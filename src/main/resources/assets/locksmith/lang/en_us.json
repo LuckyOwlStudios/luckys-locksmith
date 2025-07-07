@@ -1,0 +1,25 @@
+{
+  "itemGroup.locksmith": "Locksmithing",
+  "block.locksmith.iron_chest": "Iron Chest",
+  "block.locksmith.golden_chest": "Golden Chest",
+
+  "item.locksmith.key": "Key",
+  "item.locksmith.golden_key": "Golden Key",
+
+  "item.locksmith.golden_lock": "Golden Lock",
+  "item.locksmith.trial_lock": "Trial Lock",
+
+  "tooltip.locksmith.golden_key": "Unlocks Golden Locks",
+  "tooltip.locksmith.trial_key": "Unlocks Vaults",
+
+  "tooltip.locksmith.golden_lock": "Used to add Golden Locks to Containers",
+  "tooltip.locksmith.trial_lock": "Used to add Trial Locks to Containers",
+  "tooltip.locksmith.ominous_trial_key": "Unlocks Ominous Vaults",
+
+  "tooltip.locksmith.code": "Code : %s",
+  "tooltip.locksmith.no_code": "No Code Set",
+  "tooltip.locksmith.reveal_code": "Hold %s to reveal code",
+
+  "message.locksmith.block_add_lock": "%s locked with keycode: ",
+  "message.locksmith.block_locked": "%s is Locked!"
+}

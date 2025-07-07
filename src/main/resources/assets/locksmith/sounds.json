@@ -1,0 +1,11 @@
+{
+  "attempt_open": {
+    "subtitle": "block.locksmith.attempt_open",
+    "sounds": [
+      "locksmith:attempt_open_01",
+      "locksmith:attempt_open_02",
+      "locksmith:attempt_open_03",
+      "locksmith:attempt_open_04"
+    ]
+  }
+}

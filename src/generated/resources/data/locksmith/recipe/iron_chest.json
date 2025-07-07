@@ -1,0 +1,24 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "#": {
+      "item": "minecraft:black_wool"
+    },
+    "$": {
+      "item": "minecraft:chest"
+    },
+    "@": {
+      "item": "minecraft:iron_block"
+    }
+  },
+  "pattern": [
+    "@#@",
+    "#$#",
+    "@#@"
+  ],
+  "result": {
+    "count": 1,
+    "id": "locksmith:iron_chest"
+  }
+}

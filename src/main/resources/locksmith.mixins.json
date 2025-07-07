@@ -1,0 +1,13 @@
+{
+  "required": true,
+  "package": "net.luckyowlstudios.locksmith.mixin",
+  "compatibilityLevel": "JAVA_21",
+  "mixins": [
+    "ChestBlockMixin",
+    "BaseContainerBlockEntityMixin"
+  ],
+  "client": [],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}

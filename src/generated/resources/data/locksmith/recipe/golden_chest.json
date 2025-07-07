@@ -1,0 +1,24 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "#": {
+      "item": "minecraft:red_wool"
+    },
+    "$": {
+      "item": "minecraft:chest"
+    },
+    "@": {
+      "item": "minecraft:gold_block"
+    }
+  },
+  "pattern": [
+    "@#@",
+    "#$#",
+    "@#@"
+  ],
+  "result": {
+    "count": 1,
+    "id": "locksmith:golden_chest"
+  }
+}

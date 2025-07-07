@@ -1,0 +1,9 @@
+// 1.21.1	2025-07-06T19:23:50.7646513	Recipes
+4f20a1961acba308b2547930278d59c8c0dd94fd data/locksmith/advancement/recipes/misc/golden_chest.json
+d6a20c6bb377b31bbb3dfc6cd6420969227f10c2 data/locksmith/advancement/recipes/misc/golden_key.json
+79d758e39447314af201215244c8c86ec985a8a5 data/locksmith/advancement/recipes/misc/iron_chest.json
+8c668950d25c611fb6a4f9162308df67a37c1141 data/locksmith/advancement/recipes/misc/key.json
+0900ca41358ec7b7b8fd494e07c0b3e12226383b data/locksmith/recipe/golden_chest.json
+ce7bbb35e14b1429a7714c5569487645b99be025 data/locksmith/recipe/golden_key.json
+2fcbaf2c1c33ce4c9a0aafb0f88d8cbcef02a92f data/locksmith/recipe/iron_chest.json
+8e9a6e6f66431b9806065e4f77c8522ca86bd00e data/locksmith/recipe/key.json
