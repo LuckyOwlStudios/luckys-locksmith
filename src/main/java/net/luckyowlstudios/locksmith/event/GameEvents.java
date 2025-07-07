@@ -4,7 +4,6 @@ import net.luckyowlstudios.locksmith.Locksmith;
 import net.luckyowlstudios.locksmith.init.ModDataComponents;
 import net.luckyowlstudios.locksmith.init.ModItems;
 import net.luckyowlstudios.locksmith.item.KeyItem;
-import net.luckyowlstudios.locksmith.util.LockHandler;
 import net.luckyowlstudios.locksmith.util.LockType;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
@@ -83,12 +82,14 @@ public class GameEvents {
     // Ran on the server and client when a player right-clicks a block.
     @SubscribeEvent
     public static void onRightClickBlock(PlayerInteractEvent.RightClickBlock event) {
+
         Player player = event.getEntity();
         Level level = player.level();
         BlockPos pos = event.getPos();
         BlockState blockState = level.getBlockState(pos);
         MutableComponent getBlockName = blockState.getBlock().getName();
         if (!(level.getBlockEntity(pos) instanceof BaseContainerBlockEntity containerBlockEntity)) return;
+
         InteractionHand hand = event.getHand();
         if (hand != InteractionHand.MAIN_HAND) return;
 
@@ -96,35 +97,34 @@ public class GameEvents {
         boolean isHeldKey = heldItem.getItem() instanceof KeyItem;
 
         DataComponentType<LockType> lockType = ModDataComponents.LOCK_TYPE.get();
-        boolean blockHasGoldenLock = containerBlockEntity.components().has(lockType) && containerBlockEntity.components().get(lockType) == LockType.GOLDEN;
-        if (blockHasGoldenLock) {
-            if (heldItem.is(ModItems.GOLDEN_KEY)) {
-                level.playSound(null, pos, SoundEvents.VAULT_INSERT_ITEM, player.getSoundSource(), 1.0F, 1.5F);
-                BlockState chainState = Blocks.CHAIN.defaultBlockState();
-                level.playSound(null, pos, chainState.getBlock().getSoundType(chainState, level, pos, null).getBreakSound(), player.getSoundSource(), 1.0F, 1.0F);
-                containerBlockEntity.setComponents(DataComponentMap.builder().addAll(containerBlockEntity.components()).set(ModDataComponents.LOCK_TYPE, LockType.NONE).build());
-                containerBlockEntity.setChanged();
-                player.swing(hand);
-                heldItem.shrink(1);
-                event.setCanceled(true);
-            } else {
-                failedToOpen(event);
+        if (containerBlockEntity.components().has(lockType)) {
+            if (containerBlockEntity.components().get(lockType) == LockType.GOLDEN) {
+                if (heldItem.is(ModItems.GOLDEN_KEY)) {
+                    level.playSound(null, pos, SoundEvents.VAULT_INSERT_ITEM, player.getSoundSource(), 1.0F, 1.5F);
+                    BlockState chainState = Blocks.CHAIN.defaultBlockState();
+                    level.playSound(null, pos, chainState.getBlock().getSoundType(chainState, level, pos, null).getBreakSound(), player.getSoundSource(), 1.0F, 1.0F);
+                    containerBlockEntity.setComponents(DataComponentMap.builder().addAll(containerBlockEntity.components()).set(ModDataComponents.LOCK_TYPE, LockType.NONE).build());
+                    containerBlockEntity.setChanged();
+                    player.swing(hand);
+                    heldItem.shrink(1);
+                    event.setCanceled(true);
+                } else {
+                    failedToOpen(event);
+                }
             }
-        }
-
-        boolean blockHasTrialLock = containerBlockEntity.components().has(lockType) && containerBlockEntity.components().get(lockType) == LockType.TRIAL;
-        if (blockHasTrialLock) {
-            if (heldItem.is(Items.TRIAL_KEY)) {
-                level.playSound(null, pos, SoundEvents.VAULT_INSERT_ITEM, player.getSoundSource(), 1.0F, 1.5F);
-                BlockState chainState = Blocks.CHAIN.defaultBlockState();
-                level.playSound(null, pos, chainState.getBlock().getSoundType(chainState, level, pos, null).getBreakSound(), player.getSoundSource(), 1.0F, 1.0F);
-                containerBlockEntity.setComponents(DataComponentMap.builder().addAll(containerBlockEntity.components()).set(ModDataComponents.LOCK_TYPE, LockType.NONE).build());
-                containerBlockEntity.setChanged();
-                player.swing(hand);
-                heldItem.shrink(1);
-                event.setCanceled(true);
-            } else {
-                failedToOpen(event);
+            if (containerBlockEntity.components().get(lockType) == LockType.TRIAL) {
+                if (heldItem.is(Items.TRIAL_KEY)) {
+                    level.playSound(null, pos, SoundEvents.VAULT_INSERT_ITEM, player.getSoundSource(), 1.0F, 1.5F);
+                    BlockState chainState = Blocks.CHAIN.defaultBlockState();
+                    level.playSound(null, pos, chainState.getBlock().getSoundType(chainState, level, pos, null).getBreakSound(), player.getSoundSource(), 1.0F, 1.0F);
+                    containerBlockEntity.setComponents(DataComponentMap.builder().addAll(containerBlockEntity.components()).set(ModDataComponents.LOCK_TYPE, LockType.NONE).build());
+                    containerBlockEntity.setChanged();
+                    player.swing(hand);
+                    heldItem.shrink(1);
+                    event.setCanceled(true);
+                } else {
+                    failedToOpen(event);
+                }
             }
         }
 

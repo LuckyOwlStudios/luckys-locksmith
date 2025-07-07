@@ -1,6 +1,7 @@
-package net.luckyowlstudios.locksmith.block.chest.iron;
+package net.luckyowlstudios.locksmith.block.chest.iron_trapped;
 
 import com.mojang.blaze3d.vertex.PoseStack;
+import net.luckyowlstudios.locksmith.block.chest.iron.IronChestBlockEntity;
 import net.luckyowlstudios.locksmith.init.ModBlocks;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.BlockEntityWithoutLevelRenderer;
@@ -11,14 +12,14 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 
-public class IronChestItemRenderer extends BlockEntityWithoutLevelRenderer {
+public class IronTrappedChestItemRenderer extends BlockEntityWithoutLevelRenderer {
 
-    public IronChestItemRenderer() {
+    public IronTrappedChestItemRenderer() {
         super(Minecraft.getInstance().getBlockEntityRenderDispatcher(), Minecraft.getInstance().getEntityModels());
     }
 
     @Override
     public void renderByItem(ItemStack stack, ItemDisplayContext displayContext, PoseStack poseStack, MultiBufferSource buffer, int packedLight, int packedOverlay) {
-        Minecraft.getInstance().getBlockEntityRenderDispatcher().renderItem(new IronChestBlockEntity(BlockPos.ZERO, ModBlocks.IRON_CHEST.get().defaultBlockState()), poseStack, buffer, packedLight, packedOverlay);
+        Minecraft.getInstance().getBlockEntityRenderDispatcher().renderItem(new IronTrappedChestBlockEntity(BlockPos.ZERO, ModBlocks.IRON_TRAPPED_CHEST.get().defaultBlockState()), poseStack, buffer, packedLight, packedOverlay);
     }
 }

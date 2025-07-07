@@ -1,11 +1,15 @@
 package net.luckyowlstudios.locksmith;
 
-import net.luckyowlstudios.locksmith.block.chest.gold.GoldenChestRenderer;
+import net.luckyowlstudios.locksmith.block.chest.gold.GoldenChestItemRenderer;
+import net.luckyowlstudios.locksmith.block.chest.gold_trapped.GoldenTrappedChestItemRenderer;
+import net.luckyowlstudios.locksmith.block.chest.gold_trapped.GoldenTrappedChestRenderer;
 import net.luckyowlstudios.locksmith.block.chest.iron.IronChestItemRenderer;
+import net.luckyowlstudios.locksmith.block.chest.iron_trapped.IronTrappedChestItemRenderer;
+import net.luckyowlstudios.locksmith.block.chest.iron_trapped.IronTrappedChestRenderer;
+import net.luckyowlstudios.locksmith.block.chest.gold.GoldenChestRenderer;
 import net.luckyowlstudios.locksmith.block.chest.iron.IronChestRenderer;
 import net.luckyowlstudios.locksmith.init.ModBlockEntityTypes;
 import net.luckyowlstudios.locksmith.init.ModBlocks;
-import net.luckyowlstudios.locksmith.block.chest.gold.GoldenChestItemRenderer;
 import net.luckyowlstudios.locksmith.overrides.AddBarrelRenderer;
 import net.luckyowlstudios.locksmith.overrides.OverrideChestRenderer;
 import net.minecraft.client.renderer.BlockEntityWithoutLevelRenderer;
@@ -40,10 +44,13 @@ public class LocksmithClient {
     @SubscribeEvent
     public static void registerBER(EntityRenderersEvent.RegisterRenderers event) {
         event.registerBlockEntityRenderer(BlockEntityType.CHEST, OverrideChestRenderer::new);
-        event.registerBlockEntityRenderer(BlockEntityType.TRAPPED_CHEST, OverrideChestRenderer::new);
-        event.registerBlockEntityRenderer(BlockEntityType.BARREL, AddBarrelRenderer::new);
         event.registerBlockEntityRenderer(ModBlockEntityTypes.IRON_CHEST_BLOCK_ENTITY.get(), IronChestRenderer::new);
         event.registerBlockEntityRenderer(ModBlockEntityTypes.GOLDEN_CHEST_BLOCK_ENTITY.get(), GoldenChestRenderer::new);
+
+        event.registerBlockEntityRenderer(BlockEntityType.TRAPPED_CHEST, OverrideChestRenderer::new);
+        event.registerBlockEntityRenderer(ModBlockEntityTypes.IRON_TRAPPED_CHEST_BLOCK_ENTITY.get(), IronTrappedChestRenderer::new);
+        event.registerBlockEntityRenderer(ModBlockEntityTypes.GOLDEN_TRAPPED_CHEST_BLOCK_ENTITY.get(), GoldenTrappedChestRenderer::new);
+        event.registerBlockEntityRenderer(BlockEntityType.BARREL, AddBarrelRenderer::new);
     }
 
     @SubscribeEvent
@@ -60,6 +67,18 @@ public class LocksmithClient {
                 return new GoldenChestItemRenderer();
             }
         }, ModBlocks.GOLDEN_CHEST.asItem());
+        event.registerItem(new IClientItemExtensions() {
+            @Override
+            public @NotNull BlockEntityWithoutLevelRenderer getCustomRenderer() {
+                return new IronTrappedChestItemRenderer();
+            }
+        }, ModBlocks.IRON_TRAPPED_CHEST.asItem());
+        event.registerItem(new IClientItemExtensions() {
+            @Override
+            public @NotNull BlockEntityWithoutLevelRenderer getCustomRenderer() {
+                return new GoldenTrappedChestItemRenderer();
+            }
+        }, ModBlocks.GOLDEN_TRAPPED_CHEST.asItem());
     }
 
     @SubscribeEvent

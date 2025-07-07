@@ -1,7 +1,11 @@
 {
   "itemGroup.locksmith": "Locksmithing",
+
   "block.locksmith.iron_chest": "Iron Chest",
   "block.locksmith.golden_chest": "Golden Chest",
+
+  "block.locksmith.iron_trapped_chest": "Iron Trapped Chest",
+  "block.locksmith.golden_trapped_chest": "Golden Trapped Chest",
 
   "item.locksmith.key": "Key",
   "item.locksmith.golden_key": "Golden Key",

@@ -1,0 +1,7 @@
+{
+  "variants": {
+    "": {
+      "model": "locksmith:block/iron_trapped_chest"
+    }
+  }
+}

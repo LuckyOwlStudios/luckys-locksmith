@@ -2,7 +2,9 @@ package net.luckyowlstudios.locksmith.init;
 
 import net.luckyowlstudios.locksmith.Locksmith;
 import net.luckyowlstudios.locksmith.block.chest.gold.GoldenChestBlockEntity;
+import net.luckyowlstudios.locksmith.block.chest.gold_trapped.GoldenTrappedChestBlockEntity;
 import net.luckyowlstudios.locksmith.block.chest.iron.IronChestBlockEntity;
+import net.luckyowlstudios.locksmith.block.chest.iron_trapped.IronTrappedChestBlockEntity;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.neoforged.bus.api.IEventBus;
@@ -26,6 +28,20 @@ public class ModBlockEntityTypes {
             BLOCK_ENTITIES.register("golden_chest", () -> BlockEntityType.Builder.of(
                             GoldenChestBlockEntity::new,
                             ModBlocks.GOLDEN_CHEST.get()
+                    )
+                    .build(null));
+
+    public static final Supplier<BlockEntityType<IronTrappedChestBlockEntity>> IRON_TRAPPED_CHEST_BLOCK_ENTITY =
+            BLOCK_ENTITIES.register("iron_trapped_chest", () -> BlockEntityType.Builder.of(
+                            IronTrappedChestBlockEntity::new,
+                            ModBlocks.IRON_TRAPPED_CHEST.get()
+                    )
+                    .build(null));
+
+    public static final Supplier<BlockEntityType<GoldenTrappedChestBlockEntity>> GOLDEN_TRAPPED_CHEST_BLOCK_ENTITY =
+            BLOCK_ENTITIES.register("golden_trapped_chest", () -> BlockEntityType.Builder.of(
+                            GoldenTrappedChestBlockEntity::new,
+                            ModBlocks.GOLDEN_TRAPPED_CHEST.get()
                     )
                     .build(null));
 

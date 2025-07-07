@@ -2,7 +2,9 @@ package net.luckyowlstudios.locksmith.init;
 
 import net.luckyowlstudios.locksmith.Locksmith;
 import net.luckyowlstudios.locksmith.block.chest.gold.GoldenChestBlock;
+import net.luckyowlstudios.locksmith.block.chest.gold_trapped.GoldenTrappedChestBlock;
 import net.luckyowlstudios.locksmith.block.chest.iron.IronChestBlock;
+import net.luckyowlstudios.locksmith.block.chest.iron_trapped.IronTrappedChestBlock;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
@@ -24,6 +26,12 @@ public class ModBlocks {
 
     public static final DeferredBlock<Block> GOLDEN_CHEST = registerBlock("golden_chest",
             () -> new GoldenChestBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.GOLD_BLOCK)));
+
+    public static final DeferredBlock<Block> IRON_TRAPPED_CHEST = registerBlock("iron_trapped_chest",
+            () -> new IronTrappedChestBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.IRON_BLOCK)));
+
+    public static final DeferredBlock<Block> GOLDEN_TRAPPED_CHEST = registerBlock("golden_trapped_chest",
+            () -> new GoldenTrappedChestBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.GOLD_BLOCK)));
 
     private static <T extends Block> DeferredBlock<T> registerBlock(String name, Supplier<T> block) {
         DeferredBlock<T> toReturn = BLOCKS.register(name, block);
