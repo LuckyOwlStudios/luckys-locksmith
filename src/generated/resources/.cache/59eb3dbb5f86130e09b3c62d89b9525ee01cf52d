@@ -1,3 +1,5 @@
-// 1.21.1	2025-07-06T18:18:22.9352491	Loot Tables
+// 1.21.1	2025-07-07T19:05:45.9134641	Loot Tables
 7fcc8afd11ccf89b3d4e77b9778e5f2c2c94a8f6 data/locksmith/loot_table/blocks/golden_chest.json
+ece8b711a966f2b70d397f622aeee7c459c48853 data/locksmith/loot_table/blocks/golden_trapped_chest.json
 a3acb966c34ef0bf35a82551b7973f3c9fce9318 data/locksmith/loot_table/blocks/iron_chest.json
+832bcda0553e41719adeae9e4d3de659b5b1c1b7 data/locksmith/loot_table/blocks/iron_trapped_chest.json

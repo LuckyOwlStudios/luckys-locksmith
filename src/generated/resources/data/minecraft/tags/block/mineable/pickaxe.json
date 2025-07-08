@@ -1,5 +1,8 @@
 {
   "values": [
-    "locksmith:golden_chest"
+    "locksmith:iron_chest",
+    "locksmith:golden_chest",
+    "locksmith:iron_trapped_chest",
+    "locksmith:golden_trapped_chest"
   ]
 }

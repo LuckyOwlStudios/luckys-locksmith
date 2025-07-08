@@ -1,3 +1,8 @@
-// 1.21.1	2025-06-30T23:44:07.3231874	Tags for minecraft:block mod id locksmith
-25d5265b81e2a41cef45df17c0ab7c16c753b6fb data/minecraft/tags/block/mineable/axe.json
-25d5265b81e2a41cef45df17c0ab7c16c753b6fb data/minecraft/tags/block/mineable/pickaxe.json
+// 1.21.1	2025-07-08T00:56:02.1755304	Tags for minecraft:block mod id locksmith
+750997925ef1adc0d27ed1f9c0610a5625cd9a30 data/c/tags/block/chests.json
+d65dcbe6aeb238ac58fe1196d1b08147ac0fb969 data/c/tags/block/chests/trapped.json
+db72fb19eb384b4f2bbcf420e927836e458d6d71 data/minecraft/tags/block/features_cannot_replace.json
+ee3467fe1d911e2fc9affeb7eaf96e6a5877771a data/minecraft/tags/block/guarded_by_piglins.json
+db72fb19eb384b4f2bbcf420e927836e458d6d71 data/minecraft/tags/block/lava_pool_stone_cannot_replace.json
+db72fb19eb384b4f2bbcf420e927836e458d6d71 data/minecraft/tags/block/mineable/axe.json
+db72fb19eb384b4f2bbcf420e927836e458d6d71 data/minecraft/tags/block/mineable/pickaxe.json

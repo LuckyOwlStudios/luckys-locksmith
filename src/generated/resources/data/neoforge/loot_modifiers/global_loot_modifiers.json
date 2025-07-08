@@ -1,6 +1,7 @@
 {
   "entries": [
-    "locksmith:golden_key_to_piglin_brute"
+    "locksmith:golden_key_to_piglin_brute",
+    "locksmith:golden_key_to_nether_fortress_chest"
   ],
   "replace": false
 }

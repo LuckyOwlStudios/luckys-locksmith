@@ -1,2 +1,4 @@
-// 1.21.1	2025-07-04T02:13:53.5509365	Tags for minecraft:item mod id locksmith
+// 1.21.1	2025-07-08T00:56:02.1735359	Tags for minecraft:item mod id locksmith
+35133e95f1c8fdd7a1c21afcc231fc0bffefb9a8 data/c/tags/item/chests.json
+35133e95f1c8fdd7a1c21afcc231fc0bffefb9a8 data/c/tags/item/chests/trapped.json
 13cd47a3a3d1052b0dfb599f9cf9869118ddb4e6 data/locksmith/tags/item/keys.json

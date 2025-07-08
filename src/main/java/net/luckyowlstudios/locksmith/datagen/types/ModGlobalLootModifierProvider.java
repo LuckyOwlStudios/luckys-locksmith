@@ -19,10 +19,17 @@ public class ModGlobalLootModifierProvider extends GlobalLootModifierProvider {
 
     @Override
     protected void start() {
+
+        // Making piglin brutes drop a golden key
         this.add("golden_key_to_piglin_brute",
                 new AddItemModifier(new LootItemCondition[] {
                         new LootTableIdCondition.Builder(ResourceLocation.withDefaultNamespace("entities/piglin_brute")).build()
                 }, ModItems.GOLDEN_KEY.get().asItem()));
 
+        // Making nether fortress chests contain a golden key
+        this.add("golden_key_to_nether_fortress_chest",
+                new AddItemModifier(new LootItemCondition[] {
+                        new LootTableIdCondition.Builder(ResourceLocation.withDefaultNamespace("chests/nether_bridge")).build()
+                }, ModItems.GOLDEN_KEY.get().asItem()));
     }
 }

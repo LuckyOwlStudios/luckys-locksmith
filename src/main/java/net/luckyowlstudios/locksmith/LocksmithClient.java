@@ -11,7 +11,7 @@ import net.luckyowlstudios.locksmith.block.chest.iron.IronChestRenderer;
 import net.luckyowlstudios.locksmith.init.ModBlockEntityTypes;
 import net.luckyowlstudios.locksmith.init.ModBlocks;
 import net.luckyowlstudios.locksmith.overrides.AddBarrelRenderer;
-import net.luckyowlstudios.locksmith.overrides.OverrideChestRenderer;
+import net.luckyowlstudios.locksmith.overrides.LockModel;
 import net.minecraft.client.renderer.BlockEntityWithoutLevelRenderer;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.neoforged.api.distmarker.Dist;
@@ -43,11 +43,10 @@ public class LocksmithClient {
 
     @SubscribeEvent
     public static void registerBER(EntityRenderersEvent.RegisterRenderers event) {
-        event.registerBlockEntityRenderer(BlockEntityType.CHEST, OverrideChestRenderer::new);
+//        event.registerBlockEntityRenderer(BlockEntityType.CHEST, OverrideChestRenderer::new);
         event.registerBlockEntityRenderer(ModBlockEntityTypes.IRON_CHEST_BLOCK_ENTITY.get(), IronChestRenderer::new);
         event.registerBlockEntityRenderer(ModBlockEntityTypes.GOLDEN_CHEST_BLOCK_ENTITY.get(), GoldenChestRenderer::new);
 
-        event.registerBlockEntityRenderer(BlockEntityType.TRAPPED_CHEST, OverrideChestRenderer::new);
         event.registerBlockEntityRenderer(ModBlockEntityTypes.IRON_TRAPPED_CHEST_BLOCK_ENTITY.get(), IronTrappedChestRenderer::new);
         event.registerBlockEntityRenderer(ModBlockEntityTypes.GOLDEN_TRAPPED_CHEST_BLOCK_ENTITY.get(), GoldenTrappedChestRenderer::new);
         event.registerBlockEntityRenderer(BlockEntityType.BARREL, AddBarrelRenderer::new);
@@ -83,7 +82,7 @@ public class LocksmithClient {
 
     @SubscribeEvent
     public static void registerLayerDefinitions(EntityRenderersEvent.RegisterLayerDefinitions event) {
-        event.registerLayerDefinition(OverrideChestRenderer.LAYER_LOCATION, OverrideChestRenderer::createLock);
+        event.registerLayerDefinition(LockModel.LAYER_LOCATION, LockModel::createLock);
         event.registerLayerDefinition(AddBarrelRenderer.LAYER_LOCATION, AddBarrelRenderer::createBodyLayer);
     }
 }

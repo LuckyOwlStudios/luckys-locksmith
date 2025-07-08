@@ -1,6 +1,6 @@
 package net.luckyowlstudios.locksmith;
 
-import net.luckyowlstudios.locksmith.datagen.loot.ModLootModifiers;
+import net.luckyowlstudios.locksmith.init.ModLootModifiers;
 import net.luckyowlstudios.locksmith.init.*;
 import net.minecraft.resources.ResourceLocation;
 import org.slf4j.Logger;
@@ -43,7 +43,6 @@ public class Locksmith {
         ModCreativeModeTabs.register(modEventBus);
         modEventBus.addListener(ModCreativeModeTabs::addCreative);
         ModDataComponents.register(modEventBus);
-        ModSoundEvents.register(modEventBus);
         ModLootModifiers.register(modEventBus);
 
         // Register our mod's ModConfigSpec so that FML can create and load the config file for us

@@ -19,7 +19,7 @@ public class IronTrappedChestRenderer extends DyeableChestRenderer {
 
     @Override
     protected DyedItemColor defaultColor() {
-        return new DyedItemColor(DyeColor.GRAY.getTextureDiffuseColor(), true);
+        return new DyedItemColor(DyeColor.BROWN.getTextureDiffuseColor(), true);
     }
 
     @Override

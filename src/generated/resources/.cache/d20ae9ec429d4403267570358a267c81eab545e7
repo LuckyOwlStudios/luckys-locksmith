@@ -1,3 +1,4 @@
-// 1.21.1	2025-07-06T19:23:50.7635175	Global Loot Modifiers : locksmith
+// 1.21.1	2025-07-07T19:05:45.9124673	Global Loot Modifiers : locksmith
+21d0bf21b3dc36c4b7da259d0fbdc6aa6a983bf3 data/locksmith/loot_modifiers/golden_key_to_nether_fortress_chest.json
 87e1ab0f86f292cec6ebe68c6b086e25474e1e18 data/locksmith/loot_modifiers/golden_key_to_piglin_brute.json
-2017d642ae766d7a96df0c09477814a30072b3c2 data/neoforge/loot_modifiers/global_loot_modifiers.json
+17cd8dd7837ce9168ecdac3f3618c8b9f38a809c data/neoforge/loot_modifiers/global_loot_modifiers.json

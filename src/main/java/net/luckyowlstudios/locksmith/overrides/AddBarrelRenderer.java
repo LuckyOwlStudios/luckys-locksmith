@@ -4,6 +4,8 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.mojang.math.Axis;
 import net.luckyowlstudios.locksmith.Locksmith;
+import net.luckyowlstudios.locksmith.init.ModDataComponents;
+import net.luckyowlstudios.locksmith.util.LockHandler;
 import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.model.geom.PartPose;
@@ -15,9 +17,11 @@ import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.component.DataComponents;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.LightLayer;
 import net.minecraft.world.level.block.BarrelBlock;
 import net.minecraft.world.level.block.entity.BarrelBlockEntity;
+import net.minecraft.world.level.block.entity.BaseContainerBlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 
@@ -47,7 +51,7 @@ public class AddBarrelRenderer<T extends BlockEntity> implements BlockEntityRend
 
     @Override
     public void render(BarrelBlockEntity blockEntity, float partialTick, PoseStack poseStack, MultiBufferSource bufferSource, int packedLight, int packedOverlay) {
-        if (blockEntity.components().has(DataComponents.LOCK)) {
+        if (LockHandler.containerHasLock(blockEntity)) {
             poseStack.pushPose();
 
             BlockState state = blockEntity.getBlockState();
@@ -78,11 +82,22 @@ public class AddBarrelRenderer<T extends BlockEntity> implements BlockEntityRend
 
             float f = blockEntity.getBlockState().getValue(BarrelBlock.FACING).toYRot();
             poseStack.mulPose(Axis.YP.rotationDegrees(f));
-            VertexConsumer consumer = bufferSource.getBuffer(RenderType.entityCutout(Locksmith.id("textures/entity/lock/barrel/lock.png")));
+            VertexConsumer consumer = bufferSource.getBuffer(RenderType.entityCutout(getTexture(blockEntity)));
             int light = getFrontLightLevel(blockEntity);
             this.lock.render(poseStack, consumer, light, packedOverlay);
             poseStack.popPose();
         }
+    }
+
+    public static ResourceLocation getTexture(BaseContainerBlockEntity containerBlockEntity) {
+        if (containerBlockEntity.components().has(ModDataComponents.LOCK_TYPE.get())) {
+            return switch (containerBlockEntity.components().get(ModDataComponents.LOCK_TYPE.get())) {
+                case GOLDEN -> Locksmith.id("textures/entity/lock/barrel/golden_lock.png");
+                case TRIAL -> Locksmith.id("textures/entity/lock/barrel/trial_lock.png");
+                default -> Locksmith.id("textures/entity/lock/barrel/lock.png");
+            };
+        }
+        return Locksmith.id("textures/entity/lock/barrel/lock.png");
     }
 
     private int getFrontLightLevel(BarrelBlockEntity blockEntity) {

@@ -1,9 +1,13 @@
-// 1.21.1	2025-07-06T19:23:50.7646513	Recipes
-4f20a1961acba308b2547930278d59c8c0dd94fd data/locksmith/advancement/recipes/misc/golden_chest.json
-d6a20c6bb377b31bbb3dfc6cd6420969227f10c2 data/locksmith/advancement/recipes/misc/golden_key.json
-79d758e39447314af201215244c8c86ec985a8a5 data/locksmith/advancement/recipes/misc/iron_chest.json
-8c668950d25c611fb6a4f9162308df67a37c1141 data/locksmith/advancement/recipes/misc/key.json
+// 1.21.1	2025-07-08T00:56:02.1745329	Recipes
+7d5891ee3957eaac0201b6c3844f3c792fd9f63e data/locksmith/advancement/recipes/misc/golden_chest.json
+d22d4b8dc0e07b0c35fb0dd107b24d92354253bf data/locksmith/advancement/recipes/misc/golden_key.json
+a2897bfd917980d857fd35c7c1aa1f71367e3a48 data/locksmith/advancement/recipes/misc/iron_chest.json
+8ba43c8648018bb1813c9028f06cfa373885121c data/locksmith/advancement/recipes/misc/key.json
+bd41a329facfc99120ec21bef064e38eac35218e data/locksmith/advancement/recipes/redstone/golden_trapped_chest.json
+6ce8d7a2d62afc655417be1fe94ea88d00cc0edc data/locksmith/advancement/recipes/redstone/iron_trapped_chest.json
 0900ca41358ec7b7b8fd494e07c0b3e12226383b data/locksmith/recipe/golden_chest.json
 ce7bbb35e14b1429a7714c5569487645b99be025 data/locksmith/recipe/golden_key.json
+bf10540ecc55725c5a0cc7b759c38415098e5fbd data/locksmith/recipe/golden_trapped_chest.json
 2fcbaf2c1c33ce4c9a0aafb0f88d8cbcef02a92f data/locksmith/recipe/iron_chest.json
+7e5f17b8d568579eaa191a7b258d7a7c6429c9bb data/locksmith/recipe/iron_trapped_chest.json
 8e9a6e6f66431b9806065e4f77c8522ca86bd00e data/locksmith/recipe/key.json

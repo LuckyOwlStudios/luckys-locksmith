@@ -14,7 +14,12 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.spongepowered.asm.mixin.Mixin;
 
-// The goal of this mixin is to ensure that the BaseContainerBlockEntity sends the update to the client to let the renderer know if it should render a lock or not.
+/**
+ * This mixin is used to ensure that the BaseContainerBlockEntity sends the update packet to the client
+ * so that the renderer can determine whether to render a lock on the chest.
+ * This is necessary because without this, logging off and reconnecting would not show the lock on the chest
+ * even if it is locked.
+ */
 @Mixin(BaseContainerBlockEntity.class)
 public abstract class BaseContainerBlockEntityMixin extends BlockEntity {
 

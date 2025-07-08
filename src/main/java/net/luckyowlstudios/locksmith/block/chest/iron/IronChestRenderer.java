@@ -2,8 +2,6 @@ package net.luckyowlstudios.locksmith.block.chest.iron;
 
 import net.luckyowlstudios.locksmith.Locksmith;
 import net.luckyowlstudios.locksmith.block.chest.DyeableChestRenderer;
-import net.minecraft.client.model.geom.ModelLayers;
-import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.renderer.Sheets;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
 import net.minecraft.client.resources.model.Material;
@@ -21,7 +19,7 @@ public class IronChestRenderer extends DyeableChestRenderer {
 
     @Override
     protected DyedItemColor defaultColor() {
-        return new DyedItemColor(DyeColor.GRAY.getTextureDiffuseColor(), true);
+        return new DyedItemColor(DyeColor.BROWN.getTextureDiffuseColor(), true);
     }
 
     @Override

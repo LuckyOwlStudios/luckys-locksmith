@@ -3,10 +3,12 @@
   "package": "net.luckyowlstudios.locksmith.mixin",
   "compatibilityLevel": "JAVA_21",
   "mixins": [
-    "ChestBlockMixin",
-    "BaseContainerBlockEntityMixin"
+    "BaseContainerBlockEntityMixin",
+    "ChestBlockMixin"
   ],
-  "client": [],
+  "client": [
+    "ChestRendererMixin"
+  ],
   "injectors": {
     "defaultRequire": 1
   }

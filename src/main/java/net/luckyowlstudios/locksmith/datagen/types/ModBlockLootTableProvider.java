@@ -20,6 +20,9 @@ public class ModBlockLootTableProvider extends BlockLootSubProvider {
         // Needs to add ModBlocks.CANNON_BARREL.get() to the loot table
         dropSelf(ModBlocks.IRON_CHEST.get());
         dropSelf(ModBlocks.GOLDEN_CHEST.get());
+
+        dropSelf(ModBlocks.IRON_TRAPPED_CHEST.get());
+        dropSelf(ModBlocks.GOLDEN_TRAPPED_CHEST.get());
     }
 
     @Override

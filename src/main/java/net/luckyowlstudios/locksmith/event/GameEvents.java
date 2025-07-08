@@ -4,9 +4,11 @@ import net.luckyowlstudios.locksmith.Locksmith;
 import net.luckyowlstudios.locksmith.init.ModDataComponents;
 import net.luckyowlstudios.locksmith.init.ModItems;
 import net.luckyowlstudios.locksmith.item.KeyItem;
+import net.luckyowlstudios.locksmith.util.LockHandler;
 import net.luckyowlstudios.locksmith.util.LockType;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
 import net.minecraft.core.component.DataComponentMap;
 import net.minecraft.core.component.DataComponentType;
 import net.minecraft.core.component.DataComponents;
@@ -21,15 +23,21 @@ import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.ChestBlock;
 import net.minecraft.world.level.block.entity.BaseContainerBlockEntity;
+import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.properties.ChestType;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.event.AnvilUpdateEvent;
 import net.neoforged.neoforge.event.entity.player.AnvilRepairEvent;
 import net.neoforged.neoforge.event.entity.player.ItemTooltipEvent;
 import net.neoforged.neoforge.event.entity.player.PlayerInteractEvent;
+import net.neoforged.neoforge.event.level.BlockEvent;
+import net.neoforged.neoforge.event.level.ExplosionEvent;
 import net.neoforged.neoforge.items.IItemHandler;
 import top.theillusivec4.curios.api.CuriosApi;
 import top.theillusivec4.curios.api.type.capability.ICuriosItemHandler;
@@ -79,7 +87,36 @@ public class GameEvents {
         if (itemStack.is(Items.OMINOUS_TRIAL_KEY)) tooltip.add(Component.translatable("tooltip.locksmith.ominous_trial_key").withStyle(ChatFormatting.GRAY));
     }
 
+    // Prevents players from breaking locked blocks, such as chests!
+    @SubscribeEvent
+    public static void onBlockBroken(BlockEvent.BreakEvent event) {
+        Player player = event.getPlayer();
+        LevelAccessor level = event.getLevel();
+        BlockPos pos = event.getPos();
+        if (level.getBlockEntity(pos) instanceof BaseContainerBlockEntity containerBlockEntity) {
+            boolean isLocked = LockHandler.containerHasLock(containerBlockEntity);
+            if (isLocked && !player.isCreative()) {
+                failedToOpen(player, (Level) level, pos);
+                event.setCanceled(true); // Prevents the block from being broken
+            }
+        }
+    }
+
+    // Only prevent explosions from destroying locked blocks that are not player locks!
+    @SubscribeEvent
+    public static void onExplosionDetonate(ExplosionEvent.Detonate event) {
+        Level level = event.getLevel();
+        List<BlockPos> affectedBlocks = event.getAffectedBlocks();
+
+        // Remove locked blocks from the explosion list
+        affectedBlocks.removeIf(pos -> {
+            BlockEntity blockEntity = level.getBlockEntity(pos);
+            return blockEntity instanceof BaseContainerBlockEntity baseContainerBlockEntity && baseContainerBlockEntity.components().has(ModDataComponents.LOCK_TYPE.get()) && baseContainerBlockEntity.components().get(ModDataComponents.LOCK_TYPE.get()) != LockType.NONE;
+        });
+    }
+
     // Ran on the server and client when a player right-clicks a block.
+    // Handles opening locked chests with keys, setting locks, and playing sounds.
     @SubscribeEvent
     public static void onRightClickBlock(PlayerInteractEvent.RightClickBlock event) {
 
@@ -103,13 +140,16 @@ public class GameEvents {
                     level.playSound(null, pos, SoundEvents.VAULT_INSERT_ITEM, player.getSoundSource(), 1.0F, 1.5F);
                     BlockState chainState = Blocks.CHAIN.defaultBlockState();
                     level.playSound(null, pos, chainState.getBlock().getSoundType(chainState, level, pos, null).getBreakSound(), player.getSoundSource(), 1.0F, 1.0F);
-                    containerBlockEntity.setComponents(DataComponentMap.builder().addAll(containerBlockEntity.components()).set(ModDataComponents.LOCK_TYPE, LockType.NONE).build());
-                    containerBlockEntity.setChanged();
+                    DataComponentMap newData = DataComponentMap.builder().addAll(containerBlockEntity.components()).set(ModDataComponents.LOCK_TYPE, LockType.NONE).build();
+                    applyChangesToBlock(containerBlockEntity, newData);
                     player.swing(hand);
                     heldItem.shrink(1);
                     event.setCanceled(true);
                 } else {
-                    failedToOpen(event);
+                    failedToOpen(player, level, pos);
+                    player.swing(event.getHand(), true);
+                    event.setCancellationResult(InteractionResult.FAIL);
+                    event.setCanceled(true);
                 }
             }
             if (containerBlockEntity.components().get(lockType) == LockType.TRIAL) {
@@ -117,13 +157,16 @@ public class GameEvents {
                     level.playSound(null, pos, SoundEvents.VAULT_INSERT_ITEM, player.getSoundSource(), 1.0F, 1.5F);
                     BlockState chainState = Blocks.CHAIN.defaultBlockState();
                     level.playSound(null, pos, chainState.getBlock().getSoundType(chainState, level, pos, null).getBreakSound(), player.getSoundSource(), 1.0F, 1.0F);
-                    containerBlockEntity.setComponents(DataComponentMap.builder().addAll(containerBlockEntity.components()).set(ModDataComponents.LOCK_TYPE, LockType.NONE).build());
-                    containerBlockEntity.setChanged();
+                    DataComponentMap newData = DataComponentMap.builder().addAll(containerBlockEntity.components()).set(ModDataComponents.LOCK_TYPE, LockType.NONE).build();
+                    applyChangesToBlock(containerBlockEntity, newData);
                     player.swing(hand);
                     heldItem.shrink(1);
                     event.setCanceled(true);
                 } else {
-                    failedToOpen(event);
+                    failedToOpen(player, level, pos);
+                    player.swing(event.getHand(), true);
+                    event.setCancellationResult(InteractionResult.FAIL);
+                    event.setCanceled(true);
                 }
             }
         }
@@ -152,20 +195,23 @@ public class GameEvents {
                 return;
             } else {
                 if (!player.isCrouching() || !(heldItem.getItem() instanceof BlockItem)) {
-                    failedToOpen(event);
+                    failedToOpen(player, level, pos);
+                    player.swing(event.getHand(), true);
+                    event.setCancellationResult(InteractionResult.FAIL);
+                    event.setCanceled(true);
                 }
             }
         } else if ((containerBlockEntity.components().has(ModDataComponents.LOCK_TYPE.get()) && containerBlockEntity.components().get(ModDataComponents.LOCK_TYPE.get()) == LockType.NONE) || !containerBlockEntity.components().has(ModDataComponents.LOCK_TYPE.get())) {
             if (heldItem.is(ModItems.GOLDEN_LOCK)) {
                 level.playSound(null, pos, SoundEvents.VAULT_INSERT_ITEM_FAIL, player.getSoundSource(), 1.0F, 1.5F);
-                containerBlockEntity.setComponents(DataComponentMap.builder().addAll(containerBlockEntity.components()).set(ModDataComponents.LOCK_TYPE, LockType.GOLDEN).build());
-                containerBlockEntity.setChanged();
+                DataComponentMap newData = DataComponentMap.builder().addAll(containerBlockEntity.components()).set(ModDataComponents.LOCK_TYPE, LockType.GOLDEN).build();
+                applyChangesToBlock(containerBlockEntity, newData);
                 player.swing(hand);
                 event.setCanceled(true);
             } else if (heldItem.is(ModItems.TRIAL_LOCK)) {
                 level.playSound(null, pos, SoundEvents.VAULT_INSERT_ITEM_FAIL, player.getSoundSource(), 1.0F, 1.5F);
-                containerBlockEntity.setComponents(DataComponentMap.builder().addAll(containerBlockEntity.components()).set(ModDataComponents.LOCK_TYPE, LockType.TRIAL).build());
-                containerBlockEntity.setChanged();
+                DataComponentMap newData = DataComponentMap.builder().addAll(containerBlockEntity.components()).set(ModDataComponents.LOCK_TYPE, LockType.TRIAL).build();
+                applyChangesToBlock(containerBlockEntity, newData);
                 player.swing(hand);
                 event.setCanceled(true);
             }
@@ -174,8 +220,8 @@ public class GameEvents {
         // 2. Handle setting new lock if player is holding a key
         if (isHeldKey) {
             String keyCode = heldItem.get(DataComponents.LOCK).key();
-            containerBlockEntity.setComponents(DataComponentMap.builder().addAll(containerBlockEntity.components()).set(DataComponents.LOCK, new LockCode(keyCode)).build());
-            containerBlockEntity.setChanged();
+            DataComponentMap newData = DataComponentMap.builder().addAll(containerBlockEntity.components()).set(DataComponents.LOCK, new LockCode(keyCode)).build();
+            applyChangesToBlock(containerBlockEntity, newData);
             level.playSound(null, pos, SoundEvents.VAULT_INSERT_ITEM_FAIL, player.getSoundSource(), 1.0F, 1.0F);
             player.displayClientMessage(Component.translatable("message.locksmith.block_add_lock", getBlockName).append(keyCode), true);
             player.swing(event.getHand(), true);
@@ -183,15 +229,37 @@ public class GameEvents {
         }
     }
 
-    private static void failedToOpen(PlayerInteractEvent.RightClickBlock event) {
-        Level level = event.getEntity().level();
-        Player player = event.getEntity();
-        BlockPos pos = event.getPos();
+    private static void applyChangesToBlock(BaseContainerBlockEntity containerBlockEntity, DataComponentMap newData) {
+        containerBlockEntity.setComponents(newData);
+        containerBlockEntity.setChanged();
+
+        Level level = containerBlockEntity.getLevel();
+        BlockState blockState = containerBlockEntity.getBlockState();
+
+        if (!(blockState.getBlock() instanceof ChestBlock)) return;
+        if (blockState.getValue(ChestBlock.TYPE) == ChestType.SINGLE) return;
+
+        Direction facing = ChestBlock.getConnectedDirection(blockState);
+        BlockPos otherPos = containerBlockEntity.getBlockPos().relative(facing);
+        BlockState otherState = level.getBlockState(otherPos);
+
+        // Check if it's the same chest block type
+        if (otherState.getBlock() != blockState.getBlock()) return;
+
+        // Check if it's a double chest partner (must be opposite type and facing matches)
+        if (otherState.getValue(ChestBlock.TYPE) == ChestType.SINGLE) return;
+        if (otherState.getValue(ChestBlock.FACING) != blockState.getValue(ChestBlock.FACING)) return;
+
+        BlockEntity otherBlockEntity = level.getBlockEntity(otherPos);
+        if (otherBlockEntity instanceof BaseContainerBlockEntity otherContainer) {
+            otherContainer.setComponents(newData);
+            otherContainer.setChanged();
+        }
+    }
+
+    private static void failedToOpen(Player player, Level level, BlockPos pos) {
         MutableComponent getBlockName = level.getBlockState(pos).getBlock().getName();
         level.playSound(null, pos, SoundEvents.VAULT_INSERT_ITEM_FAIL, player.getSoundSource(), 1.0F, 1.0F);
         player.displayClientMessage(Component.translatable("message.locksmith.block_locked", getBlockName), true);
-        player.swing(event.getHand(), true);
-        event.setCancellationResult(InteractionResult.FAIL);
-        event.setCanceled(true);
     }
 }

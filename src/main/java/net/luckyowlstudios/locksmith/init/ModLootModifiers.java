@@ -1,7 +1,8 @@
-package net.luckyowlstudios.locksmith.datagen.loot;
+package net.luckyowlstudios.locksmith.init;
 
 import com.mojang.serialization.MapCodec;
 import net.luckyowlstudios.locksmith.Locksmith;
+import net.luckyowlstudios.locksmith.datagen.loot.AddItemModifier;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.common.loot.IGlobalLootModifier;
 import net.neoforged.neoforge.registries.DeferredRegister;
