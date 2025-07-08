@@ -48,6 +48,7 @@ public class KeyItem extends Item implements ICurioItem {
         if (Screen.hasShiftDown()) {
             if (lockCode != null && !lockCode.key().isEmpty()) {
                 tooltipComponents.add(Component.translatable("tooltip.locksmith.code", lockCode.key()).withStyle(ChatFormatting.GRAY));
+                tooltipComponents.add(Component.translatable("tooltip.locksmith.key_duplicate", lockCode.key()).withStyle(ChatFormatting.GRAY));
             } else {
                 tooltipComponents.add(Component.translatable("tooltip.locksmith.no_code").withStyle(ChatFormatting.GRAY));
             }

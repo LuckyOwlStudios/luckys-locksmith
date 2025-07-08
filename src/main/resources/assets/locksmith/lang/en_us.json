@@ -20,6 +20,7 @@
   "tooltip.locksmith.trial_lock": "Used to add Trial Locks to Containers",
   "tooltip.locksmith.ominous_trial_key": "Unlocks Ominous Vaults",
 
+  "tooltip.locksmith.key_duplicate": "Put in Anvil with Iron to Copy",
   "tooltip.locksmith.code": "Code: %s",
   "tooltip.locksmith.no_code": "No Code Set",
   "tooltip.locksmith.reveal_code": "Hold %s to reveal code",
