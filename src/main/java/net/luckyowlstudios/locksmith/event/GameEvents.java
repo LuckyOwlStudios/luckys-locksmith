@@ -218,7 +218,7 @@ public class GameEvents {
         }
 
         // 2. Handle setting new lock if player is holding a key
-        if (isHeldKey) {
+        if (isHeldKey && !containerBlockEntity.components().has(DataComponents.LOCK)) {
             String keyCode = heldItem.get(DataComponents.LOCK).key();
             DataComponentMap newData = DataComponentMap.builder().addAll(containerBlockEntity.components()).set(DataComponents.LOCK, new LockCode(keyCode)).build();
             applyChangesToBlock(containerBlockEntity, newData);
