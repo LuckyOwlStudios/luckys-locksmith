@@ -3,6 +3,7 @@ package net.luckyowlstudios.locksmith.init;
 import net.luckyowlstudios.locksmith.Locksmith;
 import net.luckyowlstudios.locksmith.util.LockType;
 import net.minecraft.core.Registry;
+import net.minecraft.core.UUIDUtil;
 import net.minecraft.core.component.DataComponentType;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceKey;
@@ -10,6 +11,7 @@ import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.registries.DeferredHolder;
 import net.neoforged.neoforge.registries.DeferredRegister;
 
+import java.util.UUID;
 import java.util.function.UnaryOperator;
 
 public class ModDataComponents {
@@ -22,6 +24,14 @@ public class ModDataComponents {
 
     public static final DeferredHolder<DataComponentType<?>, DataComponentType<LockType>> LOCK_TYPE = register("golden_lock",
             builder -> builder.persistent(LockType.CODEC).networkSynchronized(LockType.STREAM_CODEC));
+
+    public static final DeferredHolder<DataComponentType<?>, DataComponentType<UUID>> OWNER_UUID =
+            DATA_COMPONENT_TYPES.register("owner_uuid", () ->
+                    DataComponentType.<UUID>builder()
+                            .persistent(UUIDUtil.CODEC)
+                            .networkSynchronized(UUIDUtil.STREAM_CODEC)
+                            .build()
+            );
 
     private static <T> DeferredHolder<DataComponentType<?>, DataComponentType<T>> register(String name,
                                                                                            UnaryOperator<DataComponentType.Builder<T>> builderOperator) {
