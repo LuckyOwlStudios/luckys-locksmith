@@ -28,6 +28,11 @@ public class LocksmithConfig {
             .comment("A list of items to log on common setup.")
             .defineListAllowEmpty("items", List.of("minecraft:iron_ingot"), () -> "", LocksmithConfig::validateItemName);
 
+    public static final ModConfigSpec.DoubleValue FORTRESS_CHEST_LOCK_CHANCE = BUILDER
+            .comment("Chance (0.0 to 1.0) that an unopened Nether fortress chest is locked with a golden lock.",
+                    "Each chest is rolled once, the first time its chunk loads. Set to 0 to turn this off.")
+            .defineInRange("fortressChestLockChance", 0.25, 0.0, 1.0);
+
     static final ModConfigSpec SPEC = BUILDER.build();
 
     private static boolean validateItemName(final Object obj) {
