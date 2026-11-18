@@ -28,3 +28,10 @@ jobs:
 
       - name: Build with Gradle
         run: ./gradlew build
+      - name: Upload mod jars
+        uses: actions/upload-artifact@v4
+        with:
+          name: locksmith-jars
+          path: |
+            fabric/build/libs/*.jar
+            neoforge/build/libs/*.jar

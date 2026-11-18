@@ -1,0 +1,34 @@
+{
+  "schemaVersion": 1,
+  "id": "${mod_id}",
+  "version": "${mod_version}",
+  "name": "${mod_name}",
+  "description": "${mod_description}",
+  "authors": [
+    "${mod_authors}"
+  ],
+  "contact": {
+    "sources": "https://github.com/luckyowlstudios/luckys-locksmith"
+  },
+  "license": "${mod_license}",
+  "icon": "assets/locksmith/icon.png",
+  "environment": "*",
+  "entrypoints": {
+    "main": [
+      "net.luckyowlstudios.locksmith.fabric.LocksmithFabric"
+    ],
+    "client": [
+      "net.luckyowlstudios.locksmith.fabric.LocksmithFabricClient"
+    ]
+  },
+  "mixins": [
+    "${mod_id}.mixins.json",
+    "${mod_id}.fabric.mixins.json"
+  ],
+  "depends": {
+    "fabricloader": ">=${fabric_loader_version}",
+    "fabric-api": "*",
+    "minecraft": "${minecraft_version}",
+    "java": ">=21"
+  }
+}

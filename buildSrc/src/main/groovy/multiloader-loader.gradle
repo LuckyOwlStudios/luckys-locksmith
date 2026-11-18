@@ -1,0 +1,33 @@
+// Shared setup for the loader subprojects (fabric, neoforge): compiles the common sources and
+// packs the common resources into each loader's jar.
+plugins {
+    id 'multiloader-common'
+}
+
+configurations {
+    commonJava {
+        canBeResolved = true
+    }
+    commonResources {
+        canBeResolved = true
+    }
+}
+
+dependencies {
+    // Lets the IDE resolve common classes; the actual classes are compiled from source below.
+    compileOnly project(':common')
+    commonJava project(path: ':common', configuration: 'commonJava')
+    commonResources project(path: ':common', configuration: 'commonResources')
+}
+
+tasks.named('compileJava', JavaCompile) {
+    dependsOn(configurations.commonJava)
+    source(configurations.commonJava)
+}
+
+processResources {
+    dependsOn(configurations.commonResources)
+    from(configurations.commonResources)
+    // Datagen's cache folder isn't a resource
+    exclude('.cache', '.cache/**')
+}

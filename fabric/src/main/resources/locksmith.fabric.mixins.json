@@ -1,0 +1,15 @@
+{
+  "required": true,
+  "minVersion": "0.8",
+  "package": "net.luckyowlstudios.locksmith.fabric.mixin",
+  "refmap": "locksmith.refmap.json",
+  "compatibilityLevel": "JAVA_21",
+  "mixins": [
+    "AnvilMenuAccessor",
+    "AnvilMenuMixin",
+    "ExplosionMixin"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}
