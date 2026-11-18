@@ -6,7 +6,8 @@
   "compatibilityLevel": "JAVA_21",
   "mixins": [
     "BaseContainerBlockEntityMixin",
-    "ChestBlockMixin"
+    "ChestBlockMixin",
+    "NaturalSpawnerMixin"
   ],
   "client": [
     "ChestRendererMixin"
