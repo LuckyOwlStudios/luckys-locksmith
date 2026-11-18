@@ -117,9 +117,12 @@ public class DungeonSlimeRenderer extends SlimeRenderer {
             // sits still in the middle of the body, facing the slime's front.
             poseStack.translate(0.0F, 20.0F / 16.0F, 0.0F);
             poseStack.mulPose(Axis.ZP.rotationDegrees(180.0F));
-            // FIXED draws the item centered at half size, which fits inside the 6 pixel inner cube
-            poseStack.scale(0.7F, 0.7F, 0.7F);
-            this.itemRenderer.renderStatic(this.key, ItemDisplayContext.FIXED, packedLight, OverlayTexture.NO_OVERLAY,
+            // Undo the slime's size scaling so the key is drawn at the same size as a dropped item
+            float size = slime.getSize();
+            poseStack.scale(1.0F / size, 1.0F / size, 1.0F / size);
+            // GROUND lifts items 2 pixels above their origin; move it back down to center the key
+            poseStack.translate(0.0F, -2.0F / 16.0F, 0.0F);
+            this.itemRenderer.renderStatic(this.key, ItemDisplayContext.GROUND, packedLight, OverlayTexture.NO_OVERLAY,
                     poseStack, buffer, slime.level(), slime.getId());
             poseStack.popPose();
         }
