@@ -382,6 +382,6 @@ public final class LockEvents {
     private static void failedToOpen(Player player, Level level, BlockPos pos) {
         MutableComponent blockName = level.getBlockState(pos).getBlock().getName();
         level.playSound(null, pos, SoundEvents.VAULT_INSERT_ITEM_FAIL, player.getSoundSource(), 1.0F, 1.0F);
-        player.displayClientMessage(Component.translatable("message.locksmith.block_locked", blockName), true);
+        player.displayClientMessage(Component.translatable("message.locksmith.block_locked", blockName).withStyle(ChatFormatting.RED), true);
     }
 }
