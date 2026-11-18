@@ -101,6 +101,7 @@ public class DungeonSlimeRenderer extends SlimeRenderer {
     }
 
     private static class KeyLayer extends RenderLayer<Slime, SlimeModel<Slime>> {
+        private static final RenderType KEY_RENDER_TYPE = RenderType.entityCutoutNoCull(TextureAtlas.LOCATION_BLOCKS);
         private final ItemRenderer itemRenderer;
         private ItemStack key;
 
@@ -128,10 +129,11 @@ public class DungeonSlimeRenderer extends SlimeRenderer {
             poseStack.scale(1.0F / size, 1.0F / size, 1.0F / size);
             // GROUND lifts items 2 pixels above their origin; move it back down to center the key
             poseStack.translate(0.0F, -2.0F / 16.0F, 0.0F);
-            // Items normally go to a buffer that is drawn after every entity, which would put the key
-            // behind the shell's depth. Drawing it as a plain cutout entity layer gets it on screen
-            // first, so the translucent shell blends over it.
-            MultiBufferSource keyBuffer = renderType -> buffer.getBuffer(RenderType.entityCutout(TextureAtlas.LOCATION_BLOCKS));
+            // Item render types (including entityCutout on the block atlas) use fixed buffers that are
+            // drawn after every entity, so the translucent shell would already have written depth and
+            // hidden the key. entityCutoutNoCull on the atlas isn't a fixed buffer: it's drawn as soon
+            // as the shell asks for its own buffer, so the shell then blends over the key.
+            MultiBufferSource keyBuffer = renderType -> buffer.getBuffer(KEY_RENDER_TYPE);
             this.itemRenderer.renderStatic(this.key, ItemDisplayContext.GROUND, packedLight, OverlayTexture.NO_OVERLAY,
                     poseStack, keyBuffer, slime.level(), slime.getId());
             poseStack.popPose();
