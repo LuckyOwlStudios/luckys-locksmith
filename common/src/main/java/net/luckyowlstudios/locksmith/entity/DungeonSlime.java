@@ -83,7 +83,7 @@ public class DungeonSlime extends Slime {
     }
 
     public static boolean isInStronghold(StructureManager structureManager, BlockPos pos) {
-        return structureManager.getStructureWithPieceAt(pos, BuiltinStructures.STRONGHOLD).isValid();
+        return structureManager.getStructureWithPieceAt(pos, structure -> structure.is(BuiltinStructures.STRONGHOLD)).isValid();
     }
 
     /** The given spawn list with dungeon slimes added at {@link #STRONGHOLD_SPAWN_WEIGHT}. */
