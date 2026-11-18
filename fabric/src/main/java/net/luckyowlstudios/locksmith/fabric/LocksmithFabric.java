@@ -3,6 +3,7 @@ package net.luckyowlstudios.locksmith.fabric;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.biome.v1.BiomeModifications;
 import net.fabricmc.fabric.api.biome.v1.BiomeSelectors;
+import net.fabricmc.fabric.api.event.lifecycle.v1.ServerChunkEvents;
 import net.fabricmc.fabric.api.event.player.PlayerBlockBreakEvents;
 import net.fabricmc.fabric.api.object.builder.v1.entity.FabricDefaultAttributeRegistry;
 import net.fabricmc.fabric.api.event.player.UseBlockCallback;
@@ -14,6 +15,7 @@ import net.luckyowlstudios.locksmith.entity.DungeonSlime;
 import net.luckyowlstudios.locksmith.init.ModBlocks;
 import net.luckyowlstudios.locksmith.init.ModEntityTypes;
 import net.luckyowlstudios.locksmith.init.ModItems;
+import net.luckyowlstudios.locksmith.loot.LootChestLocks;
 import net.luckyowlstudios.locksmith.loot.LootInjections;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.MobCategory;
@@ -55,6 +57,10 @@ public class LocksmithFabric implements ModInitializer {
 
         PlayerBlockBreakEvents.BEFORE.register((level, player, pos, state, blockEntity) ->
                 LockEvents.canBreakBlock(player, level, pos));
+        // Fabric has no config screen yet, so it uses the default chance
+        ServerChunkEvents.CHUNK_LOAD.register((level, chunk) ->
+                LootChestLocks.onChunkLoad(chunk, LootChestLocks.DEFAULT_FORTRESS_CHEST_LOCK_CHANCE));
+
         // Anvil key duplication and explosion protection are done with mixins, see fabric/mixin
     }
 
