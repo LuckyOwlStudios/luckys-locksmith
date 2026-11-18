@@ -9,6 +9,7 @@ import net.luckyowlstudios.locksmith.init.ModItems;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.SlimeModel;
 import net.minecraft.client.renderer.MultiBufferSource;
+import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.entity.ItemRenderer;
 import net.minecraft.client.renderer.entity.RenderLayerParent;
@@ -16,6 +17,7 @@ import net.minecraft.client.renderer.entity.SlimeRenderer;
 import net.minecraft.client.renderer.entity.layers.RenderLayer;
 import net.minecraft.client.renderer.texture.DynamicTexture;
 import net.minecraft.client.renderer.texture.OverlayTexture;
+import net.minecraft.client.renderer.texture.TextureAtlas;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.packs.resources.Resource;
 import net.minecraft.world.entity.monster.Slime;
@@ -45,7 +47,8 @@ public class DungeonSlimeRenderer extends SlimeRenderer {
 
     public DungeonSlimeRenderer(EntityRendererProvider.Context context) {
         super(context);
-        this.addLayer(new KeyLayer(this, context.getItemRenderer()));
+        // The key has to be drawn before the see-through outer shell, or the shell hides it
+        this.layers.add(0, new KeyLayer(this, context.getItemRenderer()));
     }
 
     @Override
@@ -125,8 +128,12 @@ public class DungeonSlimeRenderer extends SlimeRenderer {
             poseStack.scale(1.0F / size, 1.0F / size, 1.0F / size);
             // GROUND lifts items 2 pixels above their origin; move it back down to center the key
             poseStack.translate(0.0F, -2.0F / 16.0F, 0.0F);
+            // Items normally go to a buffer that is drawn after every entity, which would put the key
+            // behind the shell's depth. Drawing it as a plain cutout entity layer gets it on screen
+            // first, so the translucent shell blends over it.
+            MultiBufferSource keyBuffer = renderType -> buffer.getBuffer(RenderType.entityCutout(TextureAtlas.LOCATION_BLOCKS));
             this.itemRenderer.renderStatic(this.key, ItemDisplayContext.GROUND, packedLight, OverlayTexture.NO_OVERLAY,
-                    poseStack, buffer, slime.level(), slime.getId());
+                    poseStack, keyBuffer, slime.level(), slime.getId());
             poseStack.popPose();
         }
     }
