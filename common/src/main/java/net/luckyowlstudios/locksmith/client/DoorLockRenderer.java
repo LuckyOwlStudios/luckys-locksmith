@@ -75,6 +75,11 @@ public final class DoorLockRenderer {
                 pose.translate(pos.getX() - camera.x + 0.5, pos.getY() - camera.y, pos.getZ() - camera.z + 0.5);
                 pose.mulPose(Axis.YP.rotationDegrees(DoorLockPlacement.rotation(state)));
                 pose.translate(-0.5, 0, -0.5);
+                // An open door swings around its hinge, and the padlocks swing with it
+                double pivotX = DoorLockPlacement.hingePivotX(state);
+                pose.translate(pivotX, 0, DoorLockPlacement.HINGE_PIVOT_Z);
+                pose.mulPose(Axis.YP.rotationDegrees(DoorLockPlacement.openAngle(state)));
+                pose.translate(-pivotX, 0, -DoorLockPlacement.HINGE_PIVOT_Z);
                 // A padlock on each side, slightly clear of the three-pixel-thick door panel.
                 for (boolean back : new boolean[]{false, true}) {
                     pose.pushPose();
