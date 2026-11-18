@@ -1,6 +1,6 @@
 package net.luckyowlstudios.locksmith.mixin;
 
-import net.luckyowlstudios.locksmith.door.DoorLocks;
+import net.luckyowlstudios.locksmith.util.DoorLocks;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockBehaviour;

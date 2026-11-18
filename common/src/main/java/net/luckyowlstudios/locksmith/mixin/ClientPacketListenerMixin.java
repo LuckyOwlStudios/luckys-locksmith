@@ -1,8 +1,9 @@
 package net.luckyowlstudios.locksmith.mixin;
 
-import net.luckyowlstudios.locksmith.door.DoorLocks;
+import net.luckyowlstudios.locksmith.util.DoorLocks;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.multiplayer.ClientPacketListener;
+import net.minecraft.network.protocol.game.ClientboundForgetLevelChunkPacket;
 import net.minecraft.network.protocol.game.ClientboundLevelChunkWithLightPacket;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
@@ -22,6 +23,13 @@ public abstract class ClientPacketListenerMixin {
     private void locksmith$forgetDoorLocks(ClientboundLevelChunkWithLightPacket packet, CallbackInfo ci) {
         if (Minecraft.getInstance().level != null) {
             DoorLocks.clearClientChunk(Minecraft.getInstance().level, packet.getX(), packet.getZ());
+        }
+    }
+
+    @Inject(method = "handleForgetLevelChunk", at = @At("TAIL"), require = 0)
+    private void locksmith$forgetUnloadedDoorLocks(ClientboundForgetLevelChunkPacket packet, CallbackInfo ci) {
+        if (Minecraft.getInstance().level != null) {
+            DoorLocks.clearClientChunk(Minecraft.getInstance().level, packet.pos().x, packet.pos().z);
         }
     }
 }

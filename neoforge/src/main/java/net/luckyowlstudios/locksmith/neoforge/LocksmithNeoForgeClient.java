@@ -9,6 +9,7 @@ import net.luckyowlstudios.locksmith.block.chest.iron.IronChestItemRenderer;
 import net.luckyowlstudios.locksmith.block.chest.iron.IronChestRenderer;
 import net.luckyowlstudios.locksmith.block.chest.iron_trapped.IronTrappedChestItemRenderer;
 import net.luckyowlstudios.locksmith.block.chest.iron_trapped.IronTrappedChestRenderer;
+import net.luckyowlstudios.locksmith.client.DoorLockRenderer;
 import net.luckyowlstudios.locksmith.client.DungeonSlimeRenderer;
 import net.luckyowlstudios.locksmith.init.ModBlockEntityTypes;
 import net.luckyowlstudios.locksmith.init.ModEntityTypes;
@@ -22,6 +23,7 @@ import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.ModContainer;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.client.event.EntityRenderersEvent;
+import net.neoforged.neoforge.client.event.RenderLevelStageEvent;
 import net.neoforged.neoforge.client.extensions.common.IClientItemExtensions;
 import net.neoforged.neoforge.client.extensions.common.RegisterClientExtensionsEvent;
 import net.neoforged.neoforge.client.gui.ConfigurationScreen;
@@ -66,6 +68,13 @@ public class LocksmithNeoForgeClient {
                 return renderer.get();
             }
         }, item);
+    }
+
+    @SubscribeEvent
+    public static void renderDoorLocks(RenderLevelStageEvent event) {
+        if (event.getStage() == RenderLevelStageEvent.Stage.AFTER_BLOCK_ENTITIES) {
+            DoorLockRenderer.render(event.getPoseStack(), event.getCamera().getPosition(), event.getFrustum());
+        }
     }
 
     @SubscribeEvent
