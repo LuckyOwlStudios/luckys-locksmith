@@ -33,6 +33,8 @@ import java.util.Map;
  * this is how their lock gets drawn.
  */
 public final class DoorLockRenderer {
+    /** Height of the padlock's origin above the bottom of the door: 1.05 blocks, lowered by 3 pixels. */
+    private static final double PADLOCK_HEIGHT = 1.05 - 3.0 / 16.0;
     private static final ModelPart MODEL = createModel();
     private static final ResourceLocation NORMAL = Locksmith.id("textures/entity/lock/chest/lock.png");
     private static final ResourceLocation GOLDEN = Locksmith.id("textures/entity/lock/chest/golden_lock.png");
@@ -76,7 +78,7 @@ public final class DoorLockRenderer {
                 // A padlock on each side, slightly clear of the three-pixel-thick door panel.
                 for (boolean back : new boolean[]{false, true}) {
                     pose.pushPose();
-                    pose.translate(DoorLockPlacement.handleX(state), 1.05, back ? 0.80 : 1.0125);
+                    pose.translate(DoorLockPlacement.handleX(state), PADLOCK_HEIGHT, back ? 0.80 : 1.0125);
                     if (back) pose.mulPose(Axis.YP.rotationDegrees(180));
                     pose.mulPose(Axis.XP.rotationDegrees(180));
                     MODEL.render(pose, buffers.getBuffer(RenderType.entityCutoutNoCull(texture)), light, OverlayTexture.NO_OVERLAY);
