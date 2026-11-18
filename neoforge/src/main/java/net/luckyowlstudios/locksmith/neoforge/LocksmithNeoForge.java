@@ -2,6 +2,8 @@ package net.luckyowlstudios.locksmith.neoforge;
 
 import com.mojang.logging.LogUtils;
 import net.luckyowlstudios.locksmith.Locksmith;
+import net.luckyowlstudios.locksmith.door.DoorLockSyncPayload;
+import net.luckyowlstudios.locksmith.door.DoorLocks;
 import net.luckyowlstudios.locksmith.entity.DungeonSlime;
 import net.luckyowlstudios.locksmith.init.ModBlocks;
 import net.luckyowlstudios.locksmith.init.ModEntityTypes;
@@ -26,6 +28,7 @@ import net.neoforged.neoforge.event.BuildCreativeModeTabContentsEvent;
 import net.neoforged.neoforge.event.ModifyDefaultComponentsEvent;
 import net.neoforged.neoforge.event.entity.EntityAttributeCreationEvent;
 import net.neoforged.neoforge.event.entity.RegisterSpawnPlacementsEvent;
+import net.neoforged.neoforge.network.event.RegisterPayloadHandlersEvent;
 import org.slf4j.Logger;
 
 // The value here should match an entry in the META-INF/neoforge.mods.toml file
@@ -43,6 +46,7 @@ public class LocksmithNeoForge {
         modEventBus.addListener(LocksmithNeoForge::registerAttributes);
         modEventBus.addListener(LocksmithNeoForge::registerSpawnPlacements);
         modEventBus.addListener(LocksmithNeoForge::modifyDefaultComponents);
+        modEventBus.addListener(LocksmithNeoForge::registerPayloads);
 
         // Register our mod's ModConfigSpec so that FML can create and load the config file for us
         modContainer.registerConfig(ModConfig.Type.COMMON, LocksmithConfig.SPEC);
@@ -56,6 +60,12 @@ public class LocksmithNeoForge {
         LOGGER.info("{}{}", LocksmithConfig.MAGIC_NUMBER_INTRODUCTION.get(), LocksmithConfig.MAGIC_NUMBER.getAsInt());
 
         LocksmithConfig.ITEM_STRINGS.get().forEach((item) -> LOGGER.info("ITEM >> {}", item));
+    }
+
+    private static void registerPayloads(RegisterPayloadHandlersEvent event) {
+        // Handlers run on the main thread; on the client, context.player() is the local player
+        event.registrar("1").playToClient(DoorLockSyncPayload.TYPE, DoorLockSyncPayload.STREAM_CODEC,
+                (payload, context) -> DoorLocks.applyClientSync(context.player().level(), payload));
     }
 
     private static void modifyDefaultComponents(ModifyDefaultComponentsEvent event) {

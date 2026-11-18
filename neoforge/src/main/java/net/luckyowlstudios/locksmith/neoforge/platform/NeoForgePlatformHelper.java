@@ -6,6 +6,8 @@ import net.luckyowlstudios.locksmith.neoforge.compat.CuriosCompat;
 import net.luckyowlstudios.locksmith.platform.services.IPlatformHelper;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Registry;
+import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
@@ -20,6 +22,7 @@ import net.minecraft.world.item.ItemStack;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.fml.ModList;
 import net.neoforged.neoforge.common.DeferredSpawnEggItem;
+import net.neoforged.neoforge.network.PacketDistributor;
 import net.neoforged.neoforge.registries.DeferredRegister;
 
 import java.util.LinkedHashMap;
@@ -77,5 +80,10 @@ public class NeoForgePlatformHelper implements IPlatformHelper {
     @Override
     public Optional<ItemStack> findEquippedKey(Player player) {
         return isCuriosLoaded() ? CuriosCompat.findEquippedKey(player) : Optional.empty();
+    }
+
+    @Override
+    public void sendToPlayer(ServerPlayer player, CustomPacketPayload payload) {
+        PacketDistributor.sendToPlayer(player, payload);
     }
 }

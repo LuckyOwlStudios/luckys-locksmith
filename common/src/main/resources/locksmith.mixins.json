@@ -6,10 +6,16 @@
   "compatibilityLevel": "JAVA_21",
   "mixins": [
     "BaseContainerBlockEntityMixin",
-    "ChestBlockMixin"
+    "ChestBlockMixin",
+    "BlockBehaviourMixin",
+    "DoorBlockMixin",
+    "PistonBaseBlockMixin",
+    "PlayerChunkSenderMixin",
+    "TrapDoorBlockMixin"
   ],
   "client": [
-    "ChestRendererMixin"
+    "ChestRendererMixin",
+    "ClientPacketListenerMixin"
   ],
   "injectors": {
     "defaultRequire": 1

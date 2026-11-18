@@ -1,5 +1,7 @@
 package net.luckyowlstudios.locksmith.event;
 
+import net.luckyowlstudios.locksmith.door.DoorLock;
+import net.luckyowlstudios.locksmith.door.DoorLocks;
 import net.luckyowlstudios.locksmith.init.ModDataComponents;
 import net.luckyowlstudios.locksmith.init.ModItems;
 import net.luckyowlstudios.locksmith.item.KeyItem;
@@ -89,6 +91,10 @@ public final class LockEvents {
 
     /** @return false if the player may not break the block at {@code pos}. */
     public static boolean canBreakBlock(Player player, Level level, BlockPos pos) {
+        BlockState state = level.getBlockState(pos);
+        if (DoorLocks.isLockable(state)) {
+            return DoorLockEvents.canBreak(player, level, pos, state);
+        }
         if (level.getBlockEntity(pos) instanceof BaseContainerBlockEntity containerBlockEntity) {
             if (LockHandler.containerHasLock(containerBlockEntity) && !player.isCreative()) {
                 // Owner can always break their own locked chest
@@ -106,10 +112,14 @@ public final class LockEvents {
         return true;
     }
 
-    /** Removes containers with a golden or trial lock from the list of blocks an explosion destroys. */
+    /** Removes containers, doors and trapdoors with a golden or trial lock from the list of blocks an explosion destroys. */
     public static void protectLockedBlocksFromExplosion(Level level, List<BlockPos> affectedBlocks) {
         // Only mod locks, not player locks
         affectedBlocks.removeIf(pos -> {
+            DoorLock doorLock = DoorLocks.get(level, pos);
+            if (doorLock != null) {
+                return doorLock.isSpecial();
+            }
             BlockEntity blockEntity = level.getBlockEntity(pos);
             if (blockEntity instanceof BaseContainerBlockEntity container) {
                 DataComponentType<LockType> lockType = ModDataComponents.LOCK_TYPE.get();
@@ -126,6 +136,10 @@ public final class LockEvents {
 
     public static ClickResult onRightClickBlock(Player player, Level level, InteractionHand hand, BlockPos pos) {
         if (hand != InteractionHand.MAIN_HAND) return ClickResult.PASS;
+        BlockState state = level.getBlockState(pos);
+        if (DoorLocks.isLockable(state)) {
+            return DoorLockEvents.onRightClick(player, level, hand, pos, state);
+        }
         if (!(level.getBlockEntity(pos) instanceof BaseContainerBlockEntity containerBlockEntity)) return ClickResult.PASS;
 
         ItemStack heldItem = player.getMainHandItem();
@@ -330,7 +344,22 @@ public final class LockEvents {
         return false;
     }
 
-    private static boolean hasItemInInventory(Player player, Item item) {
+    /** @return true if the player holds, wears or carries a key with this code. */
+    static boolean hasKeyFor(Player player, String keyCode) {
+        ItemStack heldItem = player.getMainHandItem();
+        if (heldItem.getItem() instanceof KeyItem && heldItem.has(DataComponents.LOCK)
+                && heldItem.get(DataComponents.LOCK).key().equals(keyCode)) {
+            return true;
+        }
+        Optional<ItemStack> curiosKey = Services.PLATFORM.findEquippedKey(player);
+        if (curiosKey.isPresent() && curiosKey.get().has(DataComponents.LOCK)
+                && curiosKey.get().get(DataComponents.LOCK).key().equals(keyCode)) {
+            return true;
+        }
+        return hasMatchingKeyInInventory(player, keyCode);
+    }
+
+    static boolean hasItemInInventory(Player player, Item item) {
         return player.getInventory().hasAnyMatching(stack -> stack.is(item));
     }
 
@@ -379,7 +408,7 @@ public final class LockEvents {
                 otherState.getValue(ChestBlock.FACING) == blockState.getValue(ChestBlock.FACING);
     }
 
-    private static void failedToOpen(Player player, Level level, BlockPos pos) {
+    static void failedToOpen(Player player, Level level, BlockPos pos) {
         MutableComponent blockName = level.getBlockState(pos).getBlock().getName();
         level.playSound(null, pos, SoundEvents.VAULT_INSERT_ITEM_FAIL, player.getSoundSource(), 1.0F, 1.0F);
         player.displayClientMessage(Component.translatable("message.locksmith.block_locked", blockName), true);

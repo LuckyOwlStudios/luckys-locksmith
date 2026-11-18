@@ -1,12 +1,15 @@
 package net.luckyowlstudios.locksmith.fabric.platform;
 
 import net.fabricmc.fabric.api.itemgroup.v1.FabricItemGroup;
+import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
 import net.fabricmc.fabric.api.object.builder.v1.block.entity.FabricBlockEntityTypeBuilder;
 import net.luckyowlstudios.locksmith.Locksmith;
 import net.luckyowlstudios.locksmith.item.KeyItem;
 import net.luckyowlstudios.locksmith.platform.services.IPlatformHelper;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Registry;
+import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
@@ -66,5 +69,10 @@ public class FabricPlatformHelper implements IPlatformHelper {
     public Optional<ItemStack> findEquippedKey(Player player) {
         // No accessory mod support on Fabric yet
         return Optional.empty();
+    }
+
+    @Override
+    public void sendToPlayer(ServerPlayer player, CustomPacketPayload payload) {
+        ServerPlayNetworking.send(player, payload);
     }
 }

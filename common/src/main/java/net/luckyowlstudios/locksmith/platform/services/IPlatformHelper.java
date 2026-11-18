@@ -3,6 +3,8 @@ package net.luckyowlstudios.locksmith.platform.services;
 import net.luckyowlstudios.locksmith.item.KeyItem;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Registry;
+import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.player.Player;
@@ -46,4 +48,7 @@ public interface IPlatformHelper {
 
     /** A key the player wears in an accessory slot, if the loader has an accessory mod installed. */
     Optional<ItemStack> findEquippedKey(Player player);
+
+    /** Sends one of this mod's payloads (registered by each loader) to a player. */
+    void sendToPlayer(ServerPlayer player, CustomPacketPayload payload);
 }

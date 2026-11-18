@@ -1,6 +1,7 @@
 package net.luckyowlstudios.locksmith.fabric;
 
 import net.fabricmc.api.ClientModInitializer;
+import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
 import net.fabricmc.fabric.api.client.item.v1.ItemTooltipCallback;
 import net.fabricmc.fabric.api.client.rendering.v1.BlockEntityRendererRegistry;
 import net.fabricmc.fabric.api.client.rendering.v1.BuiltinItemRendererRegistry;
@@ -14,6 +15,8 @@ import net.luckyowlstudios.locksmith.block.chest.iron.IronChestItemRenderer;
 import net.luckyowlstudios.locksmith.block.chest.iron.IronChestRenderer;
 import net.luckyowlstudios.locksmith.block.chest.iron_trapped.IronTrappedChestItemRenderer;
 import net.luckyowlstudios.locksmith.block.chest.iron_trapped.IronTrappedChestRenderer;
+import net.luckyowlstudios.locksmith.door.DoorLockSyncPayload;
+import net.luckyowlstudios.locksmith.door.DoorLocks;
 import net.luckyowlstudios.locksmith.event.LockEvents;
 import net.luckyowlstudios.locksmith.client.DungeonSlimeRenderer;
 import net.luckyowlstudios.locksmith.init.ModBlockEntityTypes;
@@ -48,6 +51,10 @@ public class LocksmithFabricClient implements ClientModInitializer {
         registerItemRenderer(ModBlocks.GOLDEN_CHEST.get(), GoldenChestItemRenderer::new);
         registerItemRenderer(ModBlocks.IRON_TRAPPED_CHEST.get(), IronTrappedChestItemRenderer::new);
         registerItemRenderer(ModBlocks.GOLDEN_TRAPPED_CHEST.get(), GoldenTrappedChestItemRenderer::new);
+
+        // Runs on the client thread
+        ClientPlayNetworking.registerGlobalReceiver(DoorLockSyncPayload.TYPE,
+                (payload, context) -> DoorLocks.applyClientSync(context.player().level(), payload));
 
         ItemTooltipCallback.EVENT.register((stack, context, flag, lines) -> LockEvents.appendTooltip(stack, lines));
     }
