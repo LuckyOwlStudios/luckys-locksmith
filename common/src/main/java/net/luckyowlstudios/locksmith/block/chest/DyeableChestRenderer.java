@@ -28,7 +28,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.ChestType;
 
 /**
- * Renders this mod's chests: the base texture, a dyeable overlay on top, and the padlock when locked.
+ * Renders this mod's chests: the base texture, an overlay on top (tinted when dyed), and the padlock when locked.
  * <p>
  * This does not extend vanilla's ChestRenderer, because only NeoForge lets a subclass choose the
  * chest texture there (Fabric always uses the vanilla wood texture).
@@ -47,12 +47,22 @@ public abstract class DyeableChestRenderer implements BlockEntityRenderer<ChestB
         lock = context.bakeLayer(LockModel.LAYER_LOCATION).getChild("lock");
     }
 
-    protected abstract DyedItemColor defaultColor();
+    /**
+     * The overlay texture drawn on top of the base chest, without the "_left"/"_right" suffix,
+     * e.g. "entity/chest/fabric". {@code dyed} is true once the chest has been dyed.
+     */
+    protected abstract String overlayTexture(boolean dyed);
+
+    /** The tint for the overlay while the chest is not dyed. -1 draws the texture as is. */
+    protected int undyedColor() {
+        return -1;
+    }
 
     @Override
     public void render(ChestBlockEntity blockEntity, float partialTick, PoseStack poseStack, MultiBufferSource bufferSource, int packedLight, int packedOverlay) {
-        DyedItemColor dyedComponent = blockEntity.components().getOrDefault(DataComponents.DYED_COLOR, defaultColor());
-        int color = dyedComponent.rgb();
+        DyedItemColor dyedComponent = blockEntity.components().get(DataComponents.DYED_COLOR);
+        boolean dyed = dyedComponent != null;
+        int color = dyed ? dyedComponent.rgb() : undyedColor();
         Level level = blockEntity.getLevel();
         boolean flag = level != null;
         BlockState blockstate = flag ? blockEntity.getBlockState() : Blocks.CHEST.defaultBlockState().setValue(ChestBlock.FACING, Direction.SOUTH);
@@ -82,12 +92,13 @@ public abstract class DyeableChestRenderer implements BlockEntityRenderer<ChestB
             VertexConsumer baseConsumer = existingMaterial.buffer(bufferSource, RenderType::entityCutout);
             renderParts(poseStack, baseConsumer, chesttype, f1, i, packedOverlay, -1);
 
-            // Dye overlay
-            ResourceLocation dyeOverlay = switch (chesttype) {
-                case LEFT -> ResourceLocation.fromNamespaceAndPath(Locksmith.MOD_ID, "entity/chest/dye_left");
-                case RIGHT -> ResourceLocation.fromNamespaceAndPath(Locksmith.MOD_ID, "entity/chest/dye_right");
-                case SINGLE -> ResourceLocation.fromNamespaceAndPath(Locksmith.MOD_ID, "entity/chest/dye");
+            // Overlay (tinted with the dye color)
+            String overlay = overlayTexture(dyed) + switch (chesttype) {
+                case LEFT -> "_left";
+                case RIGHT -> "_right";
+                case SINGLE -> "";
             };
+            ResourceLocation dyeOverlay = ResourceLocation.fromNamespaceAndPath(Locksmith.MOD_ID, overlay);
             Material dyeMaterial = new Material(existingMaterial.atlasLocation(), dyeOverlay);
             VertexConsumer vertexconsumer = dyeMaterial.buffer(bufferSource, RenderType::entityCutout);
             renderParts(poseStack, vertexconsumer, chesttype, f1, i, packedOverlay, color);

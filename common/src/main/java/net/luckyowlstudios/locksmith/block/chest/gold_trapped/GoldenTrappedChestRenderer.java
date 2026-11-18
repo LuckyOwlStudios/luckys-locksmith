@@ -7,7 +7,6 @@ import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
 import net.minecraft.client.resources.model.Material;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.DyeColor;
-import net.minecraft.world.item.component.DyedItemColor;
 import net.minecraft.world.level.block.entity.ChestBlockEntity;
 import net.minecraft.world.level.block.state.properties.ChestType;
 
@@ -18,8 +17,14 @@ public class GoldenTrappedChestRenderer extends DyeableChestRenderer {
     }
 
     @Override
-    protected DyedItemColor defaultColor() {
-        return new DyedItemColor(DyeColor.RED.getTextureDiffuseColor(), true);
+    protected String overlayTexture(boolean dyed) {
+        // Always fabric, red until dyed
+        return "entity/chest/fabric";
+    }
+
+    @Override
+    protected int undyedColor() {
+        return DyeColor.RED.getTextureDiffuseColor();
     }
 
     @Override

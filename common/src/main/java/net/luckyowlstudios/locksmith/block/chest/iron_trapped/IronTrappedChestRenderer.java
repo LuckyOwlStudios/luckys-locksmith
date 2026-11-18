@@ -6,8 +6,6 @@ import net.minecraft.client.renderer.Sheets;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
 import net.minecraft.client.resources.model.Material;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.item.DyeColor;
-import net.minecraft.world.item.component.DyedItemColor;
 import net.minecraft.world.level.block.entity.ChestBlockEntity;
 import net.minecraft.world.level.block.state.properties.ChestType;
 
@@ -18,8 +16,9 @@ public class IronTrappedChestRenderer extends DyeableChestRenderer {
     }
 
     @Override
-    protected DyedItemColor defaultColor() {
-        return new DyedItemColor(DyeColor.BROWN.getTextureDiffuseColor(), true);
+    protected String overlayTexture(boolean dyed) {
+        // Natural wood until dyed, then the grayscale wood tinted with the dye color
+        return dyed ? "entity/chest/wood_dyeable" : "entity/chest/wood";
     }
 
     @Override
