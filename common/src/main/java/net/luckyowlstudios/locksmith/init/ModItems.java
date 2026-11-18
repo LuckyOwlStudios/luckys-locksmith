@@ -10,8 +10,11 @@ import java.util.function.Supplier;
 
 public class ModItems {
 
+    /** Max stack size for golden keys and vanilla trial keys. Each loader applies it to the trial key. */
+    public static final int KEY_STACK_SIZE = 16;
+
     public static final Supplier<Item> KEY = register("key", () -> Services.PLATFORM.createKeyItem(new Item.Properties()));
-    public static final Supplier<Item> GOLDEN_KEY = register("golden_key", () -> new GoldenKey(new Item.Properties()));
+    public static final Supplier<Item> GOLDEN_KEY = register("golden_key", () -> new GoldenKey(new Item.Properties().stacksTo(KEY_STACK_SIZE)));
 
     public static final Supplier<Item> GOLDEN_LOCK = register("golden_lock", () -> new LockItem(new Item.Properties()));
     public static final Supplier<Item> TRIAL_LOCK = register("trial_lock", () -> new LockItem(new Item.Properties()));

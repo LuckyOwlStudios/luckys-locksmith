@@ -4,6 +4,7 @@ import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerChunkEvents;
 import net.fabricmc.fabric.api.event.player.PlayerBlockBreakEvents;
 import net.fabricmc.fabric.api.event.player.UseBlockCallback;
+import net.fabricmc.fabric.api.item.v1.DefaultItemComponentEvents;
 import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents;
 import net.fabricmc.fabric.api.loot.v3.LootTableEvents;
 import net.luckyowlstudios.locksmith.Locksmith;
@@ -12,6 +13,7 @@ import net.luckyowlstudios.locksmith.init.ModBlocks;
 import net.luckyowlstudios.locksmith.init.ModItems;
 import net.luckyowlstudios.locksmith.loot.LootChestLocks;
 import net.luckyowlstudios.locksmith.loot.LootInjections;
+import net.minecraft.core.component.DataComponents;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.item.CreativeModeTabs;
 import net.minecraft.world.item.Items;
@@ -27,6 +29,8 @@ public class LocksmithFabric implements ModInitializer {
         registerEvents();
         registerLoot();
         registerCreativeTabEntries();
+        DefaultItemComponentEvents.MODIFY.register(context ->
+                context.modify(Items.TRIAL_KEY, builder -> builder.set(DataComponents.MAX_STACK_SIZE, ModItems.KEY_STACK_SIZE)));
     }
 
     private static void registerEvents() {

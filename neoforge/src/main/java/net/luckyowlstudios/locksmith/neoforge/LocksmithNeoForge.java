@@ -5,6 +5,7 @@ import net.luckyowlstudios.locksmith.Locksmith;
 import net.luckyowlstudios.locksmith.init.ModBlocks;
 import net.luckyowlstudios.locksmith.init.ModItems;
 import net.luckyowlstudios.locksmith.neoforge.platform.NeoForgePlatformHelper;
+import net.minecraft.core.component.DataComponents;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.CreativeModeTabs;
@@ -17,6 +18,7 @@ import net.neoforged.fml.common.Mod;
 import net.neoforged.fml.config.ModConfig;
 import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.neoforged.neoforge.event.BuildCreativeModeTabContentsEvent;
+import net.neoforged.neoforge.event.ModifyDefaultComponentsEvent;
 import org.slf4j.Logger;
 
 // The value here should match an entry in the META-INF/neoforge.mods.toml file
@@ -31,6 +33,7 @@ public class LocksmithNeoForge {
 
         modEventBus.addListener(this::commonSetup);
         modEventBus.addListener(LocksmithNeoForge::addCreative);
+        modEventBus.addListener(LocksmithNeoForge::modifyDefaultComponents);
 
         // Register our mod's ModConfigSpec so that FML can create and load the config file for us
         modContainer.registerConfig(ModConfig.Type.COMMON, LocksmithConfig.SPEC);
@@ -44,6 +47,10 @@ public class LocksmithNeoForge {
         LOGGER.info("{}{}", LocksmithConfig.MAGIC_NUMBER_INTRODUCTION.get(), LocksmithConfig.MAGIC_NUMBER.getAsInt());
 
         LocksmithConfig.ITEM_STRINGS.get().forEach((item) -> LOGGER.info("ITEM >> {}", item));
+    }
+
+    private static void modifyDefaultComponents(ModifyDefaultComponentsEvent event) {
+        event.modify(Items.TRIAL_KEY, builder -> builder.set(DataComponents.MAX_STACK_SIZE, ModItems.KEY_STACK_SIZE));
     }
 
     private static void addCreative(BuildCreativeModeTabContentsEvent event) {
