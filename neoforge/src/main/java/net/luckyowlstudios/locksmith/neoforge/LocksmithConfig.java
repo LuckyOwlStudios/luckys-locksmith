@@ -31,7 +31,7 @@ public class LocksmithConfig {
     public static final ModConfigSpec.DoubleValue FORTRESS_CHEST_LOCK_CHANCE = BUILDER
             .comment("Chance (0.0 to 1.0) that an unopened Nether fortress chest is locked with a golden lock.",
                     "Each chest is rolled once, the first time its chunk loads. Set to 0 to turn this off.")
-            .defineInRange("fortressChestLockChance", 0.25, 0.0, 1.0);
+            .defineInRange("fortressChestLockChance", net.luckyowlstudios.locksmith.loot.LootChestLocks.DEFAULT_FORTRESS_CHEST_LOCK_CHANCE, 0.0, 1.0);
 
     public static final ModConfigSpec SPEC = BUILDER.build();
 
