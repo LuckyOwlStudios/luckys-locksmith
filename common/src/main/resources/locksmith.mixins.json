@@ -11,7 +11,8 @@
     "DoorBlockMixin",
     "PistonBaseBlockMixin",
     "PlayerChunkSenderMixin",
-    "TrapDoorBlockMixin"
+    "TrapDoorBlockMixin",
+    "NaturalSpawnerMixin"
   ],
   "client": [
     "ChestRendererMixin",
