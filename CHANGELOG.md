@@ -1,0 +1,59 @@
+# Changelog
+
+All notable changes to Locksmith are listed here.
+
+The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
+and this project uses [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
+
+## [Unreleased]
+
+Entries marked _(pending)_ are not merged yet. Remove the marker once they land,
+or drop the entry if the change doesn't make this release.
+
+### Added
+- **Fabric support!** Locksmith now runs on both NeoForge and Fabric for Minecraft 1.21.1.
+  - On Fabric, keys work from your hand or inventory. A worn key slot isn't available there yet.
+- **Dungeon Slime**, a new mob and the new source of golden keys. It's a gray, see-through
+  slime with a golden key floating inside.
+  - Spawns in the Overworld below Y 0 in full darkness (not on Peaceful, in mushroom fields
+    or in the Deep Dark).
+  - Always spawns as a medium slime and drops exactly one golden key. It splits into small
+    slimes on death, which drop slimeballs instead of keys.
+  - Has its own spawn egg.
+  - _(pending)_ Also spawns commonly inside strongholds.
+- Some Nether fortress chests now generate with a **golden lock** (25% chance per chest). Bring
+  a golden key! Unopened fortress chests in existing worlds can get locked too.
+  - On NeoForge, the chance can be changed with the `fortressChestLockChance` config option
+    (set it to 0 to turn this off).
+- _(pending)_ Locks on doors and trapdoors.
+
+### Changed
+- **Golden keys can no longer be crafted.** Find them on Dungeon Slimes or in Nether fortress
+  chests.
+- Piglin brutes no longer drop golden keys.
+- Nether fortress chests now have a 15% chance to hold a golden key (it used to be every chest).
+- Golden keys and trial keys now stack up to 16.
+- New recipes for the **iron chest** and **golden chest**: a chest surrounded by 4 iron or gold
+  ingots (corners empty). They used to need 4 blocks and 4 wool.
+- Reworked **iron chest** and **golden chest** textures. Iron chests show natural wood until
+  dyed, and golden chests have a fabric trim that takes the dye color.
+- Curios is now optional on NeoForge. Install it to wear your key in a Curios slot.
+- _(pending)_ The "is Locked!" message now shows in red.
+
+### Fixed
+- _(pending)_ Locking one half of a double chest no longer changes the other half's dye color.
+
+## [1.0.3] - 2026-04-15
+
+### Fixed
+- You can now break your own locked chest.
+- An already locked chest can no longer be locked again.
+
+### Added
+- Key tooltip explaining how to duplicate keys.
+
+## [1.0.0] - 2025-07-08
+
+- First release: locks, keys, iron chests and golden chests.
+
+[Unreleased]: https://github.com/luckyowlstudios/luckys-locksmith/compare/b48fdf6...HEAD

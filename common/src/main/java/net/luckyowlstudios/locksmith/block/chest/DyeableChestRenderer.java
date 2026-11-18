@@ -48,10 +48,19 @@ public abstract class DyeableChestRenderer implements BlockEntityRenderer<ChestB
     }
 
     /**
-     * The overlay texture drawn on top of the base chest, without the "_left"/"_right" suffix,
-     * e.g. "entity/chest/fabric". {@code dyed} is true once the chest has been dyed.
+     * The overlay texture drawn on top of the base chest, e.g. "entity/chest/fabric_left".
+     * {@code dyed} is true once the chest has been dyed.
      */
-    protected abstract String overlayTexture(boolean dyed);
+    protected abstract String overlayTexture(ChestType chestType, boolean dyed);
+
+    /** "_left", "_right" or "" for a single chest, the suffix vanilla uses for double chest textures. */
+    protected static String sideSuffix(ChestType chestType) {
+        return switch (chestType) {
+            case LEFT -> "_left";
+            case RIGHT -> "_right";
+            case SINGLE -> "";
+        };
+    }
 
     /** The tint for the overlay while the chest is not dyed. -1 draws the texture as is. */
     protected int undyedColor() {
@@ -93,12 +102,7 @@ public abstract class DyeableChestRenderer implements BlockEntityRenderer<ChestB
             renderParts(poseStack, baseConsumer, chesttype, f1, i, packedOverlay, -1);
 
             // Overlay (tinted with the dye color)
-            String overlay = overlayTexture(dyed) + switch (chesttype) {
-                case LEFT -> "_left";
-                case RIGHT -> "_right";
-                case SINGLE -> "";
-            };
-            ResourceLocation dyeOverlay = ResourceLocation.fromNamespaceAndPath(Locksmith.MOD_ID, overlay);
+            ResourceLocation dyeOverlay = ResourceLocation.fromNamespaceAndPath(Locksmith.MOD_ID, overlayTexture(chesttype, dyed));
             Material dyeMaterial = new Material(existingMaterial.atlasLocation(), dyeOverlay);
             VertexConsumer vertexconsumer = dyeMaterial.buffer(bufferSource, RenderType::entityCutout);
             renderParts(poseStack, vertexconsumer, chesttype, f1, i, packedOverlay, color);
