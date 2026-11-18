@@ -1,13 +1,19 @@
 package net.luckyowlstudios.locksmith.platform.services;
 
 import net.luckyowlstudios.locksmith.item.KeyItem;
+import net.minecraft.core.BlockPos;
 import net.minecraft.core.Registry;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.entity.BlockEntityType;
+import net.minecraft.world.level.block.state.BlockState;
 
 import java.util.Optional;
+import java.util.function.BiFunction;
 import java.util.function.Supplier;
 
 /**
@@ -23,6 +29,9 @@ public interface IPlatformHelper {
      * registry event fires, so only call {@link Supplier#get()} on the result after registration.
      */
     <R, T extends R> Supplier<T> register(Registry<R> registry, String name, Supplier<T> factory);
+
+    /** Vanilla's block entity type builder takes a package-private factory type, so each loader builds it. */
+    <T extends BlockEntity> BlockEntityType<T> createBlockEntityType(BiFunction<BlockPos, BlockState, T> factory, Block... blocks);
 
     /** A creative tab builder; vanilla's no-arg builder only exists on NeoForge. */
     CreativeModeTab.Builder creativeTabBuilder();

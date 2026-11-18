@@ -4,7 +4,12 @@ import net.luckyowlstudios.locksmith.Locksmith;
 import net.luckyowlstudios.locksmith.item.KeyItem;
 import net.luckyowlstudios.locksmith.neoforge.compat.CuriosCompat;
 import net.luckyowlstudios.locksmith.platform.services.IPlatformHelper;
+import net.minecraft.core.BlockPos;
 import net.minecraft.core.Registry;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.entity.BlockEntityType;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.CreativeModeTab;
@@ -17,6 +22,7 @@ import net.neoforged.neoforge.registries.DeferredRegister;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Optional;
+import java.util.function.BiFunction;
 import java.util.function.Supplier;
 
 public class NeoForgePlatformHelper implements IPlatformHelper {
@@ -43,6 +49,11 @@ public class NeoForgePlatformHelper implements IPlatformHelper {
         DeferredRegister<R> register = (DeferredRegister<R>) REGISTERS.computeIfAbsent(registry.key(),
                 key -> DeferredRegister.create(registry.key(), Locksmith.MOD_ID));
         return register.register(name, factory);
+    }
+
+    @Override
+    public <T extends BlockEntity> BlockEntityType<T> createBlockEntityType(BiFunction<BlockPos, BlockState, T> factory, Block... blocks) {
+        return BlockEntityType.Builder.of(factory::apply, blocks).build(null);
     }
 
     @Override

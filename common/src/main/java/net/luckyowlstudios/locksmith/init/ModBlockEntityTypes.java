@@ -13,32 +13,16 @@ import java.util.function.Supplier;
 public class ModBlockEntityTypes {
 
     public static final Supplier<BlockEntityType<IronChestBlockEntity>> IRON_CHEST_BLOCK_ENTITY =
-            register("iron_chest", () -> BlockEntityType.Builder.of(
-                            IronChestBlockEntity::new,
-                            ModBlocks.IRON_CHEST.get()
-                    )
-                    .build(null));
+            register("iron_chest", () -> Services.PLATFORM.createBlockEntityType(IronChestBlockEntity::new, ModBlocks.IRON_CHEST.get()));
 
     public static final Supplier<BlockEntityType<GoldenChestBlockEntity>> GOLDEN_CHEST_BLOCK_ENTITY =
-            register("golden_chest", () -> BlockEntityType.Builder.of(
-                            GoldenChestBlockEntity::new,
-                            ModBlocks.GOLDEN_CHEST.get()
-                    )
-                    .build(null));
+            register("golden_chest", () -> Services.PLATFORM.createBlockEntityType(GoldenChestBlockEntity::new, ModBlocks.GOLDEN_CHEST.get()));
 
     public static final Supplier<BlockEntityType<IronTrappedChestBlockEntity>> IRON_TRAPPED_CHEST_BLOCK_ENTITY =
-            register("iron_trapped_chest", () -> BlockEntityType.Builder.of(
-                            IronTrappedChestBlockEntity::new,
-                            ModBlocks.IRON_TRAPPED_CHEST.get()
-                    )
-                    .build(null));
+            register("iron_trapped_chest", () -> Services.PLATFORM.createBlockEntityType(IronTrappedChestBlockEntity::new, ModBlocks.IRON_TRAPPED_CHEST.get()));
 
     public static final Supplier<BlockEntityType<GoldenTrappedChestBlockEntity>> GOLDEN_TRAPPED_CHEST_BLOCK_ENTITY =
-            register("golden_trapped_chest", () -> BlockEntityType.Builder.of(
-                            GoldenTrappedChestBlockEntity::new,
-                            ModBlocks.GOLDEN_TRAPPED_CHEST.get()
-                    )
-                    .build(null));
+            register("golden_trapped_chest", () -> Services.PLATFORM.createBlockEntityType(GoldenTrappedChestBlockEntity::new, ModBlocks.GOLDEN_TRAPPED_CHEST.get()));
 
     private static <T extends BlockEntityType<?>> Supplier<T> register(String name, Supplier<T> type) {
         return Services.PLATFORM.register(BuiltInRegistries.BLOCK_ENTITY_TYPE, name, type);
