@@ -7,9 +7,6 @@ and this project uses [Semantic Versioning](https://semver.org/spec/v2.0.0.html)
 
 ## [Unreleased]
 
-Entries marked _(pending)_ are not merged yet. Remove the marker once they land,
-or drop the entry if the change doesn't make this release.
-
 ### Added
 - **Fabric support!** Locksmith now runs on both NeoForge and Fabric for Minecraft 1.21.1.
   - On Fabric, keys work from your hand or inventory. A worn key slot isn't available there yet.
@@ -20,12 +17,17 @@ or drop the entry if the change doesn't make this release.
   - Always spawns as a medium slime and drops exactly one golden key. It splits into small
     slimes on death, which drop slimeballs instead of keys.
   - Has its own spawn egg.
-  - _(pending)_ Also spawns commonly inside strongholds.
+  - Also spawns commonly inside strongholds, even above Y 0 (it still needs darkness).
 - Some Nether fortress chests now generate with a **golden lock** (25% chance per chest). Bring
   a golden key! Unopened fortress chests in existing worlds can get locked too.
   - On NeoForge, the chance can be changed with the `fortressChestLockChance` config option
     (set it to 0 to turn this off).
-- _(pending)_ Locks on doors and trapdoors.
+- **Locks on doors and trapdoors!** Lock any door or trapdoor (including iron ones and modded ones)
+  with a key, golden lock or trial lock, just like a chest.
+  - A locked door stays shut against redstone, villagers, pistons and wind charges until it's
+    opened with the right key.
+  - Golden and trial locked doors also survive explosions and can't be broken without the key.
+  - A door's two halves share one lock. Locks are not drawn on doors yet.
 
 ### Changed
 - **Golden keys can no longer be crafted.** Find them on Dungeon Slimes or in Nether fortress
@@ -37,11 +39,11 @@ or drop the entry if the change doesn't make this release.
   ingots (corners empty). They used to need 4 blocks and 4 wool.
 - Reworked **iron chest** and **golden chest** textures. Iron chests show natural wood until
   dyed, and golden chests have a fabric trim that takes the dye color.
-- Curios is now optional on NeoForge. Install it to wear your key in a Curios slot.
-- _(pending)_ The "is Locked!" message now shows in red.
+- Curios is now optional on NeoForge and listed as an optional dependency. Install it to wear your key in a Curios slot.
+- The "is Locked!" message now shows in red.
 
 ### Fixed
-- _(pending)_ Locking one half of a double chest no longer changes the other half's dye color.
+- Locking one half of a double chest no longer changes the other half's dye color.
 
 ## [1.0.3] - 2026-04-15
 
