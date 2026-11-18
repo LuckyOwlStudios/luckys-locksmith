@@ -43,7 +43,15 @@ public final class DoorLocks {
     /** What each client knows: lock types by chunk. Only touched on the client thread. */
     private static final Map<Level, Map<Long, Map<BlockPos, LockType>>> CLIENT_LOCKS = new WeakHashMap<>();
 
+    /** True while the server opens or closes a locked door for someone who has the key. */
+    private static boolean opening;
+
     private DoorLocks() {
+    }
+
+    /** @return true if a door is being moved for a player with the key, so its lock must not stop it. */
+    public static boolean isOpeningForKeyHolder() {
+        return opening;
     }
 
     public static boolean isLockable(BlockState state) {
@@ -135,6 +143,20 @@ public final class DoorLocks {
             if (lock == null) return LockEvents.ClickResult.PASS;
             if (lock.type() == LockType.LOCK && hasKey(player, lock)) {
                 level.playSound(null, pos, SoundEvents.VAULT_INSERT_ITEM, player.getSoundSource(), 1.0F, 1.5F);
+                if (level.getBlockState(pos).getBlock() instanceof DoorBlock door) {
+                    // The client waits for the server, so it never opened the door itself and vanilla would
+                    // leave out the opening sound for this player. Move the door with no entity so everyone
+                    // hears it, and send both halves together so they don't open a frame apart.
+                    BlockState lower = level.getBlockState(pos);
+                    opening = true;
+                    try {
+                        door.setOpen(null, level, lower, pos, !lower.getValue(DoorBlock.OPEN));
+                    } finally {
+                        opening = false;
+                    }
+                    correctPrediction(player, level, pos, lower);
+                    return LockEvents.ClickResult.CANCEL;
+                }
                 return LockEvents.ClickResult.PASS;
             }
             if (specialKey(held, lock.type())) {

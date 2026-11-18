@@ -35,6 +35,7 @@ public abstract class DoorBlockMixin {
     private void locksmith$blockAutomaticOpening(@Nullable Entity entity, Level level, BlockState state,
                                                  BlockPos pos, boolean open, CallbackInfo ci) {
         // Only the server knows the keys, and only the server decides
+        if (DoorLocks.isOpeningForKeyHolder()) return;
         DoorLockData.Entry lock = DoorLocks.get(level, pos);
         if (open && lock != null && !(entity instanceof Player player
                 && lock.type() == LockType.LOCK && DoorLocks.hasKey(player, lock))) {
