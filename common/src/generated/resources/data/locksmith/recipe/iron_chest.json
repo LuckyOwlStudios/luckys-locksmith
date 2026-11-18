@@ -3,19 +3,16 @@
   "category": "misc",
   "key": {
     "#": {
-      "item": "minecraft:black_wool"
+      "item": "minecraft:iron_ingot"
     },
     "$": {
       "item": "minecraft:chest"
-    },
-    "@": {
-      "item": "minecraft:iron_block"
     }
   },
   "pattern": [
-    "@#@",
+    " # ",
     "#$#",
-    "@#@"
+    " # "
   ],
   "result": {
     "count": 1,

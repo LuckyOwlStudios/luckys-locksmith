@@ -3,19 +3,16 @@
   "category": "misc",
   "key": {
     "#": {
-      "item": "minecraft:red_wool"
+      "item": "minecraft:gold_ingot"
     },
     "$": {
       "item": "minecraft:chest"
-    },
-    "@": {
-      "item": "minecraft:gold_block"
     }
   },
   "pattern": [
-    "@#@",
+    " # ",
     "#$#",
-    "@#@"
+    " # "
   ],
   "result": {
     "count": 1,
