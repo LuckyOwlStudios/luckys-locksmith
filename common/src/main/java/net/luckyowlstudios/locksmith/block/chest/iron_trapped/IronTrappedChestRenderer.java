@@ -16,9 +16,9 @@ public class IronTrappedChestRenderer extends DyeableChestRenderer {
     }
 
     @Override
-    protected String overlayTexture(boolean dyed) {
+    protected String overlayTexture(ChestType chestType, boolean dyed) {
         // Natural wood until dyed, then the grayscale wood tinted with the dye color
-        return dyed ? "entity/chest/wood_dyeable" : "entity/chest/wood";
+        return "entity/chest/wood" + sideSuffix(chestType) + (dyed ? "_dyeable" : "");
     }
 
     @Override

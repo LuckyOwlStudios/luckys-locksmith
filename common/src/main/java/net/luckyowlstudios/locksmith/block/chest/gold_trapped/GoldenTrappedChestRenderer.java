@@ -17,9 +17,9 @@ public class GoldenTrappedChestRenderer extends DyeableChestRenderer {
     }
 
     @Override
-    protected String overlayTexture(boolean dyed) {
+    protected String overlayTexture(ChestType chestType, boolean dyed) {
         // Always fabric, red until dyed
-        return "entity/chest/fabric";
+        return "entity/chest/fabric" + sideSuffix(chestType);
     }
 
     @Override
