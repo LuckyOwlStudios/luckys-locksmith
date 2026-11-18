@@ -32,25 +32,23 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
                 .save(recipeOutput);
 
         ShapedRecipeBuilder.shaped(RecipeCategory.MISC, ModBlocks.IRON_CHEST.get())
-                .pattern("@#@")
+                .pattern(" # ")
                 .pattern("#$#")
-                .pattern("@#@")
-                .define('@', Items.IRON_BLOCK)
-                .define('#', Items.BLACK_WOOL)
+                .pattern(" # ")
+                .define('#', Items.IRON_INGOT)
                 .define('$', Items.CHEST)
                 .unlockedBy("has_chest", has(Tags.Items.CHESTS))
-                .unlockedBy("has_iron", has(Items.IRON_BLOCK))
+                .unlockedBy("has_iron", has(Items.IRON_INGOT))
                 .save(recipeOutput);
 
         ShapedRecipeBuilder.shaped(RecipeCategory.MISC, ModBlocks.GOLDEN_CHEST.get())
-                .pattern("@#@")
+                .pattern(" # ")
                 .pattern("#$#")
-                .pattern("@#@")
-                .define('@', Items.GOLD_BLOCK)
-                .define('#', Items.RED_WOOL)
+                .pattern(" # ")
+                .define('#', Items.GOLD_INGOT)
                 .define('$', Items.CHEST)
                 .unlockedBy("has_chest", has(Tags.Items.CHESTS))
-                .unlockedBy("has_gold", has(Items.GOLD_BLOCK))
+                .unlockedBy("has_gold", has(Items.GOLD_INGOT))
                 .save(recipeOutput);
 
         ShapelessRecipeBuilder.shapeless(RecipeCategory.REDSTONE, ModBlocks.IRON_TRAPPED_CHEST.get())
