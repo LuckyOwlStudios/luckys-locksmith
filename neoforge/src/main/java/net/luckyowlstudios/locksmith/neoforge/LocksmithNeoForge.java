@@ -2,8 +2,8 @@ package net.luckyowlstudios.locksmith.neoforge;
 
 import com.mojang.logging.LogUtils;
 import net.luckyowlstudios.locksmith.Locksmith;
-import net.luckyowlstudios.locksmith.door.DoorLockSyncPayload;
-import net.luckyowlstudios.locksmith.door.DoorLocks;
+import net.luckyowlstudios.locksmith.network.DoorLocksPayload;
+import net.luckyowlstudios.locksmith.util.DoorLocks;
 import net.luckyowlstudios.locksmith.entity.DungeonSlime;
 import net.luckyowlstudios.locksmith.init.ModBlocks;
 import net.luckyowlstudios.locksmith.init.ModEntityTypes;
@@ -64,7 +64,7 @@ public class LocksmithNeoForge {
 
     private static void registerPayloads(RegisterPayloadHandlersEvent event) {
         // Handlers run on the main thread; on the client, context.player() is the local player
-        event.registrar("1").playToClient(DoorLockSyncPayload.TYPE, DoorLockSyncPayload.STREAM_CODEC,
+        event.registrar("1").playToClient(DoorLocksPayload.TYPE, DoorLocksPayload.STREAM_CODEC,
                 (payload, context) -> DoorLocks.applyClientSync(context.player().level(), payload));
     }
 

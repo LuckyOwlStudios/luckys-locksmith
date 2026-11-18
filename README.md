@@ -63,8 +63,13 @@ Right-click them with **any dye** to recolor them and make your storage room mat
 <img src="media/screenshots/dye_chest.png" alt="Iron chests dyed red, blue and purple" width="720">
 </div>
 
-### 🚪 Coming soon
-- Locks for **doors and trapdoors**
+### 🚪 Doors and trapdoors
+Locks work on **doors and trapdoors** too, including iron, copper and modded ones. Right-click one with a key, golden lock or trial lock, just like a chest.
+
+- A padlock is drawn on both sides of a locked door and follows it as it swings. (Trapdoors don't show a padlock yet.)
+- A locked door ignores redstone, villagers, zombies, pistons and wind charges until you open it with the right key.
+- Locked doors can't be blown up or broken by other players, and neither can the block holding them up.
+- Door locks are based on [KevoMartinez256's](https://github.com/KevoMartinez256) contribution. Thank you!
 
 ---
 
@@ -119,6 +124,8 @@ See **[CHANGELOG.md](CHANGELOG.md)** for what's new in each version.
 <div align="center">
 
 Made by **LuckyOwl** · All Rights Reserved
+
+Door locks and their visible padlocks by **[Don Kevo](https://github.com/KevoMartinez256)**
 
 <img src="media/icon.png" alt="Locksmith icon" width="96">
 

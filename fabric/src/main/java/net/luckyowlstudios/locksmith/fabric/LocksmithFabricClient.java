@@ -7,6 +7,7 @@ import net.fabricmc.fabric.api.client.rendering.v1.BlockEntityRendererRegistry;
 import net.fabricmc.fabric.api.client.rendering.v1.BuiltinItemRendererRegistry;
 import net.fabricmc.fabric.api.client.rendering.v1.EntityModelLayerRegistry;
 import net.fabricmc.fabric.api.client.rendering.v1.EntityRendererRegistry;
+import net.fabricmc.fabric.api.client.rendering.v1.WorldRenderEvents;
 import net.luckyowlstudios.locksmith.block.chest.gold.GoldenChestItemRenderer;
 import net.luckyowlstudios.locksmith.block.chest.gold.GoldenChestRenderer;
 import net.luckyowlstudios.locksmith.block.chest.gold_trapped.GoldenTrappedChestItemRenderer;
@@ -15,8 +16,9 @@ import net.luckyowlstudios.locksmith.block.chest.iron.IronChestItemRenderer;
 import net.luckyowlstudios.locksmith.block.chest.iron.IronChestRenderer;
 import net.luckyowlstudios.locksmith.block.chest.iron_trapped.IronTrappedChestItemRenderer;
 import net.luckyowlstudios.locksmith.block.chest.iron_trapped.IronTrappedChestRenderer;
-import net.luckyowlstudios.locksmith.door.DoorLockSyncPayload;
-import net.luckyowlstudios.locksmith.door.DoorLocks;
+import net.luckyowlstudios.locksmith.client.DoorLockRenderer;
+import net.luckyowlstudios.locksmith.network.DoorLocksPayload;
+import net.luckyowlstudios.locksmith.util.DoorLocks;
 import net.luckyowlstudios.locksmith.event.LockEvents;
 import net.luckyowlstudios.locksmith.client.DungeonSlimeRenderer;
 import net.luckyowlstudios.locksmith.init.ModBlockEntityTypes;
@@ -53,8 +55,11 @@ public class LocksmithFabricClient implements ClientModInitializer {
         registerItemRenderer(ModBlocks.GOLDEN_TRAPPED_CHEST.get(), GoldenTrappedChestItemRenderer::new);
 
         // Runs on the client thread
-        ClientPlayNetworking.registerGlobalReceiver(DoorLockSyncPayload.TYPE,
+        ClientPlayNetworking.registerGlobalReceiver(DoorLocksPayload.TYPE,
                 (payload, context) -> DoorLocks.applyClientSync(context.player().level(), payload));
+
+        WorldRenderEvents.AFTER_ENTITIES.register(context ->
+                DoorLockRenderer.render(context.matrixStack(), context.camera().getPosition(), context.frustum()));
 
         ItemTooltipCallback.EVENT.register((stack, context, flag, lines) -> LockEvents.appendTooltip(stack, lines));
     }

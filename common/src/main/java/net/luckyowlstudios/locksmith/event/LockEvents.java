@@ -1,11 +1,10 @@
 package net.luckyowlstudios.locksmith.event;
 
-import net.luckyowlstudios.locksmith.door.DoorLock;
-import net.luckyowlstudios.locksmith.door.DoorLocks;
 import net.luckyowlstudios.locksmith.init.ModDataComponents;
 import net.luckyowlstudios.locksmith.init.ModItems;
 import net.luckyowlstudios.locksmith.item.KeyItem;
 import net.luckyowlstudios.locksmith.platform.Services;
+import net.luckyowlstudios.locksmith.util.DoorLocks;
 import net.luckyowlstudios.locksmith.util.LockHandler;
 import net.luckyowlstudios.locksmith.util.LockType;
 import net.minecraft.ChatFormatting;
@@ -91,9 +90,8 @@ public final class LockEvents {
 
     /** @return false if the player may not break the block at {@code pos}. */
     public static boolean canBreakBlock(Player player, Level level, BlockPos pos) {
-        BlockState state = level.getBlockState(pos);
-        if (DoorLocks.isLockable(state)) {
-            return DoorLockEvents.canBreak(player, level, pos, state);
+        if (!DoorLocks.canBreak(player, level, pos)) {
+            return false;
         }
         if (level.getBlockEntity(pos) instanceof BaseContainerBlockEntity containerBlockEntity) {
             if (LockHandler.containerHasLock(containerBlockEntity) && !player.isCreative()) {
@@ -112,13 +110,12 @@ public final class LockEvents {
         return true;
     }
 
-    /** Removes containers, doors and trapdoors with a golden or trial lock from the list of blocks an explosion destroys. */
+    /** Removes locked doors and trapdoors, and containers with a golden or trial lock, from the list of blocks an explosion destroys. */
     public static void protectLockedBlocksFromExplosion(Level level, List<BlockPos> affectedBlocks) {
         // Only mod locks, not player locks
         affectedBlocks.removeIf(pos -> {
-            DoorLock doorLock = DoorLocks.get(level, pos);
-            if (doorLock != null) {
-                return doorLock.isSpecial();
+            if (DoorLocks.protectedDoor(level, pos) != null) {
+                return true;
             }
             BlockEntity blockEntity = level.getBlockEntity(pos);
             if (blockEntity instanceof BaseContainerBlockEntity container) {
@@ -138,7 +135,7 @@ public final class LockEvents {
         if (hand != InteractionHand.MAIN_HAND) return ClickResult.PASS;
         BlockState state = level.getBlockState(pos);
         if (DoorLocks.isLockable(state)) {
-            return DoorLockEvents.onRightClick(player, level, hand, pos, state);
+            return DoorLocks.onRightClick(player, level, hand, pos, state);
         }
         if (!(level.getBlockEntity(pos) instanceof BaseContainerBlockEntity containerBlockEntity)) return ClickResult.PASS;
 

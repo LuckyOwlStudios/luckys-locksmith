@@ -1,6 +1,6 @@
 package net.luckyowlstudios.locksmith.mixin;
 
-import net.luckyowlstudios.locksmith.door.DoorLocks;
+import net.luckyowlstudios.locksmith.util.DoorLocks;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Explosion;
@@ -31,7 +31,7 @@ public abstract class TrapDoorBlockMixin {
 
     // Explosions that trigger blocks (wind charges) toggle trapdoors here and never destroy anything,
     // so skipping the whole method only skips the toggle
-    @Inject(method = "onExplosionHit", at = @At("HEAD"), cancellable = true)
+    @Inject(method = "onExplosionHit", at = @At("HEAD"), cancellable = true, require = 0)
     private void locksmith$ignoreWindChargesWhenLocked(BlockState state, Level level, BlockPos pos, Explosion explosion,
                                                        BiConsumer<ItemStack, BlockPos> dropConsumer, CallbackInfo ci) {
         if (explosion.canTriggerBlocks() && DoorLocks.isLocked(level, state, pos)) {

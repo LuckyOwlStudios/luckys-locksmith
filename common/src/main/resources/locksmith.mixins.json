@@ -8,6 +8,7 @@
     "BaseContainerBlockEntityMixin",
     "ChestBlockMixin",
     "BlockBehaviourMixin",
+    "BreakDoorGoalMixin",
     "DoorBlockMixin",
     "PistonBaseBlockMixin",
     "PlayerChunkSenderMixin",

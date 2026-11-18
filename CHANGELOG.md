@@ -22,12 +22,18 @@ and this project uses [Semantic Versioning](https://semver.org/spec/v2.0.0.html)
   a golden key! Unopened fortress chests in existing worlds can get locked too.
   - On NeoForge, the chance can be changed with the `fortressChestLockChance` config option
     (set it to 0 to turn this off).
-- **Locks on doors and trapdoors!** Lock any door or trapdoor (including iron ones and modded ones)
-  with a key, golden lock or trial lock, just like a chest.
-  - A locked door stays shut against redstone, villagers, pistons and wind charges until it's
-    opened with the right key.
-  - Golden and trial locked doors also survive explosions and can't be broken without the key.
-  - A door's two halves share one lock. Locks are not drawn on doors yet.
+- **Locks on doors and trapdoors!** Lock any door or trapdoor (including iron, copper and modded
+  ones) with a key, golden lock or trial lock, just like a chest. Door locks and their visible
+  padlocks are based on the contribution by [KevoMartinez256](https://github.com/KevoMartinez256)
+  (Don Kevo). Thank you!
+  - A padlock is drawn on both sides of a locked door and follows it as it swings. Trapdoors don't
+    show a padlock yet.
+  - A locked door or trapdoor stays shut against redstone, villagers, zombies, pistons and wind
+    charges until it's opened with the right key.
+  - Locked doors can't be blown up or broken by other players, and neither can the block holding
+    them up. The owner, or anyone with the key, can still break them.
+  - A door's two halves share one lock, and a copper door keeps its lock as it weathers.
+  - Key codes and owners stay on the server; players only learn which doors are locked.
 
 ### Changed
 - **Golden keys can no longer be crafted.** Find them on Dungeon Slimes or in Nether fortress
