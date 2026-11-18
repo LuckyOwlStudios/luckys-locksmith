@@ -2,6 +2,7 @@ package net.luckyowlstudios.locksmith.client;
 
 import com.mojang.blaze3d.platform.NativeImage;
 import com.mojang.blaze3d.vertex.PoseStack;
+import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.mojang.math.Axis;
 import net.luckyowlstudios.locksmith.Locksmith;
 import net.luckyowlstudios.locksmith.entity.DungeonSlime;
@@ -12,6 +13,7 @@ import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.entity.ItemRenderer;
+import net.minecraft.client.renderer.entity.LivingEntityRenderer;
 import net.minecraft.client.renderer.entity.RenderLayerParent;
 import net.minecraft.client.renderer.entity.SlimeRenderer;
 import net.minecraft.client.renderer.entity.layers.RenderLayer;
@@ -30,13 +32,17 @@ import java.util.Optional;
 
 /**
  * Draws the dungeon slime with the vanilla slime model and a gray copy of the vanilla slime texture.
- * The gray copy is made from whatever slime texture is loaded (so resource packs carry over), with the
- * inner core left out so the golden key shows in its place while the slime still carries it.
+ * The gray copy is made from whatever slime texture is loaded (so resource packs carry over). The inner
+ * core is drawn darker and see-through so the golden key shows inside it while the slime carries it.
  */
 public class DungeonSlimeRenderer extends SlimeRenderer {
 
     private static final ResourceLocation VANILLA_TEXTURE = ResourceLocation.withDefaultNamespace("textures/entity/slime/slime.png");
     private static final ResourceLocation GRAY_TEXTURE = Locksmith.id("dynamic/dungeon_slime");
+    private static final ResourceLocation CORE_TEXTURE = Locksmith.id("dynamic/dungeon_slime_core");
+    /** The core is darker than the shell and only partly see-through, so the key shows inside it. */
+    private static final int CORE_ALPHA = 150;
+    private static final float CORE_BRIGHTNESS = 0.55F;
 
     // The inner cube's area of the slime texture: a 6x6x6 box at texture offset (0, 16)
     private static final int CORE_U = 0, CORE_V = 16, CORE_WIDTH = 24, CORE_HEIGHT = 12;
@@ -49,48 +55,64 @@ public class DungeonSlimeRenderer extends SlimeRenderer {
         super(context);
         // The key has to be drawn before the see-through outer shell, or the shell hides it
         this.layers.add(0, new KeyLayer(this, context.getItemRenderer()));
+        // The vanilla core is drawn solid with the body; this draws it again see-through, after the key
+        this.layers.add(1, new CoreLayer(this));
     }
 
     @Override
     public ResourceLocation getTextureLocation(Slime entity) {
         if (!this.textureTried) {
             this.textureTried = true;
-            this.textureReady = createGrayTexture();
+            this.textureReady = createGrayTextures();
         }
         return this.textureReady ? GRAY_TEXTURE : VANILLA_TEXTURE;
     }
 
-    private static boolean createGrayTexture() {
+    /**
+     * Builds two gray copies of the vanilla slime texture: the body (shell, eyes and mouth) with the
+     * core cut out, and the core on its own, darker and see-through, for {@link CoreLayer}.
+     */
+    private static boolean createGrayTextures() {
         Minecraft minecraft = Minecraft.getInstance();
         Optional<Resource> resource = minecraft.getResourceManager().getResource(VANILLA_TEXTURE);
         if (resource.isEmpty()) return false;
 
         try (InputStream stream = resource.get().open()) {
-            NativeImage image = NativeImage.read(stream);
-            for (int x = 0; x < image.getWidth(); x++) {
-                for (int y = 0; y < image.getHeight(); y++) {
+            NativeImage body = NativeImage.read(stream);
+            NativeImage core = new NativeImage(body.getWidth(), body.getHeight(), true);
+            for (int x = 0; x < body.getWidth(); x++) {
+                for (int y = 0; y < body.getHeight(); y++) {
                     // NativeImage pixels are ABGR
-                    int pixel = image.getPixelRGBA(x, y);
+                    int pixel = body.getPixelRGBA(x, y);
                     int alpha = pixel >>> 24;
-                    if (isCore(x, y, image.getWidth())) {
-                        alpha = 0;
-                    } else if (alpha < 255) {
-                        // Thin out the see-through shell so the key reads clearly inside it
-                        alpha = (int) (alpha * 0.75F);
-                    }
                     int red = pixel & 0xFF;
                     int green = (pixel >> 8) & 0xFF;
                     int blue = (pixel >> 16) & 0xFF;
-                    int gray = (int) ((0.299F * red + 0.587F * green + 0.114F * blue) * 0.8F);
-                    image.setPixelRGBA(x, y, (alpha << 24) | (gray << 16) | (gray << 8) | gray);
+                    int gray = (int) (0.299F * red + 0.587F * green + 0.114F * blue);
+
+                    if (isCore(x, y, body.getWidth())) {
+                        body.setPixelRGBA(x, y, 0);
+                        core.setPixelRGBA(x, y, grayPixel(alpha == 0 ? 0 : CORE_ALPHA, gray * CORE_BRIGHTNESS));
+                    } else {
+                        // Thin out the see-through shell so the inside reads clearly
+                        int bodyAlpha = alpha < 255 ? (int) (alpha * 0.75F) : alpha;
+                        body.setPixelRGBA(x, y, grayPixel(bodyAlpha, gray * 0.8F));
+                        core.setPixelRGBA(x, y, 0);
+                    }
                 }
             }
-            minecraft.getTextureManager().register(GRAY_TEXTURE, new DynamicTexture(image));
+            minecraft.getTextureManager().register(GRAY_TEXTURE, new DynamicTexture(body));
+            minecraft.getTextureManager().register(CORE_TEXTURE, new DynamicTexture(core));
             return true;
         } catch (IOException e) {
-            Locksmith.LOGGER.error("Couldn't create the dungeon slime texture", e);
+            Locksmith.LOGGER.error("Couldn't create the dungeon slime textures", e);
             return false;
         }
+    }
+
+    private static int grayPixel(int alpha, float gray) {
+        int value = Math.min(255, (int) gray);
+        return (alpha << 24) | (value << 16) | (value << 8) | value;
     }
 
     private static boolean isCore(int x, int y, int imageWidth) {
@@ -98,6 +120,22 @@ public class DungeonSlimeRenderer extends SlimeRenderer {
         float scale = imageWidth / 64.0F;
         return x >= CORE_U * scale && x < (CORE_U + CORE_WIDTH) * scale
                 && y >= CORE_V * scale && y < (CORE_V + CORE_HEIGHT) * scale;
+    }
+
+    private class CoreLayer extends RenderLayer<Slime, SlimeModel<Slime>> {
+
+        CoreLayer(RenderLayerParent<Slime, SlimeModel<Slime>> parent) {
+            super(parent);
+        }
+
+        @Override
+        public void render(PoseStack poseStack, MultiBufferSource buffer, int packedLight, Slime slime,
+                           float limbSwing, float limbSwingAmount, float partialTick, float ageInTicks, float netHeadYaw, float headPitch) {
+            if (slime.isInvisible() || !DungeonSlimeRenderer.this.textureReady) return;
+            // Uses the body model, whose texture here has only the core filled in
+            VertexConsumer consumer = buffer.getBuffer(RenderType.entityTranslucent(CORE_TEXTURE));
+            this.getParentModel().renderToBuffer(poseStack, consumer, packedLight, LivingEntityRenderer.getOverlayCoords(slime, 0.0F));
+        }
     }
 
     private static class KeyLayer extends RenderLayer<Slime, SlimeModel<Slime>> {
