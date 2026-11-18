@@ -26,6 +26,16 @@ public enum LockType implements StringRepresentable {
         this.name = name;
     }
 
+    /** @return the lock type with this serialized name, or {@link #NONE} if there is none. */
+    public static LockType byName(String name) {
+        for (LockType type : values()) {
+            if (type.name.equals(name)) {
+                return type;
+            }
+        }
+        return NONE;
+    }
+
     public String getSerializedName() {
         return this.name;
     }

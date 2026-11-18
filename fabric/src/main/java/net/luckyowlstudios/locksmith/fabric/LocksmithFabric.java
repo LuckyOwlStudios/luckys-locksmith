@@ -10,7 +10,9 @@ import net.fabricmc.fabric.api.event.player.UseBlockCallback;
 import net.fabricmc.fabric.api.item.v1.DefaultItemComponentEvents;
 import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents;
 import net.fabricmc.fabric.api.loot.v3.LootTableEvents;
+import net.fabricmc.fabric.api.networking.v1.PayloadTypeRegistry;
 import net.luckyowlstudios.locksmith.Locksmith;
+import net.luckyowlstudios.locksmith.door.DoorLockSyncPayload;
 import net.luckyowlstudios.locksmith.event.LockEvents;
 import net.luckyowlstudios.locksmith.entity.DungeonSlime;
 import net.luckyowlstudios.locksmith.init.ModBlocks;
@@ -39,6 +41,7 @@ public class LocksmithFabric implements ModInitializer {
     @Override
     public void onInitialize() {
         Locksmith.init();
+        PayloadTypeRegistry.playS2C().register(DoorLockSyncPayload.TYPE, DoorLockSyncPayload.STREAM_CODEC);
         registerEvents();
         registerLoot();
         registerEntities();
