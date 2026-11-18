@@ -16,6 +16,9 @@ public class ModItems {
     public static final Supplier<Item> GOLDEN_LOCK = register("golden_lock", () -> new LockItem(new Item.Properties()));
     public static final Supplier<Item> TRIAL_LOCK = register("trial_lock", () -> new LockItem(new Item.Properties()));
 
+    public static final Supplier<Item> DUNGEON_SLIME_SPAWN_EGG = register("dungeon_slime_spawn_egg",
+            () -> Services.PLATFORM.createSpawnEgg(ModEntityTypes.DUNGEON_SLIME, 0x7A7A7A, 0xF2C230, new Item.Properties()));
+
     static <T extends Item> Supplier<T> register(String name, Supplier<T> item) {
         return Services.PLATFORM.register(BuiltInRegistries.ITEM, name, item);
     }

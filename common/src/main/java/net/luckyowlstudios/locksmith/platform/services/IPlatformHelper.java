@@ -3,6 +3,8 @@ package net.luckyowlstudios.locksmith.platform.services;
 import net.luckyowlstudios.locksmith.item.KeyItem;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Registry;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.Item;
@@ -32,6 +34,9 @@ public interface IPlatformHelper {
 
     /** Vanilla's block entity type builder takes a package-private factory type, so each loader builds it. */
     <T extends BlockEntity> BlockEntityType<T> createBlockEntityType(BiFunction<BlockPos, BlockState, T> factory, Block... blocks);
+
+    /** A spawn egg; NeoForge needs its deferred spawn egg because entity types register after items there. */
+    Item createSpawnEgg(Supplier<? extends EntityType<? extends Mob>> type, int backgroundColor, int highlightColor, Item.Properties properties);
 
     /** A creative tab builder; vanilla's no-arg builder only exists on NeoForge. */
     CreativeModeTab.Builder creativeTabBuilder();

@@ -31,16 +31,6 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
                 .unlockedBy("has_iron", has(Items.IRON_INGOT))
                 .save(recipeOutput);
 
-        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, ModItems.GOLDEN_KEY.get())
-                .pattern("@")
-                .pattern("#")
-                .pattern("#")
-                .define('@', Items.GOLD_INGOT)
-                .define('#', Items.GOLD_NUGGET)
-                .unlockedBy("has_chest", has(Tags.Items.CHESTS))
-                .unlockedBy("has_gold", has(Items.GOLD_INGOT))
-                .save(recipeOutput);
-
         ShapedRecipeBuilder.shaped(RecipeCategory.MISC, ModBlocks.IRON_CHEST.get())
                 .pattern("@#@")
                 .pattern("#$#")

@@ -9,7 +9,9 @@ import net.luckyowlstudios.locksmith.block.chest.iron.IronChestItemRenderer;
 import net.luckyowlstudios.locksmith.block.chest.iron.IronChestRenderer;
 import net.luckyowlstudios.locksmith.block.chest.iron_trapped.IronTrappedChestItemRenderer;
 import net.luckyowlstudios.locksmith.block.chest.iron_trapped.IronTrappedChestRenderer;
+import net.luckyowlstudios.locksmith.client.DungeonSlimeRenderer;
 import net.luckyowlstudios.locksmith.init.ModBlockEntityTypes;
+import net.luckyowlstudios.locksmith.init.ModEntityTypes;
 import net.luckyowlstudios.locksmith.init.ModBlocks;
 import net.luckyowlstudios.locksmith.overrides.AddBarrelRenderer;
 import net.luckyowlstudios.locksmith.overrides.LockModel;
@@ -45,6 +47,8 @@ public class LocksmithNeoForgeClient {
         event.registerBlockEntityRenderer(ModBlockEntityTypes.IRON_TRAPPED_CHEST_BLOCK_ENTITY.get(), IronTrappedChestRenderer::new);
         event.registerBlockEntityRenderer(ModBlockEntityTypes.GOLDEN_TRAPPED_CHEST_BLOCK_ENTITY.get(), GoldenTrappedChestRenderer::new);
         event.registerBlockEntityRenderer(BlockEntityType.BARREL, AddBarrelRenderer::new);
+
+        event.registerEntityRenderer(ModEntityTypes.DUNGEON_SLIME.get(), DungeonSlimeRenderer::new);
     }
 
     @SubscribeEvent

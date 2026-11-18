@@ -5,6 +5,7 @@ import net.fabricmc.fabric.api.client.item.v1.ItemTooltipCallback;
 import net.fabricmc.fabric.api.client.rendering.v1.BlockEntityRendererRegistry;
 import net.fabricmc.fabric.api.client.rendering.v1.BuiltinItemRendererRegistry;
 import net.fabricmc.fabric.api.client.rendering.v1.EntityModelLayerRegistry;
+import net.fabricmc.fabric.api.client.rendering.v1.EntityRendererRegistry;
 import net.luckyowlstudios.locksmith.block.chest.gold.GoldenChestItemRenderer;
 import net.luckyowlstudios.locksmith.block.chest.gold.GoldenChestRenderer;
 import net.luckyowlstudios.locksmith.block.chest.gold_trapped.GoldenTrappedChestItemRenderer;
@@ -14,7 +15,9 @@ import net.luckyowlstudios.locksmith.block.chest.iron.IronChestRenderer;
 import net.luckyowlstudios.locksmith.block.chest.iron_trapped.IronTrappedChestItemRenderer;
 import net.luckyowlstudios.locksmith.block.chest.iron_trapped.IronTrappedChestRenderer;
 import net.luckyowlstudios.locksmith.event.LockEvents;
+import net.luckyowlstudios.locksmith.client.DungeonSlimeRenderer;
 import net.luckyowlstudios.locksmith.init.ModBlockEntityTypes;
+import net.luckyowlstudios.locksmith.init.ModEntityTypes;
 import net.luckyowlstudios.locksmith.init.ModBlocks;
 import net.luckyowlstudios.locksmith.overrides.AddBarrelRenderer;
 import net.luckyowlstudios.locksmith.overrides.LockModel;
@@ -38,6 +41,8 @@ public class LocksmithFabricClient implements ClientModInitializer {
         registerRenderer(ModBlockEntityTypes.IRON_TRAPPED_CHEST_BLOCK_ENTITY.get(), IronTrappedChestRenderer::new);
         registerRenderer(ModBlockEntityTypes.GOLDEN_TRAPPED_CHEST_BLOCK_ENTITY.get(), GoldenTrappedChestRenderer::new);
         registerRenderer(BlockEntityType.BARREL, AddBarrelRenderer::new);
+
+        EntityRendererRegistry.register(ModEntityTypes.DUNGEON_SLIME.get(), DungeonSlimeRenderer::new);
 
         registerItemRenderer(ModBlocks.IRON_CHEST.get(), IronChestItemRenderer::new);
         registerItemRenderer(ModBlocks.GOLDEN_CHEST.get(), GoldenChestItemRenderer::new);

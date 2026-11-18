@@ -26,5 +26,7 @@
   "tooltip.locksmith.reveal_code": "Hold %s to reveal code",
 
   "message.locksmith.block_add_lock": "%s locked with keycode: ",
-  "message.locksmith.block_locked": "%s is Locked!"
+  "message.locksmith.block_locked": "%s is Locked!",
+  "entity.locksmith.dungeon_slime": "Dungeon Slime",
+  "item.locksmith.dungeon_slime_spawn_egg": "Dungeon Slime Spawn Egg"
 }

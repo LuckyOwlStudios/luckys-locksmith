@@ -1,29 +1,43 @@
 package net.luckyowlstudios.locksmith.fabric;
 
 import net.fabricmc.api.ModInitializer;
+import net.fabricmc.fabric.api.biome.v1.BiomeModifications;
+import net.fabricmc.fabric.api.biome.v1.BiomeSelectors;
 import net.fabricmc.fabric.api.event.player.PlayerBlockBreakEvents;
+import net.fabricmc.fabric.api.object.builder.v1.entity.FabricDefaultAttributeRegistry;
 import net.fabricmc.fabric.api.event.player.UseBlockCallback;
 import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents;
 import net.fabricmc.fabric.api.loot.v3.LootTableEvents;
 import net.luckyowlstudios.locksmith.Locksmith;
 import net.luckyowlstudios.locksmith.event.LockEvents;
+import net.luckyowlstudios.locksmith.entity.DungeonSlime;
 import net.luckyowlstudios.locksmith.init.ModBlocks;
+import net.luckyowlstudios.locksmith.init.ModEntityTypes;
 import net.luckyowlstudios.locksmith.init.ModItems;
 import net.luckyowlstudios.locksmith.loot.LootInjections;
 import net.minecraft.world.InteractionResult;
+import net.minecraft.world.entity.MobCategory;
+import net.minecraft.world.entity.SpawnPlacementTypes;
+import net.minecraft.world.entity.SpawnPlacements;
+import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.item.CreativeModeTabs;
+import net.minecraft.world.level.levelgen.Heightmap;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.storage.loot.LootPool;
 import net.minecraft.world.level.storage.loot.entries.LootItem;
+import net.minecraft.world.level.storage.loot.predicates.LootItemRandomChanceCondition;
 import net.minecraft.world.level.storage.loot.providers.number.ConstantValue;
 
 public class LocksmithFabric implements ModInitializer {
+
+    private static final int DUNGEON_SLIME_SPAWN_WEIGHT = 10;
 
     @Override
     public void onInitialize() {
         Locksmith.init();
         registerEvents();
         registerLoot();
+        registerEntities();
         registerCreativeTabEntries();
     }
 
@@ -48,15 +62,30 @@ public class LocksmithFabric implements ModInitializer {
         LootTableEvents.MODIFY.register((key, tableBuilder, source, registries) -> {
             for (LootInjections.Injection injection : LootInjections.ALL) {
                 if (injection.table().equals(key)) {
-                    tableBuilder.withPool(LootPool.lootPool()
+                    LootPool.Builder pool = LootPool.lootPool()
                             .setRolls(ConstantValue.exactly(1))
-                            .add(LootItem.lootTableItem(injection.item().get())));
+                            .add(LootItem.lootTableItem(injection.item().get()));
+                    if (injection.chance() < 1.0F) {
+                        pool.when(LootItemRandomChanceCondition.randomChance(injection.chance()));
+                    }
+                    tableBuilder.withPool(pool);
                 }
             }
         });
     }
 
+    private static void registerEntities() {
+        FabricDefaultAttributeRegistry.register(ModEntityTypes.DUNGEON_SLIME.get(), Monster.createMonsterAttributes());
+        SpawnPlacements.register(ModEntityTypes.DUNGEON_SLIME.get(), SpawnPlacementTypes.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES,
+                DungeonSlime::checkDungeonSlimeSpawnRules);
+        // Keep in sync with the NeoForge biome modifier, data/locksmith/neoforge/biome_modifier/dungeon_slime.json
+        BiomeModifications.addSpawn(BiomeSelectors.foundInOverworld(), MobCategory.MONSTER, ModEntityTypes.DUNGEON_SLIME.get(),
+                DUNGEON_SLIME_SPAWN_WEIGHT, 1, 1);
+    }
+
     private static void registerCreativeTabEntries() {
+        ItemGroupEvents.modifyEntriesEvent(CreativeModeTabs.SPAWN_EGGS).register(entries ->
+                entries.accept(ModItems.DUNGEON_SLIME_SPAWN_EGG.get()));
         ItemGroupEvents.modifyEntriesEvent(CreativeModeTabs.FUNCTIONAL_BLOCKS).register(entries ->
                 entries.addAfter(Items.CHEST, ModBlocks.IRON_CHEST.get(), ModBlocks.GOLDEN_CHEST.get()));
         ItemGroupEvents.modifyEntriesEvent(CreativeModeTabs.REDSTONE_BLOCKS).register(entries -> {

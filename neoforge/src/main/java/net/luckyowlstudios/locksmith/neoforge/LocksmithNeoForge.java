@@ -2,21 +2,28 @@ package net.luckyowlstudios.locksmith.neoforge;
 
 import com.mojang.logging.LogUtils;
 import net.luckyowlstudios.locksmith.Locksmith;
+import net.luckyowlstudios.locksmith.entity.DungeonSlime;
 import net.luckyowlstudios.locksmith.init.ModBlocks;
+import net.luckyowlstudios.locksmith.init.ModEntityTypes;
 import net.luckyowlstudios.locksmith.init.ModItems;
 import net.luckyowlstudios.locksmith.neoforge.platform.NeoForgePlatformHelper;
 import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.world.entity.SpawnPlacementTypes;
+import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.CreativeModeTabs;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.levelgen.Heightmap;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.fml.ModContainer;
 import net.neoforged.fml.common.Mod;
 import net.neoforged.fml.config.ModConfig;
 import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.neoforged.neoforge.event.BuildCreativeModeTabContentsEvent;
+import net.neoforged.neoforge.event.entity.EntityAttributeCreationEvent;
+import net.neoforged.neoforge.event.entity.RegisterSpawnPlacementsEvent;
 import org.slf4j.Logger;
 
 // The value here should match an entry in the META-INF/neoforge.mods.toml file
@@ -31,6 +38,8 @@ public class LocksmithNeoForge {
 
         modEventBus.addListener(this::commonSetup);
         modEventBus.addListener(LocksmithNeoForge::addCreative);
+        modEventBus.addListener(LocksmithNeoForge::registerAttributes);
+        modEventBus.addListener(LocksmithNeoForge::registerSpawnPlacements);
 
         // Register our mod's ModConfigSpec so that FML can create and load the config file for us
         modContainer.registerConfig(ModConfig.Type.COMMON, LocksmithConfig.SPEC);
@@ -44,6 +53,16 @@ public class LocksmithNeoForge {
         LOGGER.info("{}{}", LocksmithConfig.MAGIC_NUMBER_INTRODUCTION.get(), LocksmithConfig.MAGIC_NUMBER.getAsInt());
 
         LocksmithConfig.ITEM_STRINGS.get().forEach((item) -> LOGGER.info("ITEM >> {}", item));
+    }
+
+    private static void registerAttributes(EntityAttributeCreationEvent event) {
+        event.put(ModEntityTypes.DUNGEON_SLIME.get(), Monster.createMonsterAttributes().build());
+    }
+
+    private static void registerSpawnPlacements(RegisterSpawnPlacementsEvent event) {
+        // Spawn biomes come from the locksmith:dungeon_slime biome modifier
+        event.register(ModEntityTypes.DUNGEON_SLIME.get(), SpawnPlacementTypes.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES,
+                DungeonSlime::checkDungeonSlimeSpawnRules, RegisterSpawnPlacementsEvent.Operation.REPLACE);
     }
 
     private static void addCreative(BuildCreativeModeTabContentsEvent event) {
@@ -65,6 +84,9 @@ public class LocksmithNeoForge {
         if (event.getTabKey() == CreativeModeTabs.INGREDIENTS) {
             event.insertAfter(Items.EXPERIENCE_BOTTLE.getDefaultInstance(), key, CreativeModeTab.TabVisibility.PARENT_AND_SEARCH_TABS);
             event.insertAfter(key, goldenKey, CreativeModeTab.TabVisibility.PARENT_AND_SEARCH_TABS);
+        }
+        if (event.getTabKey() == CreativeModeTabs.SPAWN_EGGS) {
+            event.accept(new ItemStack(ModItems.DUNGEON_SLIME_SPAWN_EGG.get()), CreativeModeTab.TabVisibility.PARENT_AND_SEARCH_TABS);
         }
         if (event.getTabKey() == CreativeModeTabs.OP_BLOCKS) {
             event.accept(new ItemStack(ModItems.GOLDEN_LOCK.get()), CreativeModeTab.TabVisibility.PARENT_AND_SEARCH_TABS);

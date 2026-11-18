@@ -16,9 +16,10 @@ public class Locksmith {
     public static void init() {
         LOGGER.info("Loading Locksmith on {}", Services.PLATFORM.getPlatformName());
         // Order matters on Fabric, where registration happens immediately: blocks before the block
-        // entity types that reference them.
+        // entity types that reference them, and entity types before the spawn eggs that reference them.
         ModDataComponents.init();
         ModBlocks.init();
+        ModEntityTypes.init();
         ModItems.init();
         ModBlockEntityTypes.init();
         ModCreativeModeTabs.init();
