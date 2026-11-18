@@ -215,11 +215,10 @@ public final class LockEvents {
                 player.getSoundSource(), 1.0F, 1.0F);
 
         // Remove lock
-        DataComponentMap newData = DataComponentMap.builder()
-                .addAll(containerBlockEntity.components())
+        DataComponentMap lockChanges = DataComponentMap.builder()
                 .set(ModDataComponents.LOCK_TYPE.get(), LockType.NONE)
                 .build();
-        applyChangesToBlock(containerBlockEntity, newData);
+        applyChangesToBlock(containerBlockEntity, lockChanges);
 
         player.swing(hand);
         heldItem.shrink(1);
@@ -258,24 +257,22 @@ public final class LockEvents {
     private static void addLock(BaseContainerBlockEntity containerBlockEntity, LockType lockType,
                                 Player player, Level level, BlockPos pos, InteractionHand hand) {
         level.playSound(null, pos, SoundEvents.VAULT_INSERT_ITEM_FAIL, player.getSoundSource(), 1.0F, 1.5F);
-        DataComponentMap newData = DataComponentMap.builder()
-                .addAll(containerBlockEntity.components())
+        DataComponentMap lockChanges = DataComponentMap.builder()
                 .set(ModDataComponents.LOCK_TYPE.get(), lockType)
                 .set(ModDataComponents.OWNER_UUID.get(), player.getUUID())
                 .build();
-        applyChangesToBlock(containerBlockEntity, newData);
+        applyChangesToBlock(containerBlockEntity, lockChanges);
         player.swing(hand);
     }
 
     private static void addPlayerLock(BaseContainerBlockEntity containerBlockEntity, ItemStack heldItem,
                                       Player player, Level level, BlockPos pos, InteractionHand hand) {
         String keyCode = heldItem.get(DataComponents.LOCK).key();
-        DataComponentMap newData = DataComponentMap.builder()
-                .addAll(containerBlockEntity.components())
+        DataComponentMap lockChanges = DataComponentMap.builder()
                 .set(DataComponents.LOCK, new LockCode(keyCode))
                 .set(ModDataComponents.OWNER_UUID.get(), player.getUUID())
                 .build();
-        applyChangesToBlock(containerBlockEntity, newData);
+        applyChangesToBlock(containerBlockEntity, lockChanges);
 
         level.playSound(null, pos, SoundEvents.VAULT_INSERT_ITEM_FAIL, player.getSoundSource(), 1.0F, 1.0F);
         MutableComponent blockName = level.getBlockState(pos).getBlock().getName();
@@ -350,9 +347,12 @@ public final class LockEvents {
     // UTILITY METHODS
     // ========================================
 
-    private static void applyChangesToBlock(BaseContainerBlockEntity containerBlockEntity, DataComponentMap newData) {
-        containerBlockEntity.setComponents(newData);
-        containerBlockEntity.setChanged();
+    /**
+     * Applies {@code lockChanges} (only the lock components being changed) to the container, and to the other
+     * half of a double chest. Each half keeps its own other components, such as its dye color.
+     */
+    private static void applyChangesToBlock(BaseContainerBlockEntity containerBlockEntity, DataComponentMap lockChanges) {
+        mergeComponents(containerBlockEntity, lockChanges);
 
         Level level = containerBlockEntity.getLevel();
         BlockState blockState = containerBlockEntity.getBlockState();
@@ -366,11 +366,18 @@ public final class LockEvents {
             if (isValidChestPartner(blockState, otherState)) {
                 BlockEntity otherBlockEntity = level.getBlockEntity(otherPos);
                 if (otherBlockEntity instanceof BaseContainerBlockEntity otherContainer) {
-                    otherContainer.setComponents(newData);
-                    otherContainer.setChanged();
+                    mergeComponents(otherContainer, lockChanges);
                 }
             }
         }
+    }
+
+    private static void mergeComponents(BaseContainerBlockEntity container, DataComponentMap changes) {
+        container.setComponents(DataComponentMap.builder()
+                .addAll(container.components())
+                .addAll(changes)
+                .build());
+        container.setChanged();
     }
 
     private static boolean isValidChestPartner(BlockState blockState, BlockState otherState) {
