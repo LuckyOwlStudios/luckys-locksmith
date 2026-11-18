@@ -34,8 +34,8 @@ neoForge {
         data {
             data()
             programArguments.addAll '--mod', mod_id, '--all',
-                    '--output', project(':common').file('src/generated/resources/').getAbsolutePath(),
-                    '--existing', project(':common').file('src/main/resources/').getAbsolutePath(),
+                    '--output', rootProject.file('common/src/generated/resources/').getAbsolutePath(),
+                    '--existing', rootProject.file('common/src/main/resources/').getAbsolutePath(),
                     '--existing', file('src/main/resources/').getAbsolutePath()
         }
 
