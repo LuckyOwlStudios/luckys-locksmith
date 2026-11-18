@@ -64,8 +64,9 @@ public class DungeonSlime extends Slime {
     }
 
     @Override
-    protected float getSoundPitch() {
-        return super.getSoundPitch() * 0.85F;
+    public float getVoicePitch() {
+        // Lower hurt and death sounds; the jump and squish pitch is package-private in Slime
+        return super.getVoicePitch() * 0.85F;
     }
 
     public static boolean checkDungeonSlimeSpawnRules(EntityType<DungeonSlime> type, ServerLevelAccessor level, MobSpawnType spawnType, BlockPos pos, RandomSource random) {
