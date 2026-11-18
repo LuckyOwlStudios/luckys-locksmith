@@ -71,6 +71,9 @@ public class DungeonSlimeRenderer extends SlimeRenderer {
                     int alpha = pixel >>> 24;
                     if (isCore(x, y, image.getWidth())) {
                         alpha = 0;
+                    } else if (alpha < 255) {
+                        // Thin out the see-through shell so the key reads clearly inside it
+                        alpha = (int) (alpha * 0.75F);
                     }
                     int red = pixel & 0xFF;
                     int green = (pixel >> 8) & 0xFF;
