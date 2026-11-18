@@ -1,25 +1,125 @@
+<div align="center">
 
-Installation information
-=======
+<img src="media/title.png" alt="LuckyOwl's Locksmith" width="640">
 
-This template repository can be directly cloned to get you started with a new
-mod. Simply create a new repository cloned from this one, by following the
-instructions provided by [GitHub](https://docs.github.com/en/repositories/creating-and-managing-repositories/creating-a-repository-from-a-template).
+**Lock your chests and barrels with keys, and break into golden and trial locked chests found in the world.**
 
-Once you have your clone, simply open the repository in the IDE of your choice. The usual recommendation for an IDE is either IntelliJ IDEA or Eclipse.
+![Minecraft 1.21.1](https://img.shields.io/badge/Minecraft-1.21.1-62B47A?style=for-the-badge)
+![NeoForge](https://img.shields.io/badge/NeoForge-21.1.186%2B-E06C2C?style=for-the-badge)
+![Fabric](https://img.shields.io/badge/Fabric-0.16.9%2B-DBD0B4?style=for-the-badge)
+![Version](https://img.shields.io/badge/version-1.0.3-F2C744?style=for-the-badge)
 
-If at any point you are missing libraries in your IDE, or you've run into problems you can
-run `gradlew --refresh-dependencies` to refresh the local cache. `gradlew clean` to reset everything 
-{this does not affect your code} and then start the process again.
+[Features](#-features) · [Getting the items](#-getting-the-items) · [Installation](#-installation) · [Compatibility](#-compatibility) · [Changelog](CHANGELOG.md)
 
-Mapping Names:
-============
-By default, the MDK is configured to use the official mapping names from Mojang for methods and fields 
-in the Minecraft codebase. These names are covered by a specific license. All modders should be aware of this
-license. For the latest license text, refer to the mapping file itself, or the reference copy here:
-https://github.com/NeoForged/NeoForm/blob/main/Mojang.md
+<img src="media/screenshots/title.png" alt="Locksmith in game" width="820">
 
-Additional Resources: 
-==========
-Community Documentation: https://docs.neoforged.net/  
-NeoForged Discord: https://discord.neoforged.net/
+</div>
+
+---
+
+## ✨ Features
+
+### 🔑 Keys and locks
+Craft a **Key** and right-click any chest or barrel to lock it. Every key gets its own random 5-digit code, and only a key with the same code can open what it locked.
+
+- Hold <kbd>Shift</kbd> while hovering over a key to reveal its code.
+- **Copy a key** in an anvil: key on the left, iron ingot on the right. You keep the original and get a copy to share with friends.
+- A matching key works from your hand or anywhere in your inventory.
+- Locked containers can't be broken by other players. The owner, or anyone carrying the right key, can still break them.
+
+### 🟨 Golden locks
+Some of the world's treasure is behind a **Golden Lock**. Open one with a **Golden Key**, which is used up when the lock opens.
+
+- About **1 in 4 Nether fortress chests** generates with a golden lock, so bring a golden key with you.
+- Containers with golden or trial locks are **explosion proof**, so no blowing your way in.
+
+<div align="center">
+<img src="media/screenshots/golden_locked_chest_dungeon.png" alt="A golden locked chest in a dungeon" width="720">
+</div>
+
+### 🟥 Trial locks
+**Trial Locks** are opened with vanilla **Trial Keys** from Trial Chambers. Trial keys now also show what they unlock in their tooltip.
+
+<div align="center">
+<img src="media/screenshots/trial.png" alt="A trial locked chest with a trial key and trial lock" width="720">
+</div>
+
+### 🟢 Dungeon Slime
+A new gray, see-through slime that lurks **deep underground** with a golden key floating inside it.
+
+- Spawns in the Overworld **below Y 0** in full darkness (never on Peaceful, in mushroom fields or in the Deep Dark).
+- Always spawns at medium size and drops **exactly one Golden Key**. Its small offspring drop slimeballs instead.
+- Has its own spawn egg for creative builders and map makers.
+
+### 🧰 Iron and Golden Chests
+Two sturdier chests, each with a **trapped** version:
+
+- **Iron Chest** and **Iron Trapped Chest**
+- **Golden Chest** and **Golden Trapped Chest**
+
+Right-click them with **any dye** to recolor them and make your storage room match your style.
+
+<div align="center">
+<img src="media/screenshots/dye_chest.png" alt="Iron chests dyed red, blue and purple" width="720">
+</div>
+
+### 🚪 Coming soon
+- Locks for **doors and trapdoors**
+
+---
+
+## 🧭 Getting the items
+
+| Item | How to get it |
+| --- | --- |
+| **Key** | Crafted: 1 iron ingot on top of 2 iron nuggets (vertical column) |
+| **Key copy** | Anvil: key + iron ingot |
+| **Golden Key** | Dropped by **Dungeon Slimes**, and sometimes found in **Nether fortress chests** (15%) |
+| **Trial Key** | Vanilla: earned from Trial Spawners in Trial Chambers |
+| **Iron Chest** | Crafted: a chest surrounded by 4 iron ingots (top, bottom, left, right) |
+| **Golden Chest** | Crafted: a chest surrounded by 4 gold ingots (top, bottom, left, right) |
+| **Trapped versions** | Crafted: the iron or golden chest + a tripwire hook |
+| **Golden Lock / Trial Lock** | Creative menu only, for map makers and server admins |
+
+All of the mod's items are in the **Locksmithing** creative tab.
+
+---
+
+## 📦 Installation
+
+1. Install **Minecraft 1.21.1** with either loader:
+   - **NeoForge** 21.1.186 or newer, or
+   - **Fabric Loader** 0.16.9 or newer, plus **[Fabric API](https://modrinth.com/mod/fabric-api)**
+2. Drop the Locksmith jar for your loader into your `mods` folder.
+3. Launch the game and start locking things up!
+
+Locksmith is needed on **both the server and the client**.
+
+---
+
+## 🔌 Compatibility
+
+| | NeoForge | Fabric |
+| --- | :---: | :---: |
+| Keys, locks, chests, Dungeon Slime | ✅ | ✅ |
+| Worn key slot ([Curios](https://www.curseforge.com/minecraft/mc-mods/curios), optional) | ✅ | ❌ Not yet |
+| `fortressChestLockChance` config option | ✅ | Fixed at 25% |
+
+- **Curios (NeoForge, optional):** wear your key in a dedicated key slot and it opens matching locks without needing to be held. Locksmith runs fine without Curios.
+- **Config (NeoForge):** set `fortressChestLockChance` between `0.0` and `1.0` to change how often fortress chests are golden locked. `0` turns it off.
+
+---
+
+## 📜 Changelog
+
+See **[CHANGELOG.md](CHANGELOG.md)** for what's new in each version.
+
+---
+
+<div align="center">
+
+Made by **LuckyOwl** · All Rights Reserved
+
+<img src="media/icon.png" alt="Locksmith icon" width="96">
+
+</div>
