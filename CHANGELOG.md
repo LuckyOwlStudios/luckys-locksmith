@@ -68,6 +68,7 @@ Work In Progress section is started.
 
 **Fixed:**
 - Locking one half of a double chest no longer changes the other half's dye color. ([#11](https://github.com/luckyowlstudios/luckys-locksmith/pull/11))
+- Hoppers and hopper minecarts can no longer pull items out of a locked chest or other locked container. ([#23](https://github.com/luckyowlstudios/luckys-locksmith/pull/23))
 
 # 1.0.3
 
