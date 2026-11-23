@@ -2,7 +2,7 @@ package net.luckyowlstudios.locksmith.fabric.compat;
 
 import io.wispforest.accessories.api.Accessory;
 import io.wispforest.accessories.api.AccessoriesCapability;
-import io.wispforest.accessories.api.AccessoryRegistry;
+import io.wispforest.accessories.api.AccessoriesAPI;
 import net.luckyowlstudios.locksmith.init.ModItems;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
@@ -20,7 +20,7 @@ public final class AccessoriesCompat {
 
     /** Lets the key be worn in the "key" slot (see data/locksmith/accessories). */
     public static void registerKey(Item key) {
-        AccessoryRegistry.register(key, new Accessory() {
+        AccessoriesAPI.registerAccessory(key, new Accessory() {
         });
     }
 
