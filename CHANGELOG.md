@@ -50,6 +50,7 @@ and this project uses [Semantic Versioning](https://semver.org/spec/v2.0.0.html)
 
 ### Fixed
 - Locking one half of a double chest no longer changes the other half's dye color.
+- Hoppers and hopper minecarts can no longer pull items out of a locked chest or other locked container.
 
 ## [1.0.3] - 2026-04-15
 

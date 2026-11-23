@@ -10,6 +10,7 @@
     "BlockBehaviourMixin",
     "BreakDoorGoalMixin",
     "DoorBlockMixin",
+    "HopperBlockEntityMixin",
     "PistonBaseBlockMixin",
     "PlayerChunkSenderMixin",
     "TrapDoorBlockMixin",
