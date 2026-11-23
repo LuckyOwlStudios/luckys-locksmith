@@ -1,79 +1,85 @@
-<div align="center">
+<p align="center">
+  <img src="https://raw.githubusercontent.com/LuckyOwlStudios/luckys-locksmith/master/media/title.png" alt="LuckyOwl's Locksmith" width="720">
+</p>
 
-<img src="media/title.png" alt="LuckyOwl's Locksmith" width="640">
+<p align="center">
+  <b>Lock it. Key it. Break into the good stuff.</b><br>
+  A NeoForge and Fabric mod that adds keys and locks for chests, barrels, doors and trapdoors, plus golden and trial locked treasure to hunt down.
+</p>
 
-**Lock your chests and barrels with keys, and break into golden and trial locked chests found in the world.**
-
-![Minecraft 1.21.1](https://img.shields.io/badge/Minecraft-1.21.1-62B47A?style=for-the-badge)
-![NeoForge](https://img.shields.io/badge/NeoForge-21.1.186%2B-E06C2C?style=for-the-badge)
-![Fabric](https://img.shields.io/badge/Fabric-0.16.9%2B-DBD0B4?style=for-the-badge)
-![Version](https://img.shields.io/badge/version-1.0.3-F2C744?style=for-the-badge)
-
-[Features](#-features) · [Getting the items](#-getting-the-items) · [Installation](#-installation) · [Compatibility](#-compatibility) · [Changelog](CHANGELOG.md)
-
-<img src="media/screenshots/title.png" alt="Locksmith in game" width="820">
-
-</div>
+<p align="center">
+  <img alt="Minecraft 1.21.1" src="https://img.shields.io/badge/Minecraft-1.21.1-62B47A">
+  <img alt="NeoForge" src="https://img.shields.io/badge/NeoForge-21.1.x-E67E22">
+  <img alt="Fabric" src="https://img.shields.io/badge/Fabric-supported-DBD0B4">
+</p>
 
 ---
 
-## ✨ Features
+## About
 
-### 🔑 Keys and locks
-Craft a **Key** and right-click any chest or barrel to lock it. Every key gets its own random 5-digit code, and only a key with the same code can open what it locked.
+Lock your chests, barrels, doors and trapdoors with keys that only you and your friends carry. Out in the world, some treasure is locked too: Nether fortress chests can come with golden locks, and Dungeon Slimes carry the golden keys to open them.
 
-- Hold <kbd>Shift</kbd> while hovering over a key to reveal its code.
-- **Copy a key** in an anvil: key on the left, iron ingot on the right. You keep the original and get a copy to share with friends.
-- A matching key works from your hand or anywhere in your inventory.
-- Locked containers can't be broken by other players. The owner, or anyone carrying the right key, can still break them.
+![Locksmith in game](https://raw.githubusercontent.com/LuckyOwlStudios/luckys-locksmith/master/media/screenshots/title.png)
 
-### 🟨 Golden locks
+---
+
+## Keys and locks
+
+Craft a **Key** and right-click a chest, barrel, door or trapdoor to lock it. Every key gets its own random 5-digit code, and only a key with the same code can open what it locked.
+
+- **Shift-hover** a key to reveal its code.
+- **Copy a key** in an anvil: key on the left, iron ingot on the right. You keep the original and get a copy to share.
+- A matching key works from your **hand or anywhere in your inventory**.
+- Locked containers can't be broken by other players. The owner, or anyone with the right key, still can.
+- **Curios (NeoForge, optional):** wear your key in a dedicated slot and it opens matching locks without being held.
+
+### Golden locks
 Some of the world's treasure is behind a **Golden Lock**. Open one with a **Golden Key**, which is used up when the lock opens.
 
-- About **1 in 4 Nether fortress chests** generates with a golden lock, so bring a golden key with you.
-- Containers with golden or trial locks are **explosion proof**, so no blowing your way in.
+- About **1 in 4 Nether fortress chests** generates with a golden lock, so bring a golden key.
+- Golden and trial locked containers are **explosion proof**.
 
-<div align="center">
-<img src="media/screenshots/golden_locked_chest_dungeon.png" alt="A golden locked chest in a dungeon" width="720">
-</div>
+![A golden locked chest in a dungeon](https://raw.githubusercontent.com/LuckyOwlStudios/luckys-locksmith/master/media/screenshots/golden_locked_chest_dungeon.png)
 
-### 🟥 Trial locks
-**Trial Locks** are opened with vanilla **Trial Keys** from Trial Chambers. Trial keys now also show what they unlock in their tooltip.
+### Trial locks
+**Trial Locks** are opened with vanilla **Trial Keys** from Trial Chambers. Trial keys show what they unlock in their tooltip.
 
-<div align="center">
-<img src="media/screenshots/trial.png" alt="A trial locked chest with a trial key and trial lock" width="720">
-</div>
+![A trial locked chest](https://raw.githubusercontent.com/LuckyOwlStudios/luckys-locksmith/master/media/screenshots/trial.png)
 
-### 🟢 Dungeon Slime
-A new gray, see-through slime that lurks **deep underground** with a golden key floating inside it.
+### Doors and trapdoors
+Lock **any door or trapdoor**, including iron, copper and modded ones, with a key, golden lock or trial lock.
 
-- Spawns in the Overworld **below Y 0** in full darkness (never on Peaceful, in mushroom fields or in the Deep Dark).
-- Always spawns at medium size and drops **exactly one Golden Key**. Its small offspring drop slimeballs instead.
-- Has its own spawn egg for creative builders and map makers.
-
-### 🧰 Iron and Golden Chests
-Two sturdier chests, each with a **trapped** version:
-
-- **Iron Chest** and **Iron Trapped Chest**
-- **Golden Chest** and **Golden Trapped Chest**
-
-Right-click them with **any dye** to recolor them and make your storage room match your style.
-
-<div align="center">
-<img src="media/screenshots/dye_chest.png" alt="Iron chests dyed red, blue and purple" width="720">
-</div>
-
-### 🚪 Doors and trapdoors
-Locks work on **doors and trapdoors** too, including iron, copper and modded ones. Right-click one with a key, golden lock or trial lock, just like a chest.
-
-- A padlock is drawn on both sides of a locked door and follows it as it swings. (Trapdoors don't show a padlock yet.)
-- A locked door ignores redstone, villagers, zombies, pistons and wind charges until you open it with the right key.
+- A **padlock is drawn on both sides** of a locked door and swings with it as it opens. (Trapdoors don't show a padlock yet.)
+- A locked door stays shut against **redstone, villagers, zombies, pistons and wind charges** until it's opened with the right key.
 - Locked doors can't be blown up or broken by other players, and neither can the block holding them up.
-- Door locks are based on [KevoMartinez256's](https://github.com/KevoMartinez256) contribution. Thank you!
+- A door's two halves share one lock, and a copper door keeps its lock as it weathers.
+- Door locks and their padlocks are based on a contribution by **[Don Kevo](https://github.com/KevoMartinez256)**. Thank you!
 
 ---
 
-## 🧭 Getting the items
+## Dungeon Slime
+
+A gray, see-through slime with a **golden key floating inside**. It is the main source of golden keys.
+
+- Spawns in the Overworld **below Y 0** in full darkness, and commonly **inside strongholds**. Never on Peaceful, in mushroom fields or in the Deep Dark.
+- Always spawns at medium size and drops **exactly one Golden Key**. Its small offspring drop slimeballs instead.
+- Has its own spawn egg.
+
+---
+
+## Iron and Golden Chests
+
+Two sturdier chests, each with a **trapped** version. Right-click one with **any dye** to recolor it.
+
+- **Iron Chest:** natural wood trim until dyed.
+- **Golden Chest:** a fabric trim that takes the dye color.
+- Double chests keep each half's own color, even when you lock one half.
+
+![Iron chests dyed red, blue and purple](https://raw.githubusercontent.com/LuckyOwlStudios/luckys-locksmith/master/media/screenshots/dye_chest.png)
+
+---
+
+## Getting the items
 
 | Item | How to get it |
 | --- | --- |
@@ -86,47 +92,40 @@ Locks work on **doors and trapdoors** too, including iron, copper and modded one
 | **Trapped versions** | Crafted: the iron or golden chest + a tripwire hook |
 | **Golden Lock / Trial Lock** | Creative menu only, for map makers and server admins |
 
-All of the mod's items are in the **Locksmithing** creative tab.
+Golden and trial keys stack to 16. Everything is in the **Locksmithing** creative tab.
 
 ---
 
-## 📦 Installation
-
-1. Install **Minecraft 1.21.1** with either loader:
-   - **NeoForge** 21.1.186 or newer, or
-   - **Fabric Loader** 0.16.9 or newer, plus **[Fabric API](https://modrinth.com/mod/fabric-api)**
-2. Drop the Locksmith jar for your loader into your `mods` folder.
-3. Launch the game and start locking things up!
-
-Locksmith is needed on **both the server and the client**.
-
----
-
-## 🔌 Compatibility
+## Compatibility
 
 | | NeoForge | Fabric |
 | --- | :---: | :---: |
-| Keys, locks, chests, Dungeon Slime | ✅ | ✅ |
+| Keys, locks, doors, chests, Dungeon Slime | ✅ | ✅ |
 | Worn key slot ([Curios](https://www.curseforge.com/minecraft/mc-mods/curios), optional) | ✅ | ❌ Not yet |
 | `fortressChestLockChance` config option | ✅ | Fixed at 25% |
 
-- **Curios (NeoForge, optional):** wear your key in a dedicated key slot and it opens matching locks without needing to be held. Locksmith runs fine without Curios.
+- **Fabric** needs **[Fabric API](https://modrinth.com/mod/fabric-api)**.
 - **Config (NeoForge):** set `fortressChestLockChance` between `0.0` and `1.0` to change how often fortress chests are golden locked. `0` turns it off.
+- Locksmith is needed on **both the server and the client**.
 
 ---
 
-## 📜 Changelog
+## Building from source
 
-See **[CHANGELOG.md](CHANGELOG.md)** for what's new in each version.
+> **Keep in sync:** [`MOD_PAGE.md`](MOD_PAGE.md) is the copy-paste description for Modrinth and CurseForge. It is this file without this section and the links at the bottom, so update both together.
 
----
+This is a multiloader project based on [MultiLoader-Template](https://github.com/jaredlll08/MultiLoader-Template): `common/` holds almost all of the mod, `neoforge/` and `fabric/` hold the loader entry points.
 
-<div align="center">
+```
+./gradlew build
+```
+
+Jars end up in `fabric/build/libs/` and `neoforge/build/libs/`. Run with `./gradlew :neoforge:runClient` or `./gradlew :fabric:runClient`. Data generators run on NeoForge (`./gradlew :neoforge:runData`) and write into `common/src/generated/resources`.
+
+## Links
+
+- [Report a bug or suggest something](https://github.com/LuckyOwlStudios/luckys-locksmith/issues)
+- [Changelog](https://github.com/LuckyOwlStudios/luckys-locksmith/blob/master/CHANGELOG.md)
+- Door locks and padlocks by [Don Kevo](https://github.com/KevoMartinez256)
 
 Made by **LuckyOwl** · All Rights Reserved
-
-Door locks and their visible padlocks by **[Don Kevo](https://github.com/KevoMartinez256)**
-
-<img src="media/icon.png" alt="Locksmith icon" width="96">
-
-</div>
