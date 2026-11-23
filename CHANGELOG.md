@@ -1,14 +1,31 @@
 # Changelog
 
-All notable changes to Locksmith are listed here.
+All notable changes to Lucky's Locksmith are listed here.
+Every pull request adds its entry under **Work In Progress**. When a version is released,
+that section becomes the new version (with a row in the table below), and a new empty
+Work In Progress section is started.
 
-The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
-and this project uses [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
+# Navigation
+(Click on version number to jump to its changelog.)
 
-## [1.1.0]
+| Version | Release Date | Type |
+|---------|--------------|------|
+| [1.1.0](#110) | `TBD` | Release |
+| [1.0.3](#103) | `04/15/2026` | Release |
+| [1.0.0](#100) | `07/08/2025` | Release |
 
-### Added
-- **Fabric support!** Locksmith now runs on both NeoForge and Fabric for Minecraft 1.21.1.
+# Work In Progress (1.1.1)
+
+**Added:**
+
+**Changed:**
+
+**Fixed:**
+
+# 1.1.0
+
+**Added:**
+- **Fabric support!** Locksmith now runs on both NeoForge and Fabric for Minecraft 1.21.1. ([#5](https://github.com/luckyowlstudios/luckys-locksmith/pull/5))
   - On Fabric, keys work from your hand or inventory. A worn key slot isn't available there yet.
 - **Dungeon Slime**, a new mob and the new source of golden keys. It's a gray, see-through
   slime with a golden key floating inside.
@@ -25,7 +42,7 @@ and this project uses [Semantic Versioning](https://semver.org/spec/v2.0.0.html)
 - **Locks on doors and trapdoors!** Lock any door or trapdoor (including iron, copper and modded
   ones) with a key, golden lock or trial lock, just like a chest. Door locks and their visible
   padlocks are based on the contribution by [KevoMartinez256](https://github.com/KevoMartinez256)
-  (Don Kevo). Thank you!
+  (Don Kevo). Thank you! ([#2](https://github.com/luckyowlstudios/luckys-locksmith/pull/2), [#15](https://github.com/luckyowlstudios/luckys-locksmith/pull/15), [#18](https://github.com/luckyowlstudios/luckys-locksmith/pull/18))
   - A padlock is drawn on both sides of a locked door and follows it as it swings. Trapdoors don't
     show a padlock yet.
   - A locked door or trapdoor stays shut against redstone, villagers, zombies, pistons and wind
@@ -35,7 +52,7 @@ and this project uses [Semantic Versioning](https://semver.org/spec/v2.0.0.html)
   - A door's two halves share one lock, and a copper door keeps its lock as it weathers.
   - Key codes and owners stay on the server; players only learn which doors are locked.
 
-### Changed
+**Changed:**
 - **Golden keys can no longer be crafted.** Find them on Dungeon Slimes or in Nether fortress
   chests.
 - Piglin brutes no longer drop golden keys.
@@ -45,24 +62,23 @@ and this project uses [Semantic Versioning](https://semver.org/spec/v2.0.0.html)
   ingots (corners empty). They used to need 4 blocks and 4 wool.
 - Reworked **iron chest** and **golden chest** textures. Iron chests show natural wood until
   dyed, and golden chests have a fabric trim that takes the dye color.
-- Curios is now optional on NeoForge and listed as an optional dependency. Install it to wear your key in a Curios slot.
-- The "is Locked!" message now shows in red.
+- Curios is now optional on NeoForge and listed as an optional dependency. Install it to wear your key in a Curios slot. ([#16](https://github.com/luckyowlstudios/luckys-locksmith/pull/16))
+- The "is Locked!" message now shows in red. ([#12](https://github.com/luckyowlstudios/luckys-locksmith/pull/12))
 
-### Fixed
-- Locking one half of a double chest no longer changes the other half's dye color.
-- Hoppers and hopper minecarts can no longer pull items out of a locked chest or other locked container.
+**Fixed:**
+- Locking one half of a double chest no longer changes the other half's dye color. ([#11](https://github.com/luckyowlstudios/luckys-locksmith/pull/11))
+- Hoppers and hopper minecarts can no longer pull items out of a locked chest or other locked container. ([#23](https://github.com/luckyowlstudios/luckys-locksmith/pull/23))
 
-## [1.0.3] - 2026-04-15
+# 1.0.3
 
-### Fixed
+**Fixed:**
 - You can now break your own locked chest.
 - An already locked chest can no longer be locked again.
 
-### Added
+**Added:**
 - Key tooltip explaining how to duplicate keys.
 
-## [1.0.0] - 2025-07-08
+# 1.0.0
 
+**Added:**
 - First release: locks, keys, iron chests and golden chests.
-
-[Unreleased]: https://github.com/luckyowlstudios/luckys-locksmith/compare/b48fdf6...HEAD
