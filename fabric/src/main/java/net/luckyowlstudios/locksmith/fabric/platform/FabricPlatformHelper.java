@@ -1,5 +1,7 @@
 package net.luckyowlstudios.locksmith.fabric.platform;
 
+import net.fabricmc.loader.api.FabricLoader;
+import net.luckyowlstudios.locksmith.fabric.compat.AccessoriesCompat;
 import net.fabricmc.fabric.api.itemgroup.v1.FabricItemGroup;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
 import net.fabricmc.fabric.api.object.builder.v1.block.entity.FabricBlockEntityTypeBuilder;
@@ -28,6 +30,10 @@ import java.util.function.BiFunction;
 import java.util.function.Supplier;
 
 public class FabricPlatformHelper implements IPlatformHelper {
+
+    private static boolean isAccessoriesLoaded() {
+        return FabricLoader.getInstance().isModLoaded("accessories");
+    }
 
     @Override
     public String getPlatformName() {
@@ -62,13 +68,14 @@ public class FabricPlatformHelper implements IPlatformHelper {
 
     @Override
     public KeyItem createKeyItem(Item.Properties properties) {
-        return new KeyItem(properties);
+        KeyItem key = new KeyItem(properties);
+        if (isAccessoriesLoaded()) AccessoriesCompat.registerKey(key);
+        return key;
     }
 
     @Override
     public Optional<ItemStack> findEquippedKey(Player player) {
-        // No accessory mod support on Fabric yet
-        return Optional.empty();
+        return isAccessoriesLoaded() ? AccessoriesCompat.findEquippedKey(player) : Optional.empty();
     }
 
     @Override

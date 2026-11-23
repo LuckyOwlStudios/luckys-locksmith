@@ -2,6 +2,7 @@ package net.luckyowlstudios.locksmith.neoforge.platform;
 
 import net.luckyowlstudios.locksmith.Locksmith;
 import net.luckyowlstudios.locksmith.item.KeyItem;
+import net.luckyowlstudios.locksmith.neoforge.compat.AccessoriesCompat;
 import net.luckyowlstudios.locksmith.neoforge.compat.CuriosCompat;
 import net.luckyowlstudios.locksmith.platform.services.IPlatformHelper;
 import net.minecraft.core.BlockPos;
@@ -44,6 +45,10 @@ public class NeoForgePlatformHelper implements IPlatformHelper {
         return ModList.get().isLoaded("curios");
     }
 
+    private static boolean isAccessoriesLoaded() {
+        return ModList.get().isLoaded("accessories");
+    }
+
     @Override
     public String getPlatformName() {
         return "NeoForge";
@@ -74,12 +79,16 @@ public class NeoForgePlatformHelper implements IPlatformHelper {
 
     @Override
     public KeyItem createKeyItem(Item.Properties properties) {
-        return isCuriosLoaded() ? CuriosCompat.createKeyItem(properties) : new KeyItem(properties);
+        KeyItem key = isCuriosLoaded() ? CuriosCompat.createKeyItem(properties) : new KeyItem(properties);
+        if (isAccessoriesLoaded()) AccessoriesCompat.registerKey(key);
+        return key;
     }
 
     @Override
     public Optional<ItemStack> findEquippedKey(Player player) {
-        return isCuriosLoaded() ? CuriosCompat.findEquippedKey(player) : Optional.empty();
+        Optional<ItemStack> key = isCuriosLoaded() ? CuriosCompat.findEquippedKey(player) : Optional.empty();
+        if (key.isEmpty() && isAccessoriesLoaded()) key = AccessoriesCompat.findEquippedKey(player);
+        return key;
     }
 
     @Override

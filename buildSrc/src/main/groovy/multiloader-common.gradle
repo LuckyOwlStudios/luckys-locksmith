@@ -39,6 +39,10 @@ repositories {
         filter { includeGroup('org.parchmentmc.data') }
     }
     maven {
+        name = 'Wisp Forest maven'
+        url = 'https://maven.wispforest.io/releases'
+    }
+    maven {
         name = 'Illusive Soulworks maven'
         url = 'https://maven.theillusivec4.top/'
     }

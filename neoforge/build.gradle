@@ -69,4 +69,6 @@ dependencies {
     compileOnly "top.theillusivec4.curios:curios-neoforge:${curios_version}:api"
     // Use the full Curios API jar at runtime
     localRuntime "top.theillusivec4.curios:curios-neoforge:${curios_version}"
+    // Accessories is optional too; only its API is needed to compile
+    compileOnly "io.wispforest:accessories-neoforge:${accessories_version}"
 }
