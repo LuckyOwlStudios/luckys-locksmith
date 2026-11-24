@@ -32,6 +32,7 @@ public class ModCreativeModeTabs {
                         output.accept(Items.TRAPPED_CHEST);
                         output.accept(ModBlocks.IRON_TRAPPED_CHEST.get());
                         output.accept(ModBlocks.GOLDEN_TRAPPED_CHEST.get());
+                        output.accept(ModBlocks.JEWELED_TRAPPED_CHEST.get());
                         output.accept(Items.BARREL);
                         output.accept(ModItems.DUNGEON_SLIME_SPAWN_EGG.get());
                     })

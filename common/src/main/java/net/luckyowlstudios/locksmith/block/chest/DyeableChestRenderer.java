@@ -67,6 +67,11 @@ public abstract class DyeableChestRenderer implements BlockEntityRenderer<ChestB
         return -1;
     }
 
+    /** Draw the overlay before the base chest, so the base texture's pixels sit on top of it. */
+    protected boolean overlayUnderBase() {
+        return false;
+    }
+
     @Override
     public void render(ChestBlockEntity blockEntity, float partialTick, PoseStack poseStack, MultiBufferSource bufferSource, int packedLight, int packedOverlay) {
         DyedItemColor dyedComponent = blockEntity.components().get(DataComponents.DYED_COLOR);
@@ -97,15 +102,19 @@ public abstract class DyeableChestRenderer implements BlockEntityRenderer<ChestB
             int i = ((Int2IntFunction)neighborcombineresult.apply(new BrightnessCombiner())).applyAsInt(packedLight);
             Material existingMaterial = this.getMaterial(blockEntity, chesttype);
 
-            // Base chest
-            VertexConsumer baseConsumer = existingMaterial.buffer(bufferSource, RenderType::entityCutout);
-            renderParts(poseStack, baseConsumer, chesttype, f1, i, packedOverlay, -1);
-
-            // Overlay (tinted with the dye color)
             ResourceLocation dyeOverlay = ResourceLocation.fromNamespaceAndPath(Locksmith.MOD_ID, overlayTexture(chesttype, dyed));
             Material dyeMaterial = new Material(existingMaterial.atlasLocation(), dyeOverlay);
-            VertexConsumer vertexconsumer = dyeMaterial.buffer(bufferSource, RenderType::entityCutout);
-            renderParts(poseStack, vertexconsumer, chesttype, f1, i, packedOverlay, color);
+            VertexConsumer baseConsumer = existingMaterial.buffer(bufferSource, RenderType::entityCutout);
+            VertexConsumer overlayConsumer = dyeMaterial.buffer(bufferSource, RenderType::entityCutout);
+            if (overlayUnderBase()) {
+                // Overlay (tinted with the dye color), then the base chest on top
+                renderParts(poseStack, overlayConsumer, chesttype, f1, i, packedOverlay, color);
+                renderParts(poseStack, baseConsumer, chesttype, f1, i, packedOverlay, -1);
+            } else {
+                // Base chest, then the overlay (tinted with the dye color) on top
+                renderParts(poseStack, baseConsumer, chesttype, f1, i, packedOverlay, -1);
+                renderParts(poseStack, overlayConsumer, chesttype, f1, i, packedOverlay, color);
+            }
             poseStack.popPose();
         }
 

@@ -12,6 +12,8 @@ import net.luckyowlstudios.locksmith.block.chest.gold.GoldenChestItemRenderer;
 import net.luckyowlstudios.locksmith.block.chest.gold.GoldenChestRenderer;
 import net.luckyowlstudios.locksmith.block.chest.jeweled.JeweledChestItemRenderer;
 import net.luckyowlstudios.locksmith.block.chest.jeweled.JeweledChestRenderer;
+import net.luckyowlstudios.locksmith.block.chest.jeweled_trapped.JeweledTrappedChestItemRenderer;
+import net.luckyowlstudios.locksmith.block.chest.jeweled_trapped.JeweledTrappedChestRenderer;
 import net.luckyowlstudios.locksmith.block.chest.gold_trapped.GoldenTrappedChestItemRenderer;
 import net.luckyowlstudios.locksmith.block.chest.gold_trapped.GoldenTrappedChestRenderer;
 import net.luckyowlstudios.locksmith.block.chest.iron.IronChestItemRenderer;
@@ -48,6 +50,7 @@ public class LocksmithFabricClient implements ClientModInitializer {
         registerRenderer(ModBlockEntityTypes.JEWELED_CHEST_BLOCK_ENTITY.get(), JeweledChestRenderer::new);
         registerRenderer(ModBlockEntityTypes.IRON_TRAPPED_CHEST_BLOCK_ENTITY.get(), IronTrappedChestRenderer::new);
         registerRenderer(ModBlockEntityTypes.GOLDEN_TRAPPED_CHEST_BLOCK_ENTITY.get(), GoldenTrappedChestRenderer::new);
+        registerRenderer(ModBlockEntityTypes.JEWELED_TRAPPED_CHEST_BLOCK_ENTITY.get(), JeweledTrappedChestRenderer::new);
         registerRenderer(BlockEntityType.BARREL, AddBarrelRenderer::new);
 
         EntityRendererRegistry.register(ModEntityTypes.DUNGEON_SLIME.get(), DungeonSlimeRenderer::new);
@@ -57,6 +60,7 @@ public class LocksmithFabricClient implements ClientModInitializer {
         registerItemRenderer(ModBlocks.JEWELED_CHEST.get(), JeweledChestItemRenderer::new);
         registerItemRenderer(ModBlocks.IRON_TRAPPED_CHEST.get(), IronTrappedChestItemRenderer::new);
         registerItemRenderer(ModBlocks.GOLDEN_TRAPPED_CHEST.get(), GoldenTrappedChestItemRenderer::new);
+        registerItemRenderer(ModBlocks.JEWELED_TRAPPED_CHEST.get(), JeweledTrappedChestItemRenderer::new);
 
         // Runs on the client thread
         ClientPlayNetworking.registerGlobalReceiver(DoorLocksPayload.TYPE,

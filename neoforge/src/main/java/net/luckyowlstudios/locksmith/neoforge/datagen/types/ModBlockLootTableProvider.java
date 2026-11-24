@@ -24,6 +24,7 @@ public class ModBlockLootTableProvider extends BlockLootSubProvider {
 
         dropSelf(ModBlocks.IRON_TRAPPED_CHEST.get());
         dropSelf(ModBlocks.GOLDEN_TRAPPED_CHEST.get());
+        dropSelf(ModBlocks.JEWELED_TRAPPED_CHEST.get());
     }
 
     @Override

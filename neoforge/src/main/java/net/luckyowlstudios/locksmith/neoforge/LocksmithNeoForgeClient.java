@@ -5,6 +5,8 @@ import net.luckyowlstudios.locksmith.block.chest.gold.GoldenChestItemRenderer;
 import net.luckyowlstudios.locksmith.block.chest.gold.GoldenChestRenderer;
 import net.luckyowlstudios.locksmith.block.chest.jeweled.JeweledChestItemRenderer;
 import net.luckyowlstudios.locksmith.block.chest.jeweled.JeweledChestRenderer;
+import net.luckyowlstudios.locksmith.block.chest.jeweled_trapped.JeweledTrappedChestItemRenderer;
+import net.luckyowlstudios.locksmith.block.chest.jeweled_trapped.JeweledTrappedChestRenderer;
 import net.luckyowlstudios.locksmith.block.chest.gold_trapped.GoldenTrappedChestItemRenderer;
 import net.luckyowlstudios.locksmith.block.chest.gold_trapped.GoldenTrappedChestRenderer;
 import net.luckyowlstudios.locksmith.block.chest.iron.IronChestItemRenderer;
@@ -51,6 +53,7 @@ public class LocksmithNeoForgeClient {
 
         event.registerBlockEntityRenderer(ModBlockEntityTypes.IRON_TRAPPED_CHEST_BLOCK_ENTITY.get(), IronTrappedChestRenderer::new);
         event.registerBlockEntityRenderer(ModBlockEntityTypes.GOLDEN_TRAPPED_CHEST_BLOCK_ENTITY.get(), GoldenTrappedChestRenderer::new);
+        event.registerBlockEntityRenderer(ModBlockEntityTypes.JEWELED_TRAPPED_CHEST_BLOCK_ENTITY.get(), JeweledTrappedChestRenderer::new);
         event.registerBlockEntityRenderer(BlockEntityType.BARREL, AddBarrelRenderer::new);
 
         event.registerEntityRenderer(ModEntityTypes.DUNGEON_SLIME.get(), DungeonSlimeRenderer::new);
@@ -63,6 +66,7 @@ public class LocksmithNeoForgeClient {
         registerItemRenderer(event, JeweledChestItemRenderer::new, ModBlocks.JEWELED_CHEST.get().asItem());
         registerItemRenderer(event, IronTrappedChestItemRenderer::new, ModBlocks.IRON_TRAPPED_CHEST.get().asItem());
         registerItemRenderer(event, GoldenTrappedChestItemRenderer::new, ModBlocks.GOLDEN_TRAPPED_CHEST.get().asItem());
+        registerItemRenderer(event, JeweledTrappedChestItemRenderer::new, ModBlocks.JEWELED_TRAPPED_CHEST.get().asItem());
     }
 
     private static void registerItemRenderer(RegisterClientExtensionsEvent event, Supplier<BlockEntityWithoutLevelRenderer> renderer, net.minecraft.world.item.Item item) {
