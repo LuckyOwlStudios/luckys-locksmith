@@ -17,6 +17,7 @@ Work In Progress section is started.
 # Work In Progress (1.1.1)
 
 **Added:**
+- **Jeweled Trapped Chest**, the trapped version of the Jeweled Chest. Craft it from a Jeweled Chest and a tripwire hook.
 - **Jeweled Chest**, a gold and diamond chest with dyeable fabric trim (purple until dyed), double chest support and lock support like the Golden Chest. Craft it from a Golden Chest surrounded by 4 diamonds.
 
 **Changed:**

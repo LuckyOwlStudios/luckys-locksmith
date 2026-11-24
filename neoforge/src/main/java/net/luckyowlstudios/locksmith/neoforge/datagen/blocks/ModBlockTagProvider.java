@@ -26,6 +26,7 @@ public class ModBlockTagProvider extends BlockTagsProvider {
                 .add(ModBlocks.JEWELED_CHEST.get())
                 .add(ModBlocks.IRON_TRAPPED_CHEST.get())
                 .add(ModBlocks.GOLDEN_TRAPPED_CHEST.get())
+                .add(ModBlocks.JEWELED_TRAPPED_CHEST.get())
         ;
 
         tag(Tags.Blocks.CHESTS)
@@ -37,6 +38,7 @@ public class ModBlockTagProvider extends BlockTagsProvider {
         tag(Tags.Blocks.CHESTS_TRAPPED)
                 .add(ModBlocks.IRON_TRAPPED_CHEST.get())
                 .add(ModBlocks.GOLDEN_TRAPPED_CHEST.get())
+                .add(ModBlocks.JEWELED_TRAPPED_CHEST.get())
         ;
 
         tag(BlockTags.FEATURES_CANNOT_REPLACE)
@@ -45,6 +47,7 @@ public class ModBlockTagProvider extends BlockTagsProvider {
                 .add(ModBlocks.JEWELED_CHEST.get())
                 .add(ModBlocks.IRON_TRAPPED_CHEST.get())
                 .add(ModBlocks.GOLDEN_TRAPPED_CHEST.get())
+                .add(ModBlocks.JEWELED_TRAPPED_CHEST.get())
         ;
 
         tag(BlockTags.MINEABLE_WITH_PICKAXE)
@@ -53,6 +56,7 @@ public class ModBlockTagProvider extends BlockTagsProvider {
                 .add(ModBlocks.JEWELED_CHEST.get())
                 .add(ModBlocks.IRON_TRAPPED_CHEST.get())
                 .add(ModBlocks.GOLDEN_TRAPPED_CHEST.get())
+                .add(ModBlocks.JEWELED_TRAPPED_CHEST.get())
         ;
 
         tag(BlockTags.MINEABLE_WITH_AXE)
@@ -61,12 +65,14 @@ public class ModBlockTagProvider extends BlockTagsProvider {
                 .add(ModBlocks.JEWELED_CHEST.get())
                 .add(ModBlocks.IRON_TRAPPED_CHEST.get())
                 .add(ModBlocks.GOLDEN_TRAPPED_CHEST.get())
+                .add(ModBlocks.JEWELED_TRAPPED_CHEST.get())
         ;
 
         tag(BlockTags.GUARDED_BY_PIGLINS)
                 .add(ModBlocks.GOLDEN_CHEST.get())
                 .add(ModBlocks.JEWELED_CHEST.get())
                 .add(ModBlocks.GOLDEN_TRAPPED_CHEST.get())
+                .add(ModBlocks.JEWELED_TRAPPED_CHEST.get())
         ;
     }
 }

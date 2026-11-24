@@ -74,5 +74,12 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
                 .unlockedBy("has_chest", has(Tags.Items.CHESTS))
                 .unlockedBy("has_tripwire", has(Items.TRIPWIRE_HOOK))
                 .save(recipeOutput, BuiltInRegistries.BLOCK.getKey(ModBlocks.GOLDEN_TRAPPED_CHEST.get()));
+
+        ShapelessRecipeBuilder.shapeless(RecipeCategory.REDSTONE, ModBlocks.JEWELED_TRAPPED_CHEST.get())
+                .requires(ModBlocks.JEWELED_CHEST.get())
+                .requires(Ingredient.of(Items.TRIPWIRE_HOOK))
+                .unlockedBy("has_chest", has(Tags.Items.CHESTS))
+                .unlockedBy("has_tripwire", has(Items.TRIPWIRE_HOOK))
+                .save(recipeOutput, BuiltInRegistries.BLOCK.getKey(ModBlocks.JEWELED_TRAPPED_CHEST.get()));
     }
 }
