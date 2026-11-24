@@ -123,7 +123,7 @@ This is a multiloader project based on [MultiLoader-Template](https://github.com
 ./gradlew build
 ```
 
-**One-click build:** double-click `build.bat` (Windows) or `build.sh` (Mac/Linux), or run `./gradlew buildRelease`. It builds both loaders and puts the two release jars together in `release/<version>/` (git-ignored).
+**One-click build:** double-click `build.bat` (Windows) or `build.sh` (Mac/Linux), or run `./gradlew buildRelease`. In IntelliJ, pick **Build Release** in the run dropdown at the top right and press the green play button. It builds both loaders and puts the two release jars together in `release/<version>/` (git-ignored).
 
 Or build manually: jars end up in `fabric/build/libs/` and `neoforge/build/libs/`. Run with `./gradlew :neoforge:runClient` or `./gradlew :fabric:runClient`. Data generators run on NeoForge (`./gradlew :neoforge:runData`) and write into `common/src/generated/resources`.
 
