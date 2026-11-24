@@ -31,7 +31,7 @@ public class LockPickScreen extends Screen {
     private static final int PANEL_HEIGHT = 166;
 
     private static final int TRACK_HEIGHT = 18;
-    private static final int TRACK_Y = 70;
+    private static final int TRACK_Y = 76;
 
     // Vanilla inventory colors
     private static final int TEXT_COLOR = 0xFF404040;
@@ -127,7 +127,7 @@ public class LockPickScreen extends Screen {
         int pinsWidth = difficulty.pins() * 20 - 2;
         int pinX = left + (PANEL_WIDTH - pinsWidth) / 2;
         for (int i = 0; i < difficulty.pins(); i++) {
-            drawSlot(graphics, pinX + i * 20, top + 38, 18, 18, i < pinsSet ? SWEET_SPOT : SLOT_FILL);
+            drawSlot(graphics, pinX + i * 20, top + 34, 18, 16, i < pinsSet ? SWEET_SPOT : SLOT_FILL);
         }
 
         int trackX = left + (PANEL_WIDTH - LockPicking.TRACK_WIDTH) / 2;
@@ -144,7 +144,7 @@ public class LockPickScreen extends Screen {
             int markerX = trackX + Math.round(markerPosition());
             graphics.fill(markerX, trackY, markerX + 1, trackY + TRACK_HEIGHT, MARKER);
             // The lock pick itself rides along above the track
-            graphics.renderItem(new ItemStack(ModItems.LOCK_PICK.get()), markerX - 8, trackY - 20);
+            graphics.renderItem(new ItemStack(ModItems.LOCK_PICK.get()), markerX - 8, trackY - 17);
         } else if (closeAtMillis != 0) {
             Component snapped = Component.translatable("message.locksmith.lock_pick_snapped");
             graphics.drawString(font, snapped, left + (PANEL_WIDTH - font.width(snapped)) / 2, trackY + 5, 0xFFAA0000, false);
