@@ -18,6 +18,8 @@ Work In Progress section is started.
 
 **Added:**
 - **Accessories compatibility** (optional). With the [Accessories](https://www.curseforge.com/minecraft/mc-mods/accessories) mod installed, keys can be worn in a dedicated key slot on both NeoForge and Fabric, and a worn key opens matching locks without being held. This also gives Fabric its first worn key slot.
+- **Jeweled Trapped Chest**, the trapped version of the Jeweled Chest. Craft it from a Jeweled Chest and a tripwire hook.
+- **Jeweled Chest**, a gold and diamond chest with dyeable fabric trim (purple until dyed), double chest support and lock support like the Golden Chest. Craft it from a Golden Chest surrounded by 4 diamonds.
 
 **Changed:**
 

@@ -85,18 +85,22 @@ public class LocksmithNeoForge {
     private static void addCreative(BuildCreativeModeTabContentsEvent event) {
         ItemStack ironChest = new ItemStack(ModBlocks.IRON_CHEST.get());
         ItemStack goldenChest = new ItemStack(ModBlocks.GOLDEN_CHEST.get());
+        ItemStack jeweledChest = new ItemStack(ModBlocks.JEWELED_CHEST.get());
         ItemStack ironTrappedChest = new ItemStack(ModBlocks.IRON_TRAPPED_CHEST.get());
         ItemStack goldenTrappedChest = new ItemStack(ModBlocks.GOLDEN_TRAPPED_CHEST.get());
+        ItemStack jeweledTrappedChest = new ItemStack(ModBlocks.JEWELED_TRAPPED_CHEST.get());
         ItemStack key = new ItemStack(ModItems.KEY.get());
         ItemStack goldenKey = new ItemStack(ModItems.GOLDEN_KEY.get());
 
         if (event.getTabKey() == CreativeModeTabs.FUNCTIONAL_BLOCKS || event.getTabKey() == CreativeModeTabs.REDSTONE_BLOCKS) {
             event.insertAfter(Items.CHEST.getDefaultInstance(), ironChest, CreativeModeTab.TabVisibility.PARENT_AND_SEARCH_TABS);
             event.insertAfter(ironChest, goldenChest, CreativeModeTab.TabVisibility.PARENT_AND_SEARCH_TABS);
+            event.insertAfter(goldenChest, jeweledChest, CreativeModeTab.TabVisibility.PARENT_AND_SEARCH_TABS);
         }
         if (event.getTabKey() == CreativeModeTabs.REDSTONE_BLOCKS) {
             event.insertAfter(Items.TRAPPED_CHEST.getDefaultInstance(), ironTrappedChest, CreativeModeTab.TabVisibility.PARENT_AND_SEARCH_TABS);
             event.insertAfter(ironTrappedChest, goldenTrappedChest, CreativeModeTab.TabVisibility.PARENT_AND_SEARCH_TABS);
+            event.insertAfter(goldenTrappedChest, jeweledTrappedChest, CreativeModeTab.TabVisibility.PARENT_AND_SEARCH_TABS);
         }
         if (event.getTabKey() == CreativeModeTabs.INGREDIENTS) {
             event.insertAfter(Items.EXPERIENCE_BOTTLE.getDefaultInstance(), key, CreativeModeTab.TabVisibility.PARENT_AND_SEARCH_TABS);
