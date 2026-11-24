@@ -10,16 +10,13 @@ Work In Progress section is started.
 
 | Version | Release Date | Type |
 |---------|--------------|------|
-| [1.1.0](#110) | `TBD` | Release |
+| [1.1.0](#110) | `11/23/2026` | Release |
 | [1.0.3](#103) | `04/15/2026` | Release |
 | [1.0.0](#100) | `07/08/2025` | Release |
 
 # Work In Progress (1.1.1)
 
 **Added:**
-- **Accessories compatibility** (optional). With the [Accessories](https://www.curseforge.com/minecraft/mc-mods/accessories) mod installed, keys can be worn in a dedicated key slot on both NeoForge and Fabric, and a worn key opens matching locks without being held. This also gives Fabric its first worn key slot. ([#24](https://github.com/luckyowlstudios/luckys-locksmith/pull/24))
-- **Jeweled Trapped Chest**, the trapped version of the Jeweled Chest. Craft it from a Jeweled Chest and a tripwire hook. ([#25](https://github.com/luckyowlstudios/luckys-locksmith/pull/25))
-- **Jeweled Chest**, a gold and diamond chest with dyeable fabric trim (purple until dyed), double chest support and lock support like the Golden Chest. Craft it from a Golden Chest surrounded by 4 diamonds. ([#25](https://github.com/luckyowlstudios/luckys-locksmith/pull/25))
 
 **Changed:**
 
@@ -28,8 +25,11 @@ Work In Progress section is started.
 # 1.1.0
 
 **Added:**
+- **Accessories compatibility** (optional). With the [Accessories](https://www.curseforge.com/minecraft/mc-mods/accessories) mod installed, keys can be worn in a dedicated key slot on both NeoForge and Fabric, and a worn key opens matching locks without being held. This also gives Fabric its first worn key slot. ([#24](https://github.com/luckyowlstudios/luckys-locksmith/pull/24))
+- **Jeweled Trapped Chest**, the trapped version of the Jeweled Chest. Craft it from a Jeweled Chest and a tripwire hook. ([#25](https://github.com/luckyowlstudios/luckys-locksmith/pull/25))
+- **Jeweled Chest**, a gold and diamond chest with dyeable fabric trim (purple until dyed), double chest support and lock support like the Golden Chest. Craft it from a Golden Chest surrounded by 4 diamonds. ([#25](https://github.com/luckyowlstudios/luckys-locksmith/pull/25))
 - **Fabric support!** Locksmith now runs on both NeoForge and Fabric for Minecraft 1.21.1. ([#5](https://github.com/luckyowlstudios/luckys-locksmith/pull/5))
-  - On Fabric, keys work from your hand or inventory. A worn key slot isn't available there yet.
+  - On Fabric, keys work from your hand or inventory, or from a worn key slot with the optional Accessories mod.
 - **Dungeon Slime**, a new mob and the new source of golden keys. It's a gray, see-through
   slime with a golden key floating inside.
   - Spawns in the Overworld below Y 0 in full darkness (not on Peaceful, in mushroom fields
