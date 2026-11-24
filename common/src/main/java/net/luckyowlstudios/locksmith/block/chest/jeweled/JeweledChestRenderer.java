@@ -27,13 +27,13 @@ public class JeweledChestRenderer extends DyeableChestRenderer {
 
     @Override
     protected String overlayTexture(ChestType chestType, boolean dyed) {
-        // Always fabric, red until dyed
+        // Always fabric, purple until dyed
         return "entity/chest/fabric" + sideSuffix(chestType);
     }
 
     @Override
     protected int undyedColor() {
-        return DyeColor.RED.getTextureDiffuseColor();
+        return DyeColor.PURPLE.getTextureDiffuseColor();
     }
 
     @Override
