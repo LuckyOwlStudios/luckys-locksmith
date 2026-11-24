@@ -11,6 +11,8 @@ dependencies {
     }
     modImplementation "net.fabricmc:fabric-loader:${fabric_loader_version}"
     modImplementation "net.fabricmc.fabric-api:fabric-api:${fabric_version}"
+    // Accessories is optional; only its API is needed to compile
+    modCompileOnly "io.wispforest:accessories-fabric:${accessories_version}"
 }
 
 loom {

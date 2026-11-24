@@ -17,6 +17,7 @@ Work In Progress section is started.
 # Work In Progress (1.1.1)
 
 **Added:**
+- **Accessories compatibility** (optional). With the [Accessories](https://www.curseforge.com/minecraft/mc-mods/accessories) mod installed, keys can be worn in a dedicated key slot on both NeoForge and Fabric, and a worn key opens matching locks without being held. This also gives Fabric its first worn key slot.
 
 **Changed:**
 

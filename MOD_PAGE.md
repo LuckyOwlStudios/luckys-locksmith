@@ -31,7 +31,7 @@ Craft a **Key** and right-click a chest, barrel, door or trapdoor to lock it. Ev
 - **Copy a key** in an anvil: key on the left, iron ingot on the right. You keep the original and get a copy to share.
 - A matching key works from your **hand or anywhere in your inventory**.
 - Locked containers can't be broken by other players. The owner, or anyone with the right key, still can.
-- **Curios (NeoForge, optional):** wear your key in a dedicated slot and it opens matching locks without being held.
+- **Curios (NeoForge) or Accessories (NeoForge and Fabric), optional:** wear your key in a dedicated slot and it opens matching locks without being held.
 
 ### Golden locks
 Some of the world's treasure is behind a **Golden Lock**. Open one with a **Golden Key**, which is used up when the lock opens.
@@ -101,7 +101,8 @@ Golden and trial keys stack to 16. Everything is in the **Locksmithing** creativ
 | | NeoForge | Fabric |
 | --- | :---: | :---: |
 | Keys, locks, doors, chests, Dungeon Slime | ✅ | ✅ |
-| Worn key slot ([Curios](https://www.curseforge.com/minecraft/mc-mods/curios), optional) | ✅ | ❌ Not yet |
+| Worn key slot ([Curios](https://www.curseforge.com/minecraft/mc-mods/curios), optional) | ✅ | ❌ |
+| Worn key slot ([Accessories](https://www.curseforge.com/minecraft/mc-mods/accessories), optional) | ✅ | ✅ |
 | `fortressChestLockChance` config option | ✅ | Fixed at 25% |
 
 - **Fabric** needs **[Fabric API](https://modrinth.com/mod/fabric-api)**.
