@@ -17,6 +17,7 @@ Work In Progress section is started.
 # Work In Progress (1.1.1)
 
 **Added:**
+- **One-click build** for developers: `build.bat` / `build.sh` (or `./gradlew buildRelease`) builds both the Fabric and NeoForge jars and copies them into `release/<version>/`.
 
 **Changed:**
 
