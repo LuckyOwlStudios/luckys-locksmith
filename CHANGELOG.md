@@ -18,6 +18,11 @@ Work In Progress section is started.
 # 1.1.1 (Work In Progress)
 
 **Added:**
+- **Lock Pick** and a **lock picking mini game**. Craft a lock pick from 2 iron nuggets over a stick, then right-click another player's locked container with it. A vanilla-styled screen opens where a pick slides over a bar, and you click (or press space) while it is over the green sweet spot to set each tumbler. Set them all and the lock is picked and removed.
+  - The more experience levels the lock's owner has, the harder it is: more tumblers (3, then 4 from level 15, then 5 from level 30), a smaller sweet spot and a faster pick. At 30 levels or more the sweet spot is only 2 pixels wide, so it is nearly impossible. An owner who is offline counts as level 0.
+  - Starting an attempt uses 1 of the pick's 8 durability. Missing, or closing the screen early, snaps the pick.
+  - Only player locks can be picked. Golden and trial locks still need their own keys.
+  - The lock pick uses a placeholder texture for now.
 - **One-click build** for developers: `build.bat` / `build.sh` (or `./gradlew buildRelease`) builds both the Fabric and NeoForge jars and copies them into `release/<version>/`. IntelliJ also gets a **Build Release** run button in the top-right run dropdown.
 
 **Changed:**

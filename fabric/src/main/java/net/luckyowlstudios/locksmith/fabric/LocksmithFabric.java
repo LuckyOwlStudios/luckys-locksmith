@@ -12,7 +12,11 @@ import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents;
 import net.fabricmc.fabric.api.loot.v3.LootTableEvents;
 import net.fabricmc.fabric.api.networking.v1.PayloadTypeRegistry;
 import net.luckyowlstudios.locksmith.Locksmith;
+import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
+import net.luckyowlstudios.locksmith.event.LockPicking;
 import net.luckyowlstudios.locksmith.network.DoorLocksPayload;
+import net.luckyowlstudios.locksmith.network.LockPickResultPayload;
+import net.luckyowlstudios.locksmith.network.OpenLockPickPayload;
 import net.luckyowlstudios.locksmith.event.LockEvents;
 import net.luckyowlstudios.locksmith.entity.DungeonSlime;
 import net.luckyowlstudios.locksmith.init.ModBlocks;
@@ -42,6 +46,10 @@ public class LocksmithFabric implements ModInitializer {
     public void onInitialize() {
         Locksmith.init();
         PayloadTypeRegistry.playS2C().register(DoorLocksPayload.TYPE, DoorLocksPayload.STREAM_CODEC);
+        PayloadTypeRegistry.playS2C().register(OpenLockPickPayload.TYPE, OpenLockPickPayload.STREAM_CODEC);
+        PayloadTypeRegistry.playC2S().register(LockPickResultPayload.TYPE, LockPickResultPayload.STREAM_CODEC);
+        ServerPlayNetworking.registerGlobalReceiver(LockPickResultPayload.TYPE,
+                (payload, context) -> LockPicking.onResult(context.player(), payload));
         registerEvents();
         registerLoot();
         registerEntities();
@@ -107,6 +115,8 @@ public class LocksmithFabric implements ModInitializer {
         });
         ItemGroupEvents.modifyEntriesEvent(CreativeModeTabs.INGREDIENTS).register(entries ->
                 entries.addAfter(Items.EXPERIENCE_BOTTLE, ModItems.KEY.get(), ModItems.GOLDEN_KEY.get()));
+        ItemGroupEvents.modifyEntriesEvent(CreativeModeTabs.TOOLS_AND_UTILITIES).register(entries ->
+                entries.accept(ModItems.LOCK_PICK.get()));
         ItemGroupEvents.modifyEntriesEvent(CreativeModeTabs.OP_BLOCKS).register(entries -> {
             entries.accept(ModItems.GOLDEN_LOCK.get());
             entries.accept(ModItems.TRIAL_LOCK.get());

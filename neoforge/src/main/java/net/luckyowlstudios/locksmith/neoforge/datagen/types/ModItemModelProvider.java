@@ -16,6 +16,8 @@ public class ModItemModelProvider extends ItemModelProvider {
         this.basicItem(ModItems.KEY.get());
         this.basicItem(ModItems.GOLDEN_KEY.get());
 
+        this.handheldItem(ModItems.LOCK_PICK.get());
+
         this.basicItem(ModItems.GOLDEN_LOCK.get());
         this.basicItem(ModItems.TRIAL_LOCK.get());
     }

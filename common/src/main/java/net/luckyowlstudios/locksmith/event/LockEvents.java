@@ -13,8 +13,10 @@ import net.minecraft.core.Direction;
 import net.minecraft.core.component.DataComponentMap;
 import net.minecraft.core.component.DataComponentType;
 import net.minecraft.core.component.DataComponents;
+import net.minecraft.core.component.TypedDataComponent;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.LockCode;
@@ -176,6 +178,13 @@ public final class LockEvents {
             return ClickResult.CANCEL;
         } else if (currentLockType != LockType.NONE) {
             // Wrong key or no key
+            if (LockPicking.isPick(heldItem)) {
+                // Golden and trial locks need their own keys
+                if (!level.isClientSide) {
+                    player.displayClientMessage(Component.translatable("message.locksmith.cannot_pick").withStyle(ChatFormatting.RED), true);
+                }
+                return ClickResult.CANCEL;
+            }
             failedToOpen(player, level, pos);
             player.swing(hand, true);
             return ClickResult.CANCEL_FAIL;
@@ -194,6 +203,11 @@ public final class LockEvents {
             if (canUnlockWithKey(containerBlockEntity, heldItem, curiosKey, player)) {
                 level.playSound(null, pos, SoundEvents.VAULT_INSERT_ITEM, player.getSoundSource(), 1.0F, 1.5F);
                 return ClickResult.PASS;
+            } else if (LockPicking.isPick(heldItem)) {
+                if (!level.isClientSide && player instanceof ServerPlayer serverPlayer) {
+                    LockPicking.start(serverPlayer, containerBlockEntity, heldItem);
+                }
+                return ClickResult.CANCEL;
             } else if (!player.isCrouching() || !(heldItem.getItem() instanceof BlockItem)) {
                 failedToOpen(player, level, pos);
                 player.swing(hand, true);
@@ -380,22 +394,56 @@ public final class LockEvents {
     private static void applyChangesToBlock(BaseContainerBlockEntity containerBlockEntity, DataComponentMap lockChanges) {
         mergeComponents(containerBlockEntity, lockChanges);
 
+        BaseContainerBlockEntity otherContainer = chestPartner(containerBlockEntity);
+        if (otherContainer != null) {
+            mergeComponents(otherContainer, lockChanges);
+        }
+    }
+
+    /** @return the other half of a double chest, or null if this is not part of a valid double chest. */
+    private static BaseContainerBlockEntity chestPartner(BaseContainerBlockEntity containerBlockEntity) {
         Level level = containerBlockEntity.getLevel();
         BlockState blockState = containerBlockEntity.getBlockState();
 
-        // Handle double chests
-        if (blockState.getBlock() instanceof ChestBlock && blockState.getValue(ChestBlock.TYPE) != ChestType.SINGLE) {
+        if (level != null && blockState.getBlock() instanceof ChestBlock && blockState.getValue(ChestBlock.TYPE) != ChestType.SINGLE) {
             Direction facing = ChestBlock.getConnectedDirection(blockState);
             BlockPos otherPos = containerBlockEntity.getBlockPos().relative(facing);
             BlockState otherState = level.getBlockState(otherPos);
 
-            if (isValidChestPartner(blockState, otherState)) {
-                BlockEntity otherBlockEntity = level.getBlockEntity(otherPos);
-                if (otherBlockEntity instanceof BaseContainerBlockEntity otherContainer) {
-                    mergeComponents(otherContainer, lockChanges);
-                }
+            if (isValidChestPartner(blockState, otherState)
+                    && level.getBlockEntity(otherPos) instanceof BaseContainerBlockEntity otherContainer) {
+                return otherContainer;
             }
         }
+        return null;
+    }
+
+    /** Takes the player lock (and its owner) off a container and the other half of a double chest. Used by lock picking. */
+    public static void removePlayerLock(BaseContainerBlockEntity containerBlockEntity) {
+        stripPlayerLock(containerBlockEntity);
+        BaseContainerBlockEntity otherContainer = chestPartner(containerBlockEntity);
+        if (otherContainer != null) {
+            stripPlayerLock(otherContainer);
+        }
+    }
+
+    private static void stripPlayerLock(BaseContainerBlockEntity container) {
+        DataComponentMap.Builder builder = DataComponentMap.builder();
+        for (TypedDataComponent<?> component : container.components()) {
+            if (component.type() != DataComponents.LOCK && component.type() != ModDataComponents.OWNER_UUID.get()) {
+                copyComponent(builder, component);
+            }
+        }
+        container.setComponents(builder.build());
+        container.setChanged();
+        Level level = container.getLevel();
+        if (level != null) {
+            level.sendBlockUpdated(container.getBlockPos(), container.getBlockState(), container.getBlockState(), 3);
+        }
+    }
+
+    private static <T> void copyComponent(DataComponentMap.Builder builder, TypedDataComponent<T> component) {
+        builder.set(component.type(), component.value());
     }
 
     private static void mergeComponents(BaseContainerBlockEntity container, DataComponentMap changes) {

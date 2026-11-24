@@ -31,6 +31,15 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
                 .unlockedBy("has_iron", has(Items.IRON_INGOT))
                 .save(recipeOutput);
 
+        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, ModItems.LOCK_PICK.get())
+                .pattern("#")
+                .pattern("#")
+                .pattern("/")
+                .define('#', Items.IRON_NUGGET)
+                .define('/', Items.STICK)
+                .unlockedBy("has_iron_nugget", has(Items.IRON_NUGGET))
+                .save(recipeOutput);
+
         ShapedRecipeBuilder.shaped(RecipeCategory.MISC, ModBlocks.IRON_CHEST.get())
                 .pattern(" # ")
                 .pattern("#$#")
