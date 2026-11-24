@@ -2,7 +2,9 @@
   "values": [
     "locksmith:iron_chest",
     "locksmith:golden_chest",
+    "locksmith:jeweled_chest",
     "locksmith:iron_trapped_chest",
-    "locksmith:golden_trapped_chest"
+    "locksmith:golden_trapped_chest",
+    "locksmith:jeweled_trapped_chest"
   ]
 }

@@ -67,12 +67,13 @@ A gray, see-through slime with a **golden key floating inside**. It is the main 
 
 ---
 
-## Iron and Golden Chests
+## Iron, Golden and Jeweled Chests
 
-Two sturdier chests, each with a **trapped** version. Right-click one with **any dye** to recolor it.
+Three sturdier chests, each with a **trapped** version. Right-click one with **any dye** to recolor it.
 
 - **Iron Chest:** natural wood trim until dyed.
 - **Golden Chest:** a fabric trim that takes the dye color.
+- **Jeweled Chest:** gold and diamond, with a fabric trim that is purple until dyed.
 - Double chests keep each half's own color, even when you lock one half.
 
 ![Iron chests dyed red, blue and purple](https://raw.githubusercontent.com/LuckyOwlStudios/luckys-locksmith/master/media/screenshots/dye_chest.png)
@@ -89,7 +90,8 @@ Two sturdier chests, each with a **trapped** version. Right-click one with **any
 | **Trial Key** | Vanilla: earned from Trial Spawners in Trial Chambers |
 | **Iron Chest** | Crafted: a chest surrounded by 4 iron ingots (top, bottom, left, right) |
 | **Golden Chest** | Crafted: a chest surrounded by 4 gold ingots (top, bottom, left, right) |
-| **Trapped versions** | Crafted: the iron or golden chest + a tripwire hook |
+| **Jeweled Chest** | Crafted: a golden chest surrounded by 4 diamonds (top, bottom, left, right) |
+| **Trapped versions** | Crafted: the iron, golden or jeweled chest + a tripwire hook |
 | **Golden Lock / Trial Lock** | Creative menu only, for map makers and server admins |
 
 Golden and trial keys stack to 16. Everything is in the **Locksmithing** creative tab.

@@ -3,9 +3,11 @@
 
   "block.locksmith.iron_chest": "Iron Chest",
   "block.locksmith.golden_chest": "Golden Chest",
+  "block.locksmith.jeweled_chest": "Jeweled Chest",
 
   "block.locksmith.iron_trapped_chest": "Iron Trapped Chest",
   "block.locksmith.golden_trapped_chest": "Golden Trapped Chest",
+  "block.locksmith.jeweled_trapped_chest": "Jeweled Trapped Chest",
 
   "item.locksmith.key": "Key",
   "item.locksmith.golden_key": "Golden Key",

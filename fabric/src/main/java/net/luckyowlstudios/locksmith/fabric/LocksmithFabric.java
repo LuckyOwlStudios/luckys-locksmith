@@ -100,10 +100,10 @@ public class LocksmithFabric implements ModInitializer {
         ItemGroupEvents.modifyEntriesEvent(CreativeModeTabs.SPAWN_EGGS).register(entries ->
                 entries.accept(ModItems.DUNGEON_SLIME_SPAWN_EGG.get()));
         ItemGroupEvents.modifyEntriesEvent(CreativeModeTabs.FUNCTIONAL_BLOCKS).register(entries ->
-                entries.addAfter(Items.CHEST, ModBlocks.IRON_CHEST.get(), ModBlocks.GOLDEN_CHEST.get()));
+                entries.addAfter(Items.CHEST, ModBlocks.IRON_CHEST.get(), ModBlocks.GOLDEN_CHEST.get(), ModBlocks.JEWELED_CHEST.get()));
         ItemGroupEvents.modifyEntriesEvent(CreativeModeTabs.REDSTONE_BLOCKS).register(entries -> {
-            entries.addAfter(Items.CHEST, ModBlocks.IRON_CHEST.get(), ModBlocks.GOLDEN_CHEST.get());
-            entries.addAfter(Items.TRAPPED_CHEST, ModBlocks.IRON_TRAPPED_CHEST.get(), ModBlocks.GOLDEN_TRAPPED_CHEST.get());
+            entries.addAfter(Items.CHEST, ModBlocks.IRON_CHEST.get(), ModBlocks.GOLDEN_CHEST.get(), ModBlocks.JEWELED_CHEST.get());
+            entries.addAfter(Items.TRAPPED_CHEST, ModBlocks.IRON_TRAPPED_CHEST.get(), ModBlocks.GOLDEN_TRAPPED_CHEST.get(), ModBlocks.JEWELED_TRAPPED_CHEST.get());
         });
         ItemGroupEvents.modifyEntriesEvent(CreativeModeTabs.INGREDIENTS).register(entries ->
                 entries.addAfter(Items.EXPERIENCE_BOTTLE, ModItems.KEY.get(), ModItems.GOLDEN_KEY.get()));
