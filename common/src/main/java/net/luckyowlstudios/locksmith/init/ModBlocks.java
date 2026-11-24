@@ -3,6 +3,7 @@ package net.luckyowlstudios.locksmith.init;
 import net.luckyowlstudios.locksmith.block.chest.gold.GoldenChestBlock;
 import net.luckyowlstudios.locksmith.block.chest.gold_trapped.GoldenTrappedChestBlock;
 import net.luckyowlstudios.locksmith.block.chest.iron.IronChestBlock;
+import net.luckyowlstudios.locksmith.block.chest.jeweled.JeweledChestBlock;
 import net.luckyowlstudios.locksmith.block.chest.iron_trapped.IronTrappedChestBlock;
 import net.luckyowlstudios.locksmith.platform.Services;
 import net.minecraft.core.registries.BuiltInRegistries;
@@ -29,6 +30,9 @@ public class ModBlocks {
 
     public static final Supplier<Block> GOLDEN_CHEST = registerBlock("golden_chest",
             () -> new GoldenChestBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.GOLD_BLOCK).sound(SoundType.WOOD)));
+
+    public static final Supplier<Block> JEWELED_CHEST = registerBlock("jeweled_chest",
+            () -> new JeweledChestBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.DIAMOND_BLOCK).sound(SoundType.WOOD)));
 
     public static final Supplier<Block> IRON_TRAPPED_CHEST = registerBlock("iron_trapped_chest",
             () -> new IronTrappedChestBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.IRON_BLOCK).sound(SoundType.WOOD)));

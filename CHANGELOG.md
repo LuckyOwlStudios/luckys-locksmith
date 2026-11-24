@@ -17,6 +17,7 @@ Work In Progress section is started.
 # Work In Progress (1.1.1)
 
 **Added:**
+- **Jeweled Chest**, a gold and diamond chest with dyeable fabric trim, double chest support and lock support like the Golden Chest. Craft it from a Golden Chest surrounded by 4 diamonds.
 
 **Changed:**
 

@@ -51,6 +51,16 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
                 .unlockedBy("has_gold", has(Items.GOLD_INGOT))
                 .save(recipeOutput);
 
+        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, ModBlocks.JEWELED_CHEST.get())
+                .pattern(" # ")
+                .pattern("#$#")
+                .pattern(" # ")
+                .define('#', Items.DIAMOND)
+                .define('$', ModBlocks.GOLDEN_CHEST.get())
+                .unlockedBy("has_golden_chest", has(ModBlocks.GOLDEN_CHEST.get()))
+                .unlockedBy("has_diamond", has(Items.DIAMOND))
+                .save(recipeOutput);
+
         ShapelessRecipeBuilder.shapeless(RecipeCategory.REDSTONE, ModBlocks.IRON_TRAPPED_CHEST.get())
                 .requires(ModBlocks.IRON_CHEST.get())
                 .requires(Ingredient.of(Items.TRIPWIRE_HOOK))

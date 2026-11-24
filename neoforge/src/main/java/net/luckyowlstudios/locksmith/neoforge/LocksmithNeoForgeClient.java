@@ -3,6 +3,8 @@ package net.luckyowlstudios.locksmith.neoforge;
 import net.luckyowlstudios.locksmith.Locksmith;
 import net.luckyowlstudios.locksmith.block.chest.gold.GoldenChestItemRenderer;
 import net.luckyowlstudios.locksmith.block.chest.gold.GoldenChestRenderer;
+import net.luckyowlstudios.locksmith.block.chest.jeweled.JeweledChestItemRenderer;
+import net.luckyowlstudios.locksmith.block.chest.jeweled.JeweledChestRenderer;
 import net.luckyowlstudios.locksmith.block.chest.gold_trapped.GoldenTrappedChestItemRenderer;
 import net.luckyowlstudios.locksmith.block.chest.gold_trapped.GoldenTrappedChestRenderer;
 import net.luckyowlstudios.locksmith.block.chest.iron.IronChestItemRenderer;
@@ -45,6 +47,7 @@ public class LocksmithNeoForgeClient {
     public static void registerBER(EntityRenderersEvent.RegisterRenderers event) {
         event.registerBlockEntityRenderer(ModBlockEntityTypes.IRON_CHEST_BLOCK_ENTITY.get(), IronChestRenderer::new);
         event.registerBlockEntityRenderer(ModBlockEntityTypes.GOLDEN_CHEST_BLOCK_ENTITY.get(), GoldenChestRenderer::new);
+        event.registerBlockEntityRenderer(ModBlockEntityTypes.JEWELED_CHEST_BLOCK_ENTITY.get(), JeweledChestRenderer::new);
 
         event.registerBlockEntityRenderer(ModBlockEntityTypes.IRON_TRAPPED_CHEST_BLOCK_ENTITY.get(), IronTrappedChestRenderer::new);
         event.registerBlockEntityRenderer(ModBlockEntityTypes.GOLDEN_TRAPPED_CHEST_BLOCK_ENTITY.get(), GoldenTrappedChestRenderer::new);
@@ -57,6 +60,7 @@ public class LocksmithNeoForgeClient {
     public static void registerBERI(RegisterClientExtensionsEvent event) {
         registerItemRenderer(event, IronChestItemRenderer::new, ModBlocks.IRON_CHEST.get().asItem());
         registerItemRenderer(event, GoldenChestItemRenderer::new, ModBlocks.GOLDEN_CHEST.get().asItem());
+        registerItemRenderer(event, JeweledChestItemRenderer::new, ModBlocks.JEWELED_CHEST.get().asItem());
         registerItemRenderer(event, IronTrappedChestItemRenderer::new, ModBlocks.IRON_TRAPPED_CHEST.get().asItem());
         registerItemRenderer(event, GoldenTrappedChestItemRenderer::new, ModBlocks.GOLDEN_TRAPPED_CHEST.get().asItem());
     }

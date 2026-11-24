@@ -23,6 +23,7 @@ public class ModBlockTagProvider extends BlockTagsProvider {
         tag((BlockTags.LAVA_POOL_STONE_CANNOT_REPLACE))
                 .add(ModBlocks.IRON_CHEST.get())
                 .add(ModBlocks.GOLDEN_CHEST.get())
+                .add(ModBlocks.JEWELED_CHEST.get())
                 .add(ModBlocks.IRON_TRAPPED_CHEST.get())
                 .add(ModBlocks.GOLDEN_TRAPPED_CHEST.get())
         ;
@@ -30,6 +31,7 @@ public class ModBlockTagProvider extends BlockTagsProvider {
         tag(Tags.Blocks.CHESTS)
                 .add(ModBlocks.IRON_CHEST.get())
                 .add(ModBlocks.GOLDEN_CHEST.get())
+                .add(ModBlocks.JEWELED_CHEST.get())
         ;
 
         tag(Tags.Blocks.CHESTS_TRAPPED)
@@ -40,6 +42,7 @@ public class ModBlockTagProvider extends BlockTagsProvider {
         tag(BlockTags.FEATURES_CANNOT_REPLACE)
                 .add(ModBlocks.IRON_CHEST.get())
                 .add(ModBlocks.GOLDEN_CHEST.get())
+                .add(ModBlocks.JEWELED_CHEST.get())
                 .add(ModBlocks.IRON_TRAPPED_CHEST.get())
                 .add(ModBlocks.GOLDEN_TRAPPED_CHEST.get())
         ;
@@ -47,6 +50,7 @@ public class ModBlockTagProvider extends BlockTagsProvider {
         tag(BlockTags.MINEABLE_WITH_PICKAXE)
                 .add(ModBlocks.IRON_CHEST.get())
                 .add(ModBlocks.GOLDEN_CHEST.get())
+                .add(ModBlocks.JEWELED_CHEST.get())
                 .add(ModBlocks.IRON_TRAPPED_CHEST.get())
                 .add(ModBlocks.GOLDEN_TRAPPED_CHEST.get())
         ;
@@ -54,12 +58,14 @@ public class ModBlockTagProvider extends BlockTagsProvider {
         tag(BlockTags.MINEABLE_WITH_AXE)
                 .add(ModBlocks.IRON_CHEST.get())
                 .add(ModBlocks.GOLDEN_CHEST.get())
+                .add(ModBlocks.JEWELED_CHEST.get())
                 .add(ModBlocks.IRON_TRAPPED_CHEST.get())
                 .add(ModBlocks.GOLDEN_TRAPPED_CHEST.get())
         ;
 
         tag(BlockTags.GUARDED_BY_PIGLINS)
                 .add(ModBlocks.GOLDEN_CHEST.get())
+                .add(ModBlocks.JEWELED_CHEST.get())
                 .add(ModBlocks.GOLDEN_TRAPPED_CHEST.get())
         ;
     }
