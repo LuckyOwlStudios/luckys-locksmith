@@ -23,6 +23,11 @@ public class JeweledTrappedChestRenderer extends DyeableChestRenderer {
     }
 
     @Override
+    protected boolean overlayUnderBase() {
+        return true;
+    }
+
+    @Override
     protected int undyedColor() {
         return DyeColor.PURPLE.getTextureDiffuseColor();
     }
