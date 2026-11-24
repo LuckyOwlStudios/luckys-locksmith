@@ -10,11 +10,12 @@ Work In Progress section is started.
 
 | Version | Release Date | Type |
 |---------|--------------|------|
+| [1.1.1](#111-work-in-progress) | `TBD` | Release |
 | [1.1.0](#110) | `11/23/2026` | Release |
 | [1.0.3](#103) | `04/15/2026` | Release |
 | [1.0.0](#100) | `07/08/2025` | Release |
 
-# Work In Progress (1.1.1)
+# 1.1.1 (Work In Progress)
 
 **Added:**
 - **One-click build** for developers: `build.bat` / `build.sh` (or `./gradlew buildRelease`) builds both the Fabric and NeoForge jars and copies them into `release/<version>/`. IntelliJ also gets a **Build Release** run button in the top-right run dropdown.
