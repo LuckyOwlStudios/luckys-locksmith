@@ -8,3 +8,26 @@ plugins {
 tasks.named('wrapper', Wrapper).configure {
     distributionType = Wrapper.DistributionType.BIN
 }
+
+// One-click release build: `./gradlew buildRelease` (or double-click build.bat / build.sh).
+// Builds both loaders and copies the final jars (no sources or dev jars) into release/<mod_version>/.
+tasks.register('buildRelease') {
+    group = 'build'
+    description = 'Builds the Fabric and NeoForge jars and copies them into release/<mod_version>/.'
+
+    dependsOn ':fabric:remapJar', ':neoforge:jar'
+
+    doLast {
+        def dir = layout.projectDirectory.dir("release/${mod_version}").asFile
+        delete(dir)
+        dir.mkdirs()
+        [project(':fabric').tasks.named('remapJar'), project(':neoforge').tasks.named('jar')].each { t ->
+            copy {
+                from t.get().archiveFile
+                into dir
+            }
+        }
+        println "Release jars copied to ${dir}:"
+        dir.listFiles().sort().each { println "  ${it.name}" }
+    }
+}
