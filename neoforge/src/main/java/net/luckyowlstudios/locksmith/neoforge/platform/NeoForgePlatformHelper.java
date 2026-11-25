@@ -95,4 +95,9 @@ public class NeoForgePlatformHelper implements IPlatformHelper {
     public void sendToPlayer(ServerPlayer player, CustomPacketPayload payload) {
         PacketDistributor.sendToPlayer(player, payload);
     }
+
+    @Override
+    public void sendToServer(CustomPacketPayload payload) {
+        PacketDistributor.sendToServer(payload);
+    }
 }

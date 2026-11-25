@@ -11,12 +11,16 @@
 
   "item.locksmith.key": "Key",
   "item.locksmith.golden_key": "Golden Key",
+  "item.locksmith.lock_pick": "Lock Pick",
 
   "item.locksmith.golden_lock": "Golden Lock",
   "item.locksmith.trial_lock": "Trial Lock",
 
   "tooltip.locksmith.golden_key": "Unlocks Golden Locks",
   "tooltip.locksmith.trial_key": "Unlocks Vaults & Trial Locks",
+
+  "tooltip.locksmith.lock_pick": "Use on another player's lock to try to pick it",
+  "tooltip.locksmith.lock_pick_xp": "The more levels the owner has, the harder it is",
 
   "tooltip.locksmith.golden_lock": "Used to add Golden Locks to Containers",
   "tooltip.locksmith.trial_lock": "Used to add Trial Locks to Containers",
@@ -29,6 +33,12 @@
 
   "message.locksmith.block_add_lock": "%s locked with keycode: ",
   "message.locksmith.block_locked": "%s is Locked!",
+  "message.locksmith.lock_picked": "Lock picked!",
+  "message.locksmith.lock_pick_snapped": "The lock pick snapped!",
+  "message.locksmith.cannot_pick": "This lock can't be picked",
+  "screen.locksmith.lock_pick": "Lock Picking",
+  "screen.locksmith.lock_pick.hint": "[A] / [D] to Move, [Space] or [Click] to Set Tumbler",
+  "screen.locksmith.lock_pick.owner": "Lock owner: level %s",
   "entity.locksmith.dungeon_slime": "Dungeon Slime",
   "item.locksmith.dungeon_slime_spawn_egg": "Dungeon Slime Spawn Egg"
 }

@@ -21,7 +21,9 @@ import net.luckyowlstudios.locksmith.block.chest.iron.IronChestRenderer;
 import net.luckyowlstudios.locksmith.block.chest.iron_trapped.IronTrappedChestItemRenderer;
 import net.luckyowlstudios.locksmith.block.chest.iron_trapped.IronTrappedChestRenderer;
 import net.luckyowlstudios.locksmith.client.DoorLockRenderer;
+import net.luckyowlstudios.locksmith.client.LockPickClient;
 import net.luckyowlstudios.locksmith.network.DoorLocksPayload;
+import net.luckyowlstudios.locksmith.network.OpenLockPickPayload;
 import net.luckyowlstudios.locksmith.util.DoorLocks;
 import net.luckyowlstudios.locksmith.event.LockEvents;
 import net.luckyowlstudios.locksmith.client.DungeonSlimeRenderer;
@@ -65,6 +67,9 @@ public class LocksmithFabricClient implements ClientModInitializer {
         // Runs on the client thread
         ClientPlayNetworking.registerGlobalReceiver(DoorLocksPayload.TYPE,
                 (payload, context) -> DoorLocks.applyClientSync(context.player().level(), payload));
+
+        ClientPlayNetworking.registerGlobalReceiver(OpenLockPickPayload.TYPE,
+                (payload, context) -> LockPickClient.open(payload));
 
         WorldRenderEvents.AFTER_ENTITIES.register(context ->
                 DoorLockRenderer.render(context.matrixStack(), context.camera().getPosition(), context.frustum()));

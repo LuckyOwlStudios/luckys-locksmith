@@ -2,7 +2,12 @@ package net.luckyowlstudios.locksmith.neoforge;
 
 import com.mojang.logging.LogUtils;
 import net.luckyowlstudios.locksmith.Locksmith;
+import net.luckyowlstudios.locksmith.client.LockPickClient;
+import net.luckyowlstudios.locksmith.event.LockPicking;
 import net.luckyowlstudios.locksmith.network.DoorLocksPayload;
+import net.luckyowlstudios.locksmith.network.LockPickResultPayload;
+import net.luckyowlstudios.locksmith.network.OpenLockPickPayload;
+import net.minecraft.server.level.ServerPlayer;
 import net.luckyowlstudios.locksmith.util.DoorLocks;
 import net.luckyowlstudios.locksmith.entity.DungeonSlime;
 import net.luckyowlstudios.locksmith.init.ModBlocks;
@@ -64,8 +69,13 @@ public class LocksmithNeoForge {
 
     private static void registerPayloads(RegisterPayloadHandlersEvent event) {
         // Handlers run on the main thread; on the client, context.player() is the local player
-        event.registrar("1").playToClient(DoorLocksPayload.TYPE, DoorLocksPayload.STREAM_CODEC,
+        var registrar = event.registrar("1");
+        registrar.playToClient(DoorLocksPayload.TYPE, DoorLocksPayload.STREAM_CODEC,
                 (payload, context) -> DoorLocks.applyClientSync(context.player().level(), payload));
+        registrar.playToClient(OpenLockPickPayload.TYPE, OpenLockPickPayload.STREAM_CODEC,
+                (payload, context) -> LockPickClient.open(payload));
+        registrar.playToServer(LockPickResultPayload.TYPE, LockPickResultPayload.STREAM_CODEC,
+                (payload, context) -> LockPicking.onResult((ServerPlayer) context.player(), payload));
     }
 
     private static void modifyDefaultComponents(ModifyDefaultComponentsEvent event) {
@@ -105,6 +115,9 @@ public class LocksmithNeoForge {
         if (event.getTabKey() == CreativeModeTabs.INGREDIENTS) {
             event.insertAfter(Items.EXPERIENCE_BOTTLE.getDefaultInstance(), key, CreativeModeTab.TabVisibility.PARENT_AND_SEARCH_TABS);
             event.insertAfter(key, goldenKey, CreativeModeTab.TabVisibility.PARENT_AND_SEARCH_TABS);
+        }
+        if (event.getTabKey() == CreativeModeTabs.TOOLS_AND_UTILITIES) {
+            event.accept(new ItemStack(ModItems.LOCK_PICK.get()), CreativeModeTab.TabVisibility.PARENT_AND_SEARCH_TABS);
         }
         if (event.getTabKey() == CreativeModeTabs.SPAWN_EGGS) {
             event.accept(new ItemStack(ModItems.DUNGEON_SLIME_SPAWN_EGG.get()), CreativeModeTab.TabVisibility.PARENT_AND_SEARCH_TABS);

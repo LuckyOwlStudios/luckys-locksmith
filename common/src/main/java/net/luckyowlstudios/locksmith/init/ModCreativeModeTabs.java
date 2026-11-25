@@ -23,6 +23,7 @@ public class ModCreativeModeTabs {
                         output.accept(ModItems.KEY.get().getDefaultInstance());
                         output.accept(ModItems.GOLDEN_KEY.get().getDefaultInstance());
                         output.accept(Items.TRIAL_KEY);
+                        output.accept(ModItems.LOCK_PICK.get().getDefaultInstance());
                         output.accept(ModItems.GOLDEN_LOCK.get().getDefaultInstance());
                         output.accept(ModItems.TRIAL_LOCK.get().getDefaultInstance());
                         output.accept(Items.CHEST);

@@ -51,4 +51,7 @@ public interface IPlatformHelper {
 
     /** Sends one of this mod's payloads (registered by each loader) to a player. */
     void sendToPlayer(ServerPlayer player, CustomPacketPayload payload);
+
+    /** Sends one of this mod's payloads from the client to the server. Client only. */
+    void sendToServer(CustomPacketPayload payload);
 }
