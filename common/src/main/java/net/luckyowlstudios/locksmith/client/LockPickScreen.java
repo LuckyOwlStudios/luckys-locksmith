@@ -112,7 +112,7 @@ public class LockPickScreen extends Screen {
         int next = Math.max(0, Math.min(set.length - 1, selected + by));
         if (next != selected) {
             selected = next;
-            Minecraft.getInstance().getSoundManager().play(SimpleSoundInstance.forUI(SoundEvents.UI_BUTTON_CLICK, 1.6F, 0.4F));
+            Minecraft.getInstance().getSoundManager().play(SimpleSoundInstance.forUI(SoundEvents.UI_BUTTON_CLICK.value(), 1.6F, 0.4F));
         }
     }
 
