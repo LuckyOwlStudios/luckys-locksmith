@@ -37,7 +37,7 @@
   "message.locksmith.lock_pick_snapped": "The lock pick snapped!",
   "message.locksmith.cannot_pick": "This lock can't be picked",
   "screen.locksmith.lock_pick": "Lock Picking",
-  "screen.locksmith.lock_pick.hint": "Click when the pick is over the green",
+  "screen.locksmith.lock_pick.hint": "[A] / [D] to Move, [Space] or [Click] to Set Tumbler",
   "screen.locksmith.lock_pick.owner": "Lock owner: level %s",
   "entity.locksmith.dungeon_slime": "Dungeon Slime",
   "item.locksmith.dungeon_slime_spawn_egg": "Dungeon Slime Spawn Egg"
