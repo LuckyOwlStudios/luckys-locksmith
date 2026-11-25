@@ -31,7 +31,11 @@ public class LockPickScreen extends Screen {
     private static final int PANEL_HEIGHT = 166;
 
     private static final int TRACK_HEIGHT = 18;
-    private static final int TRACK_Y = 76;
+    private static final int TRACK_Y = 86;
+    private static final int PIN_WIDTH = 20;
+    private static final int PIN_HEIGHT = 34;
+    private static final int PIN_SPACING = 28;
+    private static final int PIN_Y = 26;
 
     // Vanilla inventory colors
     private static final int TEXT_COLOR = 0xFF404040;
